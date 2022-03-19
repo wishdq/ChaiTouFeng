@@ -13,14 +13,15 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>ChaiTouFeng</name>
     <description>ChaiTouFeng</description>
+
     <properties>
         <java.version>11</java.version>
+        <!-- 工 作 流 版 本 -->
+        <activiti.version>6.0.0</activiti.version>
     </properties>
+
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -30,22 +31,27 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.2.2</version>
         </dependency>
-
+        <!-- 数 据 库 操 作 框 架 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.boot</groupId>-->
+        <!--    <artifactId>spring-boot-devtools</artifactId>-->
+        <!--    <scope>runtime</scope>-->
+        <!--    <optional>true</optional>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -57,6 +63,98 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.6.4</version>
+        </dependency>
+        <!--数据库访问框架-->
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.boot</groupId>-->
+        <!--    <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+        <!--    <version>2.6.3</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>org.activiti</groupId>-->
+        <!--    <artifactId>activiti-spring-boot-starter-basic</artifactId>-->
+        <!--    <version>6.0.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--    <groupId>org.activiti</groupId>-->
+        <!--    <artifactId>activiti-json-converter</artifactId>-->
+        <!--    <version>${activiti.version}</version>-->
+        <!--    <exclusions>-->
+        <!--        <exclusion>-->
+        <!--            <groupId>org.activiti</groupId>-->
+        <!--            <artifactId>activiti-bpmn-model</artifactId>-->
+        <!--        </exclusion>-->
+        <!--    </exclusions>-->
+        <!--</dependency>-->
+        <!--Java工具包类库-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.7.22</version>
+        </dependency>
+        <!--Java的硬件信息库-->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.1.4</version>
+        </dependency>
+        <!-- JSON 解 析 工 具 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.79</version>
+        </dependency>
+        <!-- 接口文档 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!-- 安全模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.security</groupId>-->
+        <!--    <artifactId>spring-security-config</artifactId>-->
+        <!--    <version>5.5.2</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- 权 限 标 签 依 赖 -->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <!--<version>3.1.0.M1</version>-->
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+        <!-- 验 证 码 -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <!-- 分 页 组 件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-engine</artifactId>
+            <version>7-201802-EA</version>
+        </dependency>
+
     </dependencies>
 
     <build>

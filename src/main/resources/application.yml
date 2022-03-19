@@ -1,0 +1,126 @@
+#----------------spring配置------------------------
+spring:
+#    mvc:
+  # Rest风格启用
+  #    hiddenmethod:
+  #      filter:
+  #        enabled: true
+  #开启[请求参数]内容协商模式
+  #    contentnegotiation:
+  #      favor-parameter: true
+  # 静态文件的请求前缀
+  #static-path-pattern: /static/**
+
+  profiles:
+    # 运 行 环 境
+    active: dev
+  web:
+    resources:
+      static-locations: [ classpath:/static/ ]
+  servlet:
+    # 配置文件上传大小
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
+
+  datasource:
+    # 解决中文乱码输入问题,其中UTC是统一标准世界时间。
+    url: jdbc:mysql://localhost:3306/chai?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: redis123
+    database: 0
+    # 连 接 池 配 置
+    lettuce:
+      pool:
+        # 连接池中的最大空闲连接
+        max-active: 20
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 4
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 超时时间
+    timeout: 1000
+
+
+
+#---------------server配置--------------------
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      # 超 时 时 间
+      timeout: 120m
+  # 默认错误页位置
+  error:
+    path: error
+
+
+#----------------mybatis配置规则-----------------
+#mybatis:
+#  #config-location: classpath:mybatis/mybatis-config.xml  #全局配置文件位置
+#  mapper-locations: classpath*:/mapper/*.xml  #sql映射文件位置
+#  configuration: # 使用了此种，config-location变不能开启
+#    map-underscore-to-camel-case: true
+
+
+mybatis-plus:
+  # 配 置 扫 描
+  mapper-locations: classpath*:mapper/**.xml
+  #  扫描Entity, 加入此设置方可在Mybatis的XML文件中使用实体类的Alias
+  type-aliases-package: com.weiyu.chaitoufeng.domain.*
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#-------------- Pear 插 件 配 置 信 息---------------
+chaitoufeng:
+  # 权 限 配 置
+  security:
+    # 开 启 超 级 管 理 员 账 号 -- 不需要验证权限
+    super-auth-open: true
+    # 超 级 管 理 员 账 号 -- 不需要验证权限
+    super-admin: admin
+    # 允 许 同 一 账 号 多 端 登 录 个 数
+    maximum: 1
+    # 记 住 密 码 KEY
+    remember-key: PEAR_REMEMBER
+    # 不 需 要 权 限 拦 截 的 接 口 配 置
+    open-api:
+      - /login/**  # 开放登录接口
+      - /system/captcha/** # 开放验证码接口
+      - /assets/** # 开放静态资源
+      - /admin/** # 开放静态资源
+      - /component/** # 开放静态资源
+      - /favicon.ico # 开放FAVICON
+
+  # 上传配置
+  upload:
+    # windows 上传路径
+    windows-path: D:\home\uploads\
+    # linux 上传路径
+    linux-path: /home/uploads/
+    # 是否使用ftp服务器
+    ftp-use: false
+    #  ftp服务器地址
+    hostname:
+    # ftp服务器端口
+    port: 0000
+    # ftp服务器用户名
+    username:
+    # ftp服务器密码
+    password:
+
+# Page Helper 分页配置
+pagehelper:
+  # 方 言
+  helper-dialect: mysql
+  params: count=countSql
+  reasonable: true
+  support-methods-arguments: true
