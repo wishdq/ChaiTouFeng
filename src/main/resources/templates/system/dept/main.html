@@ -8,9 +8,9 @@
     <div class="layui-card-body">
         <form action="" class="layui-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">部门名称</label>
+                <label class="layui-form-label">部 门 名 称:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="deptName" placeholder="" type="text">
+                    <input class="layui-input" name="deptName" placeholder="请输入部门名称" type="text">
                 </div>
                 <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="dept-query" lay-submit>
                     <i class="layui-icon layui-icon-search"></i>
@@ -92,9 +92,9 @@
                     {field: 'phone', title: '联系方式'},
                     {field: 'email', title: '邮箱'},
                     {field: 'address', title: '详细地址'},
-                    {field: 'status', title: '状态', templet: '#dept-status'},
-                    {field: 'sort', title: '排序', width: 100},
-                    {title: '操作', templet: '#dept-bar', width: 120, align: 'center'}
+                    {field: 'status', title: '状态',  width: 95, templet: '#dept-status', align: 'center'},
+                    {field: 'sort', title: '排序', width: 60, align: 'center'},
+                    {title: '操作', templet: '#dept-bar', width: 100, align: 'center',unresize: true}
                 ]
             ]
         });
@@ -173,7 +173,7 @@
                 type: 2,
                 title: '新增',
                 shade: 0.1,
-                area: ['450px', '500px'],
+                area: ['700px', '450px'],
                 content: MODULE_PATH + 'add'
             });
         }
@@ -183,7 +183,7 @@
                 type: 2,
                 title: '修改',
                 shade: 0.1,
-                area: ['450px', '500px'],
+                area: ['670px', '430px'],
                 content: MODULE_PATH + 'edit?deptId=' + obj.data['deptId']
             });
         }

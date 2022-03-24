@@ -31,10 +31,11 @@ public class SecureAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
-        // 通过id更新最后一次登录时间
+        // 通过id更新登录用户信息登录时间
         SysUser sysUser = new SysUser();
         sysUser.setUserId(((SysUser) SecurityUtil.currentUser()).getUserId());
         sysUser.setLastTime(LocalDateTime.now());
+        //sysUser.setLogin("1");
         sysUserService.update(sysUser);
 
         // 保存本地当前用户的session。并响应消息

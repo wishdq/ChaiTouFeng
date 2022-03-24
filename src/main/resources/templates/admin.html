@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="common :: header('钗头凤 Admin 管理平台')"/>
-    <link href="admin/css/loader.css" rel="stylesheet"/>
-    <link href="admin/css/admin.css" rel="stylesheet"/>
+    <link th:href="@{admin/css/loader.css}" rel="stylesheet"/>
+    <link th:href="@{admin/css/admin.css}" rel="stylesheet"/>
 </head>
 <!-- 结 构 代 码 -->
 <body class="layui-layout-body pear-admin">
@@ -14,7 +14,7 @@
         <!-- 菜 单 顶 部 -->
         <div class="layui-logo">
             <!-- 图 标 -->
-            <img class="logo"></img>
+            <img class="logo">
             <!-- 标 题 -->
             <span class="title"></span>
         </div>
@@ -27,18 +27,24 @@
         <div class="layui-layout-control" id="control"></div>
         <!-- 顶 部 右 侧 菜 单 -->
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item layui-hide-xs"><a class="fullScreen layui-icon layui-icon-screen-full"
+            <li class="layui-nav-item layui-hide-xs">
+                <a class="fullScreen layui-icon layui-icon-screen-full"
                                                         href="#"></a></li>
-            <li class="layui-nav-item layui-hide-xs"><a class="layui-icon layui-icon-website"
-                                                        href="http://www.pearadmin.com"></a></li>
+            <li class="layui-nav-item layui-hide-xs">
+                <a class="layui-icon layui-icon-website"
+                   href="http://www.pearadmin.com"></a></li>
             <li class="layui-nav-item layui-hide-xs message"></li>
             <li class="layui-nav-item user">
                 <!-- 头 像 -->
-                <a class="layui-icon layui-icon-username" href="javascript:;"></a>
+                <!--class layui-icon-username-->
+                <a class="layui-icon" href="javascript:;">
+                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+                    <!--<span th:text="${currentUserInfo}">tester</span>-->
+                </a>
                 <!-- 功 能 菜 单 -->
                 <dl class="layui-nav-child">
-                    <dd><a user-menu-id="5555" user-menu-title="基本资料" user-menu-url="/system/user/center">基本资料</a></dd>
-                    <dd><a class="logout" href="javascript:void(0);">注销登录</a></dd>
+                    <dd><a class="layui-icon layui-icon-username" user-menu-id="5555" user-menu-title="基本资料" user-menu-url="/system/user/center">&nbsp;基本资料</a></dd>
+                    <dd><a class="layui-icon layui-icon-logout logout" href="javascript:void(0);">&nbsp;注销登录</a></dd>
                 </dl>
             </li>
             <!-- 主 题 配 置 -->
@@ -50,7 +56,7 @@
         <!-- 菜 单 顶 部 -->
         <div class="layui-logo">
             <!-- 图 标 -->
-            <img class="logo"></img>
+            <img class="logo">
             <!-- 标 题 -->
             <span class="title"></span>
         </div>
@@ -94,12 +100,7 @@
                     </ul>
                 </div>
             </div>
-
         </div>
-
-
-
-
     </div>
     <!-- 视 图 页 面 -->
     <div class="layui-body">

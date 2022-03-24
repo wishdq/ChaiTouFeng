@@ -1,4 +1,4 @@
-package com.weiyu.chaitoufeng.secure.domain;
+package com.weiyu.chaitoufeng.domain.secure;
 
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;

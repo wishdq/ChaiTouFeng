@@ -45,6 +45,10 @@
     </span>
 </script>
 
+<script id="online-lastTime" type="text/html">
+    {{layui.util.toDateString(d.createTime,  "yyyy-MM-dd HH:mm:ss")}}
+</script>
+
 <th:block th:include="common :: footer"/>
 <script>
     layui.use(['table', 'form', 'jquery', 'popup'], function () {
@@ -62,7 +66,7 @@
                 {title: '账号', field: 'username', align: 'center'},
                 {title: '状态', field: 'username', align: 'center', templet: '#online-state'},
                 {title: '在线时长', field: 'onlineTime', align: 'center'},
-                {title: '登录时间', field: 'lastTime', align: 'center'},
+                {title: '登录时间', field: 'lastTime',templet:'#online-lastTime',width:165,align: 'center'},
                 {title: '操作', toolbar: '#online-bar', align: 'center', width: 100}
             ]
         ]
@@ -71,6 +75,10 @@
             elem: '#online-table',
             url: MODULE_PATH + 'data',
             page: true,
+            initSort: {
+                field: 'lastTime' //排序字段，对应 cols 设定的各字段名
+                ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            },
             cols: cols,
             skin: 'line',
             toolbar: false

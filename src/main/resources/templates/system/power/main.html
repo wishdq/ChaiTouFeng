@@ -8,9 +8,9 @@
     <div class="layui-card-body">
         <form action="" class="layui-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">权限名称</label>
+                <label class="layui-form-label">权 限 名 称:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="powerName" placeholder="" type="text">
+                    <input class="layui-input" name="powerName" placeholder="请输入权限名称" type="text">
                 </div>
                 <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="power-query" lay-submit>
                     <i class="layui-icon layui-icon-search"></i>
@@ -36,6 +36,10 @@
         <i class="layui-icon layui-icon-add-1"></i>
         新增
     </button>
+    <button class="pear-btn pear-btn-md"  lay-event="expand-fold">
+        <i class="layui-icon layui-icon-triangle-d expand-fold "></i>
+        全部展开/折叠
+    </button>
 </script>
 
 <script id="power-bar" type="text/html">
@@ -49,11 +53,11 @@
 
 <script id="power-type" type="text/html">
     {{#if (d.powerType == '0') { }}
-    <span>目录</span>
+    <span class="layui-badge layui-bg-blue">目录</span>
     {{# }else if(d.powerType == '1'){ }}
-    <span>菜单</span>
+    <span class="layui-badge layui-bg-orange">菜单</span>
     {{# }else if(d.powerType == '2'){ }}
-    <span>按钮</span>
+    <span class="layui-badge-rim">按钮</span>
     {{# } }}
 </script>
 
@@ -75,11 +79,14 @@
         let $ = layui.jquery;
         let treetable = layui.treetable;
         let popup = layui.popup;
+        let open_flag = false;
 
         let MODULE_PATH = "/system/power/";
 
         treetable.render({
+            // 树形图标显示在第几列
             treeColIndex: 1,
+            //最上级的父级id
             treeSpid: 0,
             treeIdName: 'powerId',
             treePidName: 'parentId',
@@ -99,11 +106,11 @@
                 [
                     {type: 'checkbox'},
                     {field: 'powerName', minWidth: 200, title: '权限名称'},
-                    {field: 'icon', title: '图标', templet: '#icon'},
-                    {field: 'powerType', title: '权限类型', templet: '#power-type'},
-                    {field: 'enable', title: '是否可用', templet: '#power-enable'},
-                    {field: 'sort', title: '排序'},
-                    {title: '操作', templet: '#power-bar', width: 150, align: 'center'}
+                    {field: 'icon', title: '图标', templet: '#icon', align: 'center'},
+                    {field: 'powerType', title: '权限类型', templet: '#power-type', align: 'center'},
+                    {field: 'enable', title: '状态', width:95, templet: '#power-enable', align: 'center'},
+                    {field: 'sort', title: '排序', align: 'center'},
+                    {title: '操作', templet: '#power-bar', width: 100, align: 'center',unresize: true}
                 ]
             ]
         });
@@ -126,6 +133,8 @@
                 window.add();
             } else if (obj.event === 'refresh') {
                 window.refresh();
+            }else if (obj.event === 'expand-fold'){
+                window.expand_fold();
             }
         });
 
@@ -159,7 +168,8 @@
                 type: 2,
                 title: '新增',
                 shade: 0.1,
-                area: ['450px', '500px'],
+                scrollbar:false,
+                area: ['700px', '430px'],
                 content: MODULE_PATH + 'add'
             });
         }
@@ -169,7 +179,8 @@
                 type: 2,
                 title: '修改',
                 shade: 0.1,
-                area: ['450px', '500px'],
+                scrollbar:false,
+                area: ['700px', '450px'],
                 content: MODULE_PATH + 'edit?powerId=' + obj.data['powerId']
             });
         }
@@ -198,6 +209,22 @@
 
         window.refresh = function () {
             treetable.reload('#power-table');
+        }
+
+        window.expand_fold = function () {
+            if (open_flag === false){
+                $('.expand-fold')
+                    .toggleClass('layui-icon-triangle-d')
+                    .toggleClass('layui-icon-triangle-r');
+                treetable.foldAll('#power-table');
+                open_flag = true;
+            } else {
+                $('.expand-fold')
+                    .toggleClass('layui-icon-triangle-r')
+                    .toggleClass('layui-icon-triangle-d');
+                treetable.expandAll('#power-table');
+                open_flag = false;
+            }
         }
     })
 </script>

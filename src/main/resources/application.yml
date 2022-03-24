@@ -95,6 +95,8 @@ chaitoufeng:
     open-api:
       - /login/**  # 开放登录接口
       - /system/captcha/** # 开放验证码接口
+      - /error/** # 开放错误接口
+      - /test
       - /assets/** # 开放静态资源
       - /admin/** # 开放静态资源
       - /component/** # 开放静态资源
@@ -103,7 +105,7 @@ chaitoufeng:
   # 上传配置
   upload:
     # windows 上传路径
-    windows-path: D:\home\uploads\
+    windows-path: C:\Users\wish_dq\Desktop\毕业\ChaiTouFeng\home\uploads\
     # linux 上传路径
     linux-path: /home/uploads/
     # 是否使用ftp服务器

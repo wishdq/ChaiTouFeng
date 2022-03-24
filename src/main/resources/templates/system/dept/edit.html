@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="common :: header('部門修改')"/>
+    <th:block th:include="common :: header('部门修改')"/>
+    <th:block th:include="common :: scorlling ('textarea')"/>
 </head>
 <body>
 <form action="" class="layui-form">
@@ -12,63 +13,62 @@
                     <label class="layui-form-label">编号</label>
                     <div class="layui-input-block">
                         <input autocomplete="off" class="layui-input" lay-verify="title" name="deptId"
-                               placeholder="请输入标题" th:value="${sysDept.deptId}" type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">名称</label>
+                               placeholder="请输入标题" th:value="${sysDept.deptId}"
+                               type="text"></div></div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">部 门 名 称:</label>
                     <div class="layui-input-block">
                         <input autocomplete="off" class="layui-input" lay-verify="title" name="deptName"
-                               placeholder="请输入标题" th:value="${sysDept.deptName}" type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">负责人</label>
+                               placeholder="请输入部门名称" th:value="${sysDept.deptName}"
+                               type="text"></div></div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">排&emsp;序:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="title" name="leader"
-                               placeholder="请输入标题" th:value="${sysDept.leader}"
-                               type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">邮箱</label>
+                        <input autocomplete="off" class="layui-input" lay-verify="title" name="sort" placeholder="请输入排序号"
+                               th:value="${sysDept.sort}"
+                               type="text"></div></div>
+                <br>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">上 级 部 门:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="title" name="email"
-                               placeholder="请输入标题" th:value="${sysDept.email}"
-                               type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">联系方式</label>
-                    <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="title" name="phone"
-                               placeholder="请输入标题" th:value="${sysDept.phone}"
-                               type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">状态</label>
+                        <ul class="dtree" data-id="-1" id="selectParent" name="parentId"></ul></div></div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">状&emsp;态:</label>
                     <div class="layui-input-block">
                         <input name="status" th:checked="${sysDept.status eq '0'}" title="开启" type="radio" value="0">
                         <input checked name="status" th:checked="${sysDept.status eq '1'}" title="关闭" type="radio"
-                               value="1">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">排序</label>
+                               value="1"></div></div>
+                <br>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">负 责 人:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="title" name="sort" placeholder="请输入标题"
-                               th:value="${sysDept.sort}"
-                               type="text">
-                    </div>
-                </div>
+                        <input autocomplete="off" class="layui-input" lay-verify="title" name="leader"
+                               placeholder="请输入负责人" th:value="${sysDept.leader}"
+                               type="text"></div></div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">邮&emsp;箱:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="title" name="email"
+                               placeholder="请输入邮箱" th:value="${sysDept.email}"
+                               type="text"></div></div>
+                <br>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">联 系 方 式:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="title" name="phone"
+                               placeholder="请输入联系方式" th:value="${sysDept.phone}"
+                               type="text"></div></div>
+
                 <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">描述</label>
+                    <label class="layui-form-label">详 细 地 址:</label>
                     <div class="layui-input-block">
                         <textarea class="layui-textarea" name="address" placeholder="请输入详细地址"
-                                  th:text="${sysDept.address}"></textarea>
-                    </div>
-                </div>
+                                  th:text="${sysDept.address}"
+                                  maxlength="200" show-word-limit></textarea></div></div>
+
             </div>
         </div>
     </div>
@@ -88,11 +88,27 @@
 </form>
 <th:block th:include="common :: footer"/>
 <script>
-    layui.use(['form', 'jquery'], function () {
+    layui.use(['form', 'jquery','dtree','inputAttr'], function () {
         let form = layui.form;
         let $ = layui.jquery;
+        let dtree = layui.dtree;
+        let inputAttr = layui.inputAttr;
+
+        inputAttr.render();
+
+        dtree.renderSelect({
+            elem: "#selectParent",
+            url: "/system/dept/selectParent",
+            method: 'get',
+            selectInputName: {nodeId: "deptId", context: "deptName"},
+            skin: "layui",
+            dataFormat: "list",
+            response: {treeId: "deptId", parentId: "parentId", title: "deptName"},
+            selectInitVal: [[${sysDept.parentId}]]
+        });
 
         form.on('submit(dept-update)', function (data) {
+            data.field.deptId = $('[name="deptId"]').val();
             $.ajax({
                 url: '/system/dept/update',
                 data: JSON.stringify(data.field),

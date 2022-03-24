@@ -1,0 +1,9 @@
+/** 未展开 */
+.treeTable-icon .layui-icon-layer:before {
+    content: "\e638";
+}
+
+/** 展开 */
+.treeTable-icon.open .layui-icon-layer:before {
+    content: "\e638";
+}

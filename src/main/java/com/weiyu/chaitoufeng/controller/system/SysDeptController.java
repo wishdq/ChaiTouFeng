@@ -7,6 +7,7 @@ import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.system.SysDept;
 import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.domain.response.ResultTree;
+import com.weiyu.chaitoufeng.domain.system.SysPower;
 import com.weiyu.chaitoufeng.service.ISysDeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,6 +50,21 @@ public class SysDeptController extends BaseController {
         return jumpPage(MODULE_PATH + "main");
     }
 
+    /**
+     * Describe: 获取父级部门选择数据
+     * Param sysDept
+     * Return Result
+     */
+    @GetMapping("selectParent")
+    public ResultTree selectParent(SysDept sysDept) {
+        List<SysDept> list = sysDeptService.list(sysDept);
+        SysDept baseDept = new SysDept();
+        baseDept.setDeptName("顶级部门");
+        baseDept.setDeptId("0");
+        baseDept.setParentId("-1");
+        list.add(baseDept);
+        return dataTree(list);
+    }
     /**
      * Describe: 获取部门列表数据
      * Param SysDept PageDomain

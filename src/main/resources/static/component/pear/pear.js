@@ -40,7 +40,9 @@ layui.config({
     yaml: "yaml",
     theme: "theme",
     message: "message",
-    toast: "toast"
+    toast: "toast",
+    inputAttr: "inputAttr/js/index",
+    iconExtend: "iconExtend/iconExtend"
 }).use(['layer', 'theme'], function () {
     layui.theme.changeTheme(window, false);
 });

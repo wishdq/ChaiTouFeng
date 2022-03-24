@@ -48,19 +48,17 @@
         form.on('submit(login)', function (data) {
             let loader = layer.load();
             let btn = button.load({elem: '.login'});
-            // alert(data.field)
             $.ajax({
                 url: '/login',
                 data: data.field,
                 type: "post",
                 dataType: 'json',
                 success: function (result) {
-                    alert(result.msg)
                     layer.close(loader);
                     btn.stop(function () {
                         if (result.success) {
                             popup.success(result.msg, function () {
-                                location.href = "/index";
+                                location.href = "/admin";
                             })
                         } else {
                             popup.failure(result.msg, function () {

@@ -8,13 +8,13 @@
     <div class="layui-card-body">
         <form action="" class="layui-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">角色名</label>
+                <label class="layui-form-label">角 色 名:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="roleName" placeholder="" type="text">
+                    <input class="layui-input" name="roleName" placeholder="请输入角色名" type="text">
                 </div>
-                <label class="layui-form-label">角色标识</label>
+                <label class="layui-form-label">角 色 标 识:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="roleCode" placeholder="" type="text">
+                    <input class="layui-input" name="roleCode" placeholder="请输入角色标识" type="text">
                 </div>
                 <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="role-query" lay-submit>
                     <i class="layui-icon layui-icon-search"></i>
@@ -41,9 +41,10 @@
         <i class="layui-icon layui-icon-add-1"></i>
         新增
     </button>
-    <button sec:authorize="hasPermission('/system/role/remove','sys:role:remove')" class="pear-btn pear-btn-md"
+    <button sec:authorize="hasPermission('/system/role/remove','sys:role:remove')"
+            class="pear-btn pear-btn-danger pear-btn-md"
             lay-event="batchRemove">
-        <i class="layui-icon layui-icon-delete"></i>
+        <i class="pear-icon pear-icon-ashbin"></i>
         删除
     </button>
 </script>
@@ -83,9 +84,9 @@
                 {title: '角色名', field: 'roleName', align: 'center', width: 100},
                 {title: 'Key值', field: 'roleCode', align: 'center'},
                 {title: '描述', field: 'details', align: 'center'},
-                {title: '是否可用', field: 'enable', align: 'center', templet: '#role-enable'},
-                {title: '排序', field: 'sort', align: 'center'},
-                {title: '操作', toolbar: '#role-bar', align: 'center', width: 195}
+                {title: '状态', field: 'enable', align: 'center', templet: '#role-enable',unresize: true, width: 95},
+                {title: '排序', field: 'sort', align: 'center', sort:true},
+                {title: '操作', toolbar: '#role-bar', align: 'center',width: 145, unresize: true}
             ]
         ]
 
@@ -96,6 +97,10 @@
             cols: cols,
             skin: 'line',
             toolbar: '#role-toolbar',
+            initSort: {
+                field: 'sort'
+                ,type: 'asc'
+            },
             defaultToolbar: [{
                 title: '刷新',
                 layEvent: 'refresh',
@@ -158,7 +163,7 @@
                 type: 2,
                 title: '新增',
                 shade: 0.1,
-                area: ['500px', '500px'],
+                area: ['500px', '400px'],
                 content: MODULE_PATH + 'add'
             });
         }
@@ -168,7 +173,7 @@
                 type: 2,
                 title: '授权',
                 shade: 0.1,
-                area: ['320px', '400px'],
+                area: ['320px', '430px'],
                 content: MODULE_PATH + 'power?roleId=' + obj.data["roleId"]
             });
         }
@@ -178,7 +183,7 @@
                 type: 2,
                 title: '修改',
                 shade: 0.1,
-                area: ['500px', '500px'],
+                area: ['500px', '430px'],
                 content: MODULE_PATH + 'edit?roleId=' + obj.data['roleId']
             });
         }

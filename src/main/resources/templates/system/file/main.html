@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <th:block th:include="common :: header('文件列表')"/>
 </head>
@@ -8,19 +8,19 @@
     <div class="layui-card-body">
         <form action="" class="layui-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">资源名称</label>
+                <label class="layui-form-label">资 源 名 称:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="realName" placeholder="" type="text">
+                    <input class="layui-input" name="realName" placeholder="请输入资源名称" type="text">
                 </div>
-                <label class="layui-form-label">文件名称</label>
+                <label class="layui-form-label">文 件 名 称:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="username" placeholder="" type="text">
+                    <input class="layui-input" name="username" placeholder="请输入文件名称" type="text">
                 </div>
                 <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="file-query" lay-submit>
                     <i class="layui-icon layui-icon-search"></i>
                     查询
                 </button>
-                <button class="pear-btn pear-btn-md" type="reset">
+                <button class="pear-btn pear-btn-md" type="reset" >
                     <i class="layui-icon layui-icon-refresh"></i>
                     重置
                 </button>
@@ -38,12 +38,14 @@
 </body>
 
 <script id="role-toolbar" type="text/html">
-    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+    <button sec:authorize="hasPermission('/system/file/add','sys:file:add')"
+            class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
         <i class="layui-icon layui-icon-add-1"></i>
         上传
     </button>
-    <button class="pear-btn pear-btn-md" lay-event="batchRemove">
-        <i class="layui-icon layui-icon-delete"></i>
+    <button sec:authorize="hasPermission('/system/file/remove','sys:file:remove')"
+            class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+        <i class="pear-icon pear-icon-ashbin"></i>
         删除
     </button>
 </script>
@@ -58,6 +60,7 @@
 
 <script id="file-image" type="text/html">
     <a href="javascript:void(0);" class="pear-text">查看</a>
+    <!--<img src="/system/file/download/{{d.id}}" alt="">-->
 </script>
 
 <script id="file-createTime" type="text/html">
@@ -80,11 +83,11 @@
                 {type: 'checkbox'},
                 {title: '资源名称', field: 'fileName', align: 'center', width: 200},
                 {title: '原名称', field: 'fileDesc', align: 'center', width: 260},
-                {title: '类型', field: 'fileType', align: 'center', width: 80},
-                {title: '文件大小', field: 'fileSize', align: 'center'},
+                {title: '类型', field: 'fileType', align: 'center', width: 70},
+                {title: '文件大小', field: 'fileSize', align: 'center', width: 98},
                 {title: '预览', field: 'fileType', align: 'center', templet: "#file-image", event: "file-image"},
-                {title: '创建日期', field: 'createTime', align: 'center', templet: "#file-createTime"},
-                {title: '操作', toolbar: '#role-bar', align: 'center', width: 150}
+                {title: '创建日期', field: 'createTime', align: 'center', templet: "#file-createTime",width:165,},
+                {title: '操作', toolbar: '#role-bar', align: 'center', width: 110,unresize: true}
             ]
         ]
 
@@ -94,13 +97,24 @@
             page: true,
             cols: cols,
             skin: 'line',
-            height: 'full-148',
+            // height: 'full-148',
             toolbar: '#role-toolbar',
             defaultToolbar: [{
                 title: '刷新',
                 layEvent: 'refresh',
                 icon: 'layui-icon-refresh',
-            }, 'filter', 'print', 'exports']
+            }, 'filter', 'print', 'exports'],
+            // done:function (res, curr, count) {
+            //     // console.log(res);
+            //     for (let i = 0; i < count; i++) {
+            //         res.data.id = MODULE_PATH + 'download/' + res.data.id;
+            //     }
+            //     //得到当前页码
+            //     // console.log(curr);
+            //
+            //     //得到数据总量
+            //     // console.log(count);
+            // }
         });
 
         table.on('tool(file-table)', function (obj) {
@@ -129,7 +143,7 @@
         window.add = function () {
             layer.open({
                 type: 2,
-                title: '新增',
+                title: '上传文件',
                 shade: 0.1,
                 area: ['500px', '400px'],
                 content: MODULE_PATH + 'add'

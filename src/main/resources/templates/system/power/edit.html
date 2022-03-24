@@ -15,28 +15,30 @@
                                th:value="${sysPower.powerId}" type="text">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">父级</label>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">名&emsp;称:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" id="powerName" class="layui-input" lay-verify="required" name="powerName"
+                               placeholder="权限名称" th:value="${sysPower.powerName}" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">父&emsp;级:</label>
                     <div class="layui-input-block">
                         <ul class="dtree" data-id="-1" id="selectParent" name="parentId"></ul>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">名称</label>
+                <br>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">图&emsp;标:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="powerName"
-                               placeholder="权限名称" th:value="${sysPower.powerName}" type="text">
+                        <input class="layui-input" id="icon" lay-filter="icon" name="icon" th:value="${sysPower.icon}"
+                               type="text">
                     </div>
                 </div>
-                <div class="layui-form-item" id="powerCodeItem">
-                    <label class="layui-form-label">标识</label>
-                    <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" id="powerCode" name="powerCode"
-                               placeholder="权限标识" th:value="${sysPower.powerCode}" type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">状态</label>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">类&emsp;型:</label>
                     <div class="layui-input-block">
                         <input lay-filter="powerType" name="powerType" th:checked="${sysPower.powerType eq '0'}"
                                title="目录" type="radio" value="0">
@@ -46,15 +48,26 @@
                                title="按钮" type="radio" value="2">
                     </div>
                 </div>
-                <div class="layui-form-item" id="powerUrlItem">
-                    <label class="layui-form-label">路径</label>
+                <br>
+
+                <div class="layui-form-item layui-inline" id="powerCodeItem">
+                    <label class="layui-form-label">标&emsp;识:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" id="powerCode" name="powerCode"
+                               placeholder="权限标识" th:value="${sysPower.powerCode}" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline" id="powerUrlItem">
+                    <label class="layui-form-label">路&emsp;径:</label>
                     <div class="layui-input-block">
                         <input autocomplete="off" class="layui-input" id="powerUrl" name="powerUrl"
                                placeholder="菜单路径" th:value="${sysPower.powerUrl}" type="text">
                     </div>
                 </div>
-                <div class="layui-form-item" id="openTypeItem">
-                    <label class="layui-form-label">打开</label>
+                <br>
+
+                <div class="layui-form-item layui-inline" id="openTypeItem">
+                    <label class="layui-form-label">打&emsp;开:</label>
                     <div class="layui-input-block">
                         <select id="openType" name="openType">
                             <option value=""></option>
@@ -63,15 +76,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">图标</label>
-                    <div class="layui-input-block">
-                        <input class="layui-input" id="icon" lay-filter="icon" name="icon" th:value="${sysPower.icon}"
-                               type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">排序</label>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">排&emsp;序:</label>
                     <div class="layui-input-block">
                         <input autocomplete="off" class="layui-input" name="sort" placeholder="排序"
                                th:value="${sysPower.sort}" type="text">
@@ -134,6 +140,7 @@
         });
 
         form.on('submit(power-save)', function (data) {
+            data.field.powerName = $('[name="powerName"]').val().trim()
             data.field.icon = "layui-icon " + data.field.icon;
             $.ajax({
                 url: '/system/power/update',

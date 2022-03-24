@@ -35,7 +35,7 @@ public class SecurityUtil {
      * @return boolean 是否登录
      */
     public static boolean isAuthentication() {
-        // if security session eq s-id is not null to index
+        // if security session eq s-id is not null to admin
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return !(auth instanceof AnonymousAuthenticationToken);
     }

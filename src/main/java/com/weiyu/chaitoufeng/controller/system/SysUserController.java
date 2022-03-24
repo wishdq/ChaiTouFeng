@@ -1,6 +1,7 @@
 package com.weiyu.chaitoufeng.controller.system;
 
 import com.github.pagehelper.PageInfo;
+import com.weiyu.chaitoufeng.common.repeatsubmit.NoRepeatSubmit;
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
 import com.weiyu.chaitoufeng.common.logging.BusinessType;
 import com.weiyu.chaitoufeng.common.logging.Logging;
@@ -12,6 +13,7 @@ import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.EditPassword;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
 import com.weiyu.chaitoufeng.domain.response.ResultTable;
+import com.weiyu.chaitoufeng.domain.system.SysDept;
 import com.weiyu.chaitoufeng.domain.system.SysMenu;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import com.weiyu.chaitoufeng.service.ISysLogService;
@@ -28,7 +30,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -109,7 +110,7 @@ public class SysUserController extends BaseController {
      * Param ModelAndView
      * Return 操作结果
      */
-    //@RepeatSubmit
+    @NoRepeatSubmit
     @PostMapping("save")
     @ApiOperation(value = "保存用户数据")
     @PreAuthorize("hasPermission('/system/user/add','sys:user:add')")
@@ -145,7 +146,9 @@ public class SysUserController extends BaseController {
      * Return 返回用户密码修改视图
      */
     @GetMapping("editPassword")
-    public ModelAndView editPasswordView() {
+    @PreAuthorize("hasPermission('/system/user/editPassword','sys:user:editPassword')")
+    public ModelAndView editPasswordView(Model model, String userId) {
+        model.addAttribute("userId",userId);
         return jumpPage(MODULE_PATH + "password");
     }
 
@@ -156,25 +159,39 @@ public class SysUserController extends BaseController {
      */
     @PutMapping("editPassword")
     public Result editPassword(@RequestBody EditPassword editPassword) {
-        String oldPassword = editPassword.getOldPassword();
+        String userId = editPassword.getUserId();
         String newPassword = editPassword.getNewPassword();
         String confirmPassword = editPassword.getConfirmPassword();
-        SysUser sysUser = (SysUser) ServletUtil.getSession().getAttribute("currentUser");
-        SysUser editUser = sysUserService.getById(sysUser.getUserId());
-        if (Strings.isBlank(confirmPassword)
-                || Strings.isBlank(newPassword)
-                || Strings.isBlank(oldPassword)) {
+        if (Strings.isBlank(confirmPassword) || Strings.isBlank(newPassword)) {
             return failure("输入不能为空");
-        }
-        if (!new BCryptPasswordEncoder().matches(oldPassword, editUser.getPassword())) {
-            return failure("密码验证失败");
         }
         if (!newPassword.equals(confirmPassword)) {
             return failure("两次密码输入不一致");
         }
-        editUser.setPassword(new BCryptPasswordEncoder().encode(newPassword));
-        boolean result = sysUserService.update(editUser);
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(userId);
+        sysUser.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+        boolean result = sysUserService.update(sysUser);
         return decide(result, "修改成功", "修改失败");
+        //String oldPassword = editPassword.getOldPassword();
+        //String newPassword = editPassword.getNewPassword();
+        //String confirmPassword = editPassword.getConfirmPassword();
+        //SysUser sysUser = (SysUser) ServletUtil.getSession().getAttribute("currentUser");
+        //SysUser editUser = sysUserService.getById(sysUser.getUserId());
+        //if (Strings.isBlank(confirmPassword)
+        //        || Strings.isBlank(newPassword)
+        //        || Strings.isBlank(oldPassword)) {
+        //    return failure("输入不能为空");
+        //}
+        //if (!new BCryptPasswordEncoder().matches(oldPassword, editUser.getPassword())) {
+        //    return failure("密码验证失败");
+        //}
+        //if (!newPassword.equals(confirmPassword)) {
+        //    return failure("两次密码输入不一致");
+        //}
+        //editUser.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+        //boolean result = sysUserService.update(editUser);
+        //return decide(result, "修改成功", "修改失败");
     }
 
     /**
@@ -288,6 +305,20 @@ public class SysUserController extends BaseController {
         model.addAttribute("logs", sysLogService.selectTopLoginLog(sysUser.getUsername()));
         return jumpPage(MODULE_PATH + "center");
     }
+
+    /**
+     * Describe: 个人首页资料
+     * Param: null
+     * Return: ModelAndView
+     */
+    //@GetMapping("userInfo")
+    //@ApiOperation(value = "个人资料")
+    //public void simpleUser(Model model) {
+    //    SysUser sysUser = (SysUser) SecurityUtil.currentUser();
+    //    model.addAttribute("userInfo", sysUserService.getById(sysUser.getUserId()));
+    //    //model.addAttribute("logs", sysLogService.selectTopLoginLog(sysUser.getUsername()));
+    //    //return jumpPage(MODULE_PATH + "center");
+    //}
 
     /**
      * Describe: 用户修改接口

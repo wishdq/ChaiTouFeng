@@ -30,14 +30,14 @@ public class SysUser extends BaseDomain implements UserDetails, CredentialsConta
     private String username;
     // 密码
     private String password;
-    // 邮箱
-    private String email;
     // 盐
     private String salt;
     // 状态
     private String status;
     // 姓名
     private String realName;
+    // 邮箱
+    private String email;
     // 头像
     private String avatar;
     // 性别

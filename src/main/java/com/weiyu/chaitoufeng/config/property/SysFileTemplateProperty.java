@@ -16,44 +16,28 @@ import java.io.File;
 @ConfigurationProperties("chaitoufeng.upload")
 public class SysFileTemplateProperty {
 
-    /**
-     * windows 系统文件上传路径
-     */
+    // windows 系统文件上传路径
     private String windowsPath;
 
-    /**
-     * linux 系统文件上传路径
-     */
+    // linux 系统文件上传路径
     private String linuxPath;
 
-    /**
-     * 是否启用ftp服务器
-     */
+    // 是否启用ftp服务器
     private boolean ftpUse;
 
-    /**
-     * ftp服务器url
-     */
+    // ftp服务器url
     private String hostname;
 
-    /**
-     * ftp服务器端口号
-     */
+    // ftp服务器端口号
     private int port;
 
-    /**
-     * ftp服务器用户名
-     */
+    // ftp服务器用户名
     private String username;
 
-    /**
-     * ftp服务器密码
-     */
+    // ftp服务器密码
     private String password;
 
-    /**
-     * upload path 根据系统环境获取上传路径
-     */
+    // upload path 根据系统环境获取上传路径
     public String getUploadPath() {
         return '\\' == File.separatorChar ? this.windowsPath : this.linuxPath;
     }

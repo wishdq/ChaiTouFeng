@@ -1,4 +1,4 @@
-package com.weiyu.chaitoufeng.domain.system;
+package com.weiyu.chaitoufeng.domain.base;
 
 import com.weiyu.chaitoufeng.domain.BaseDomain;
 import lombok.Data;

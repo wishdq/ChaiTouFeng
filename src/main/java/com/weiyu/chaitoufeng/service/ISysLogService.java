@@ -35,7 +35,7 @@ public interface ISysLogService {
     SysLog getById(String id);
 
     /**
-     * Describe: 根据 operateName 查询日志
+     * Describe: 根据 operateName:操作人员名称 查询日志
      * Param: operateName
      * Return: 日志列表
      */

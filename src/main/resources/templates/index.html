@@ -1,153 +1,260 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+﻿﻿<!DOCTYPE html>
+<html lang="zh">
 <head>
-    <th:block th:include="common :: header('钗头凤 index 管理平台')"/>
-    <link href="admin/css/loader.css" rel="stylesheet"/>
-    <link href="admin/css/admin.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+    <title>不才才 bucaicai</title>
+    <meta name="description" content="95后青年，后端开发者，略懂前端, 学生，实习，缺乏社会的毒打">
+    <meta name="keywords" content="Java,Spring,个人博客，微信小程序，博客">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.fancybox@2.1.5/source/jquery.fancybox.css">
+    <script type="text/javascript">
+        if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+            alert('朋友，上古浏览器不支持呢~');
+        }
+    </script>
 </head>
-<!-- 结 构 代 码 -->
-<body class="layui-layout-body pear-admin">
-<!-- 布 局 框 架 -->
-<div class="layui-layout layui-layout-admin">
-    <!-- 顶 部 样 式 -->
-    <div class="layui-header">
-        <!-- 菜 单 顶 部 -->
-        <div class="layui-logo">
-            <!-- 图 标 -->
-            <img class="logo"></img>
-            <!-- 标 题 -->
-            <span class="title"></span>
-        </div>
-        <!-- 顶 部 左 侧 功 能 -->
-        <ul class="layui-nav layui-layout-left">
-            <li class="collaspe layui-nav-item"><a class="layui-icon layui-icon-shrink-right" href="#"></a></li>
-            <li class="refresh layui-nav-item"><a class="layui-icon layui-icon-refresh-1" href="#" loading=600></a></li>
-        </ul>
-        <!-- 多 系 统 菜 单 -->
-        <div class="layui-layout-control" id="control"></div>
-        <!-- 顶 部 右 侧 菜 单 -->
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item layui-hide-xs"><a class="fullScreen layui-icon layui-icon-screen-full"
-                                                        href="#"></a></li>
-            <li class="layui-nav-item layui-hide-xs"><a class="layui-icon layui-icon-website"
-                                                        href="http://www.pearadmin.com"></a></li>
-            <li class="layui-nav-item layui-hide-xs message"></li>
-            <li class="layui-nav-item user">
-                <!-- 头 像 -->
-                <a class="layui-icon layui-icon-username" href="javascript:;"></a>
-                <!-- 功 能 菜 单 -->
-                <dl class="layui-nav-child">
-                    <dd><a user-menu-id="5555" user-menu-title="基本资料" user-menu-url="/system/user/center">基本资料</a></dd>
-                    <dd><a class="logout" href="javascript:void(0);">注销登录</a></dd>
-                </dl>
-            </li>
-            <!-- 主 题 配 置 -->
-            <li class="layui-nav-item setting"><a class="layui-icon layui-icon-more-vertical" href="#"></a></li>
-        </ul>
-    </div>
-    <!-- 侧 边 区 域 -->
-    <div class="layui-side layui-bg-black">
-        <!-- 菜 单 顶 部 -->
-        <div class="layui-logo">
-            <!-- 图 标 -->
-            <img class="logo">
-            <!-- 标 题 -->
-            <span class="title"></span>
-        </div>
-        <!-- 菜 单 内 容 -->
-        <div class="layui-side-scroll">
-            <!--<div id="sideMenu"></div>-->
-            <div id="sideMenu" style="height: 100%;">
-                <div style="height:100%!important;" class="pear-side-scroll layui-side-scroll dark-theme">
-                    <ul lay-filter="sideMenu" class="layui-nav arrow   pear-menu layui-nav-tree pear-nav-tree">
-                        <li class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" menu-type="0" menu-id="1">
-                                <i class="layui-icon layui-icon-set-fill"></i>
-                                <span>系统管理</span><i class="layui-icon layui-icon-down layui-nav-more"></i></a>
-                            <dl class="layui-nav-child" style="height: auto;">
-                                <dd class="layui-nav-itemed layui-this">
-                                    <a class="site-demo-active" menu-type="1" menu-url="/system/user/main" menu-id="1322085079861690368" menu-title="用户管理" menu-icon="layui-icon layui-icon layui-icon layui-icon layui-icon-rate" href="javascript:;">
-                                    <i class="layui-icon layui-icon layui-icon layui-icon layui-icon-rate"></i>
-                                    <span>用户管理</span></a></dd>
-                                <dd><a class="site-demo-active" menu-type="1" menu-url="/system/file/main" menu-id="1304793451996381184" menu-title="文件管理" menu-icon="layui-icon layui-icon layui-icon-read" href="javascript:;">
-                                    <i class="layui-icon layui-icon layui-icon-read"></i>
-                                    <span>文件管理</span></a></dd>
-
-                            </dl>
-                        </li>
-
-                        <li class="layui-nav-item">
-                            <a href="javascript:;" menu-type="0" menu-id="694203021537574912">
-                                <i class="layui-icon  layui-icon-console"></i>
-                                <span>系统监控</span><i class="layui-icon layui-icon-down layui-nav-more"></i></a>
-                            <dl class="layui-nav-child">
-                                <dd class="">
-                                    <a class="site-demo-active" menu-type="1" menu-url="/system/online/main" menu-id="1330865171429588992" menu-title="在线用户" menu-icon="layui-icon layui-icon layui-icon-username" href="javascript:;">
-                                        <i class="layui-icon layui-icon layui-icon-username"></i>
-                                        <span>在线用户</span></a></dd>
-                                <dd class="">
-                                    <a class="site-demo-active" menu-type="1" menu-url="/schedule/job/main" menu-id="442650770626711552" menu-title="定时任务" menu-icon="layui-icon layui-icon layui-icon layui-icon  layui-icon-chat" href="javascript:;">
-                                        <i class="layui-icon layui-icon layui-icon layui-icon  layui-icon-chat"></i>
-                                        <span>定时任务</span></a></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
+<body>
+<div id="body-wrap">
+    <nav class="not_index_bg" id="nav" style="background-image:url(https://api.ixiaowai.cn/api/api.php)">
+        <div id="page_site-info">
+            <div id="site-title">
+                <span class="blogtitle"></span>
+                <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                <script>
+                    var typed = new Typed(".blogtitle", {
+                        strings: ['求知若饥，虚心若愚','Stay Hungry Stay Foolish'],
+                        startDelay: 300,
+                        typeSpeed: 100,
+                        loop: true,
+                        backSpeed: 50,
+                        showCursor: true
+                    });
+                </script>
             </div>
         </div>
-    </div>
-    <!-- 视 图 页 面 -->
-    <div class="layui-body">
-        <!-- 内 容 页 面 -->
-        <div id="content"></div>
-    </div>
-    <!-- 遮 盖 层 -->
-    <div class="pear-cover"></div>
-    <!-- 加 载 动 画 -->
-    <div class="loader-main">
-        <!-- 动 画 对 象 -->
-        <div class="loader"></div>
-    </div>
-</div>
-<!-- 移 动 端 便 捷 操 作 -->
-<div class="pear-collasped-pe collaspe">
-    <a class="layui-icon layui-icon-shrink-right" href="#"></a>
-</div>
-<!-- 依 赖 脚 本 -->
-<th:block th:include="common :: footer"/>
-<script th:inline="javascript">
-    layui.use(['admin', 'jquery', 'layer', 'popup'], function () {
-        let admin = layui.admin;
-        let $ = layui.jquery;
-        let layer = layui.layer;
-        let popup = layui.popup;
+    </nav>
+    <main id="content-outer">
+        <div class="layout_page" id="content-inner">
+            <div class="aside_content" id="aside_content">
+                <div class="card-widget card-info">
+                    <div class="card-content">
+                        <div class="card-info-avatar is-center">
+                            <img class="avatar-img" src="https://cdn.jsdelivr.net/gh/laoxuai/images/image/20200125221102.png" alt="avatar">
+                            <div class="author-info__name">Bucaicai</div>
+                            <div class="author-info__description">95后青年，后端开发者，略懂前端,学生，实习，缺乏社会的毒打</div>
+                        </div>
+                        <div class="card-info-social-icons is-center">
+                            <a class="social-icon" href="https://github.com/laoxuai" target="_blank">
+                                <i class="fa fa-github"></i>
+                            </a>
+                            <a class="social-icon" href="mailto:878006658@qq.com" target="_blank">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+								
+                <div class="card-widget card-announcement">
+                    <div class="card-content">
+                        <div class="item-headline">
+                            <i class="fa fa-bullhorn" aria-hidden="true"></i>
+                            <span>一言</span>
+                        </div>
+                        <div id="hitokoto"></div>
+                    </div>
+                </div>
+                <div class="card-widget card-announcement">
+                    <div class="card-content">
+                        <div class="item-headline">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span>今日诗词</span>
+                        </div>
+                        <div id="jinrishici-sentence"></div>
+                    </div>
+                </div>
 
-        // 框架初始化时会读取 根目录下 pear.config.yml 文件作为初始化配置
-        // 你可以通过 admin.setConfigPath 方法修改配置文件位置
-        // 你可以通过 admin.setConfigType 方法修改配置文件类型
-        admin.setConfigType("yml");
-        admin.setConfigPath("pear.config.yml");
-        admin.render();
+                <div class="card-widget card-webinfo">
+                    <div class="card-content">
+                        <div class="item-headline">
+                            <i class="fa fa-line-chart" aria-hidden="true"></i>
+                            <span>站点信息</span>
+                        </div>
+                        <div class="webinfo">
+                            <div class="webinfo-item">
+                                <div class="webinfo-site-uv-name">本站访客数 :</div>
+                                <div class="webinfo-site-uv-count" id="busuanzi_value_site_uv"></div>
+                            </div>
+                            <div class="webinfo-item">
+                                <div class="webinfo-site-name">本站总访问量 :</div>
+                                <div class="webinfo-site-pv-count" id="busuanzi_value_site_pv"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <article id="page">
+                <div class="article-container">
+                    <h2>听听音乐</h2>
+                    <meting-js
+                            server="netease"
+                            type="playlist"
+                            id="2181637930"
+                            mutex="true">
+                    </meting-js>
+                    <hr>
+                    
+					<h2>技能属性</h2>
+					<div class="skillbox">
+						<div class="skillbar">
+							<div class="skillbar-title" style="background: linear-gradient(to right, #FF0066 0%, #FF00CC 100%); width: 75%">
+								<span>Java</span>
+							</div>
+							<div class="skill-bar-percent">75%</div>
+						</div>
+						<div class="skillbar">
+							<div class="skillbar-title" style="background: linear-gradient(to right, #9900FF 0%, #CC66FF 100%); width: 40%">
+								<span>前端</span>
+							</div>
+							<div class="skill-bar-percent">40%</div>
+						</div>
+						<div class="skillbar">
+							<div class="skillbar-title" style="background: linear-gradient(to right, #2196F3 0%, #42A5F5 100%); width: 60%">
+								<span>Spring</span>
+							</div>
+							<div class="skill-bar-percent">60%</div>
+						</div>
+						<div class="skillbar">
+							<div class="skillbar-title" style="background: linear-gradient(to right, #00BCD4 0%, #80DEEA 100%); width: 70%">
+								<span>SpringMVC</span>
+							</div>
+							<div class="skill-bar-percent">70%</div>
+						</div>
+						<div class="skillbar">
+							<div class="skillbar-title" style="background: linear-gradient(to right, #4CAF50 0%, #81C784 100%); width: 60%">
+								<span>Mybatis</span>
+							</div>
+							<div class="skill-bar-percent">60%</div>
+						</div>
+						<div class="skillbar">
+							<div class="skillbar-title" style="background: linear-gradient(to right, #FFEB3B 0%, #FFF176 100%); width: 75%">
+								<span>数据结构与算法</span>
+							</div>
+							<div class="skill-bar-percent">75%</div>
+						</div>
+					</div>
 
-        // 注销实现
-        admin.logout(function () {
-            let loading = layer.load();
-            $.ajax({
-                url: '/logout',
-                dataType: 'json',
-                type: 'post',
-                success: function (result) {
-                    layer.close(loading);
-                    if (result.success) {
-                        popup.success(result.msg, function () {
-                            location.href = "/";
-                        });
-                        return true;
-                    }
-                }
-            })
-        })
-    })
+
+                    <hr>
+					<h2>刷题</h2>
+                    <div class="tool">
+                        <a href="https://leetcode-cn.com/problemset/all/" target="_blank">Leetcode</a><br>
+						<a href="https://www.nowcoder.com/ta/coding-interviews" target="_blank">剑指 Offer</a>				
+                    </div>
+					
+					<hr>
+                    <h2>工具</h2>
+                    <div class="tool">
+                        <a href="https://mdnice.com/" target="_blank">Markdown Nice</a><br>
+						<a href="http://lowcode.magicalcoder.com/" target="_blank">magicalcoder</a><br>
+						<a href="https://www.ssyer.com/" target="_blank">沙沙野</a><br>						
+						<a href="http://www.network-science.de/ascii/" target="_blank">ASCII Generator</a>						
+                    </div>
+                </div>
+            </article>
+         </div>
+    </main>
+    <footer id="footer">
+        <div id="footer-wrap">
+            <div class="copyright">&copy;2019 - 2020 BY Bucaicai</div>
+        </div>
+    </footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.fancybox@2.1.5/source/jquery.fancybox.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.js" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.0/lazysizes.min.js" async></script>
+<!-- aplayer、meting -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<!--   一言、今日诗词   -->
+<script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script>
+<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+<!--鼠标点击效果-->
+<script src="https://cdn.jsdelivr.net/gh/TRHX/CDN-for-itrhx.com@3.0.8/js/maodian.js"></script>
+    
+<script type="text/javascript">
+    console.clear();
+    console.log("%c 有朋自远方来, 不亦说乎.", "background:#24272A; color:#ffffff", "");
+    console.log("%c Github %c", "background:#24272A; color:#ffffff", "", "https://github.com/laoxuai");
+    console.log("%c 版本号: %c", "background:#24272A; color:#ffffff", "", "1.0.0");
+
+
+(function($){
+	$.fn.snow = function(options){
+	var $flake = $('<div id="snowbox" />').css({'position': 'absolute','z-index':'9999', 'top': '-50px'}).html('&#10052;'),
+	documentHeight 	= $(document).height(),
+	documentWidth	= $(document).width(),
+	defaults = {
+		minSize		: 10,
+		maxSize		: 20,
+		newOn		: 1000,
+		flakeColor	: "#AFDAEF" /* 此处可以定义雪花颜色，若要白色可以改为#FFFFFF */
+	},
+	options	= $.extend({}, defaults, options);
+	var interval= setInterval( function(){
+	var startPositionLeft = Math.random() * documentWidth - 100,
+	startOpacity = 0.5 + Math.random(),
+	sizeFlake = options.minSize + Math.random() * options.maxSize,
+	endPositionTop = documentHeight - 200,
+	endPositionLeft = startPositionLeft - 500 + Math.random() * 500,
+	durationFall = documentHeight * 10 + Math.random() * 5000;
+	$flake.clone().appendTo('body').css({
+		left: startPositionLeft,
+		opacity: startOpacity,
+		'font-size': sizeFlake,
+		color: options.flakeColor
+	}).animate({
+		top: endPositionTop,
+		left: endPositionLeft,
+		opacity: 0.2
+	},durationFall,'linear',function(){
+		$(this).remove()
+	});
+	}, options.newOn);
+    };
+})(jQuery);
+$(function(){
+    $.fn.snow({ 
+	    minSize: 5, /* 定义雪花最小尺寸 */
+	    maxSize: 50,/* 定义雪花最大尺寸 */
+	    newOn: 800  /* 定义密集程度，数字越小越密集 */
+    });
+});
+
+// 浏览器搞笑标题
+var OriginTitle = document.title;
+var titleTime;
+document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+        // $('[rel="icon"]').attr('href', "/funny.ico");
+        document.title = '╭(°A°`)╮ 页面崩溃啦 ~';
+        clearTimeout(titleTime);
+    }
+    else {
+        $('[rel="icon"]').attr('href', "/favicon.ico");
+        document.title = '(ฅ>ω<*ฅ) 噫又好啦 ~' + OriginTitle;
+        titleTime = setTimeout(function () {
+            document.title = OriginTitle;
+        }, 2000);
+    }
+});
 </script>
 </body>
 </html>

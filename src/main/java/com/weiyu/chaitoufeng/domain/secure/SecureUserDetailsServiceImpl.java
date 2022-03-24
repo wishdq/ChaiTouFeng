@@ -1,4 +1,4 @@
-package com.weiyu.chaitoufeng.secure.domain;
+package com.weiyu.chaitoufeng.domain.secure;
 
 import com.weiyu.chaitoufeng.domain.system.SysPower;
 import com.weiyu.chaitoufeng.domain.system.SysUser;

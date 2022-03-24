@@ -27,8 +27,6 @@ public class MySecurePermission implements PermissionEvaluator {
 
     /**
      * Describe: 自定义 Security 权限认证 @hasPermission
-     * Param: Authentication
-     * Return Boolean
      */
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {

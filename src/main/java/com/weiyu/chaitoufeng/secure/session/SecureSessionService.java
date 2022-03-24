@@ -1,8 +1,8 @@
 package com.weiyu.chaitoufeng.secure.session;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.weiyu.chaitoufeng.common.session.HttpSessionContextHolder;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
-import org.activiti.engine.impl.util.CollectionUtil;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 

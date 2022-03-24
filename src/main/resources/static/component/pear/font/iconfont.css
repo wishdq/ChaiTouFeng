@@ -45,6 +45,10 @@
     content: "\e693";
 }
 
+.pear-icon-resetPassword:before {
+    content: "\e683";
+}
+
 .pear-icon-eye-close:before {
     content: "\e694";
 }

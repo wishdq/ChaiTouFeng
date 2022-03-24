@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class SysOnlineController extends BaseController {
             sysOnlineUser.setUsername(objs.getUsername());
             sysOnlineUser.setRealName(objs.getRealName());
             sysOnlineUser.setLastTime(objs.getLastTime());
+            System.out.println(objs.getLastTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             sysOnlineUser.setOnlineTime(Duration.between(objs.getLastTime(), LocalDateTime.now()).toMinutes() + "分钟");
             onlineUser.add(sysOnlineUser);
         }

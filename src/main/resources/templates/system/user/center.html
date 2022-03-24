@@ -2,11 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="common :: header('个人中心')"/>
-    <link href="../../admin/css/other/center.css" rel="stylesheet"/>
+    <th:block th:include="common :: scorlling ('#self-remark')"/>
+    <link th:href="@{/admin/css/other/center.css}" href="../../admin/css/other/center.css" rel="stylesheet"/>
     <style>
         .layui-form-item {
             margin-top: 17px !important;
             margin-bottom: 17px !important;
+        }
+        #self-remark-card{
+            padding: 15px;
+            height: 154px;
+        }
+        #self-remark{
+            height: 106px;
+            padding: 6px;
+            border-top: 1px whitesmoke solid;
+            line-height: 25px;
+            color: darkcyan;
+            font-size: 14px;
+            text-indent: 2em;
+            overflow: auto;
         }
     </style>
 </head>
@@ -23,18 +38,21 @@
                     <p style="padding-top: 8px;margin-top: 10px;font-size: 13.5px;">China ， 中国</p>
                 </div>
             </div>
-            <div style="height: 45px;border-top: 1px whitesmoke solid;text-align: center;line-height: 45px;font-size: 13.5px;">
-                <span th:text="${userInfo.remark}">今日事 ，今日毕</span>
+            <div id="self-remark-card">
+                <div id="self-remark">
+                    <span th:text="${userInfo.remark}">今日事 ，今日毕</span>
+                </div>
             </div>
         </div>
         <div class="layui-card">
             <div class="layui-card-header">
                 登录记录
             </div>
-            <div class="layui-card-body">
+            <div class="layui-card-body" style="height: 425px">
                 <ul class="list">
-                    <li class="list-item" th:each="log:${logs}"><span class="title" th:text="${log.title}"></span><span
-                            class="footer" th:text="${log.createTime}"></span></li>
+                    <li class="list-item" th:each="log:${logs}">
+                        <span class="title" th:text="${log.title}"></span>
+                        <span class="footer" th:text="${log.createTime}"></span></li>
                 </ul>
             </div>
         </div>
@@ -55,41 +73,47 @@
                                                placeholder="请输入标题" th:value="${userInfo.userId}" type="text">
                                     </div>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">账号</label>
+                                <div class="layui-form-item layui-inline">
+                                    <label class="layui-form-label">账&emsp;号:</label>
                                     <div class="layui-input-block">
+                                        <!--readonly-->
                                         <input autocomplete="off" class="layui-input" lay-verify="title" name="username"
-                                               placeholder="请输入标题"
-                                               readonly th:value="${userInfo.username}" type="text">
+                                               placeholder="请输入账号"
+                                                th:value="${userInfo.username}" type="text">
                                     </div>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">姓名</label>
+                                <div class="layui-form-item layui-inline">
+                                    <label class="layui-form-label">姓&emsp;名:</label>
                                     <div class="layui-input-block">
                                         <input autocomplete="off" class="layui-input" lay-verify="title"
                                                name="realName"
-                                               placeholder="请输入标题" th:value="${userInfo.realName}" type="text">
+                                               placeholder="请输入姓名" th:value="${userInfo.realName}" type="text"
+                                               >
                                     </div>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">邮箱</label>
+                                <br>
+
+                                <div class="layui-form-item layui-inline">
+                                    <label class="layui-form-label">邮&emsp;箱:</label>
                                     <div class="layui-input-block">
                                         <input autocomplete="off" class="layui-input" lay-verify="title" name="email"
-                                               placeholder="请输入标题" th:value="${userInfo.email}" type="text">
+                                               placeholder="请输入邮箱" th:value="${userInfo.email}" type="text">
                                     </div>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">电话</label>
+                                <div class="layui-form-item layui-inline">
+                                    <label class="layui-form-label">电&emsp;话:</label>
                                     <div class="layui-input-block">
                                         <input autocomplete="off" class="layui-input" lay-verify="title" name="phone"
-                                               placeholder="请输入标题" th:value="${userInfo.phone}" type="text">
+                                               placeholder="请输入电话" th:value="${userInfo.phone}" type="text"
+                                               >
                                     </div>
                                 </div>
                                 <div class="layui-form-item layui-form-text">
-                                    <label class="layui-form-label">描述</label>
+                                    <label class="layui-form-label">描&emsp;述:</label>
                                     <div class="layui-input-block">
-                                        <textarea class="layui-textarea" name="details" placeholder="请输入描述"
-                                                  th:text="${userInfo.remark}"></textarea>
+                                        <textarea class="layui-textarea" name="remark" placeholder="请输入个人描述"
+                                                  th:text="${userInfo.remark}"
+                                                  maxlength="300" show-word-limit></textarea>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -182,20 +206,24 @@
     </div>
 </div>
 <th:block th:include="common :: footer"/>
-<script th:inline="javascript">
-    layui.use(['element', 'jquery', 'layer', 'form', 'convert'], function () {
+<script >
+    layui.use(['element', 'jquery', 'layer', 'form', 'convert', 'inputAttr'], function () {
         let $ = layui.jquery;
         let layer = layui.layer;
         let form = layui.form;
         let convert = layui.convert;
+        let inputAttr = layui.inputAttr;
+
+        inputAttr.render();
 
         $(".edit-password").click(function () {
+            let userId = $('[name="userId"]').val().trim();
             layer.open({
                 type: 2,
                 title: '修改密码',
                 shade: 0.1,
-                area: ['550px', '280px'],
-                content: '/system/user/editPassword'
+                area: ['400px', '250px'],
+                content: '/system/user/editPassword?userId=' + userId,
             });
             return false;
         })

@@ -1,9 +1,9 @@
 package com.weiyu.chaitoufeng.secure.session;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.weiyu.chaitoufeng.common.session.HttpSessionContextHolder;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import lombok.extern.slf4j.Slf4j;
-import org.activiti.engine.impl.util.CollectionUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.core.session.SessionInformation;

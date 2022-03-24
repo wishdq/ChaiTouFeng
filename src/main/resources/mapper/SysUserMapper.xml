@@ -202,11 +202,17 @@
             <if test="deptId!=null and deptId!=''">
                 dept_id = #{deptId},
             </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark},
+            </if>
             <if test="lastTime!=null">
                 last_time = #{lastTime},
             </if>
             <if test="avatar!=null">
                 avatar = #{avatar},
+            </if>
+            <if test="login!=null and login!=''">
+                login = #{login},
             </if>
         </set>
         where user_id = #{userId}

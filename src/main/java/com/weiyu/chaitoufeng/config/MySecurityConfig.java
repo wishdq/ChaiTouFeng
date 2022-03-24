@@ -4,7 +4,10 @@ import com.weiyu.chaitoufeng.config.property.SecurityProperty;
 import com.weiyu.chaitoufeng.secure.*;
 import com.weiyu.chaitoufeng.secure.handler.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -102,12 +105,23 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private SecureSessionExpiredHandler securityExpiredSessionHandler;
 
+    // 身份认证实现
+    @Bean
+    public AuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(securityUserDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
+        return daoAuthenticationProvider;
+    }
+
     /**
      * 身份认证接口
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(securityUserDetailsService).passwordEncoder(passwordEncoder);
+        auth.authenticationProvider(daoAuthenticationProvider());
+        //auth.userDetailsService(securityUserDetailsService).passwordEncoder(passwordEncoder);
     }
 
     /**
@@ -116,6 +130,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/admin").authenticated()
                 .antMatchers(securityProperty.getOpenApi()).permitAll()
                 // 其他的需要登录后才能访问
                 .anyRequest().authenticated()

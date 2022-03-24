@@ -12,24 +12,16 @@ import java.io.Serializable;
 @Data
 public class ResultTable implements Serializable {
 
-    /**
-     * 状态码
-     */
+    // 状态码
     private Integer code;
 
-    /**
-     * 提示消息
-     */
+    // 提示消息
     private String msg;
 
-    /**
-     * 消息总量
-     */
+    // 消息总量
     private Long count;
 
-    /**
-     * 数据对象
-     */
+    // 数据对象
     private Object data;
 
     /**

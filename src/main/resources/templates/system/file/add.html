@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="common :: header('文件新增')"/>
+    <th:block th:include="common :: header('文件上传')"/>
 </head>
 <body>
 <form action="javascript:void(0);" class="layui-form">
     <div class="mainBox">
         <div class="main-container">
             <div class="layui-upload">
-                <button class="layui-btn layui-btn-normal" id="testList" type="button">选择多文件</button>
+                <button class="pear-btn pear-btn-primary pear-btn-sm" id="btn-select-file" type="button">选择多文件</button>
                 <div class="layui-upload-list">
                     <table class="layui-table">
                         <thead>
@@ -18,7 +18,7 @@
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <tbody id="demoList"></tbody>
+                        <tbody id="fileList"></tbody>
                     </table>
                 </div>
             </div>
@@ -26,7 +26,7 @@
     </div>
     <div class="bottom">
         <div class="button-container">
-            <button class="pear-btn pear-btn-primary pear-btn-sm" id="testListAction" type="submit">
+            <button class="pear-btn pear-btn-primary pear-btn-sm" id="fileSubmit" type="submit">
                 <i class="layui-icon layui-icon-ok"></i>
                 提交
             </button>
@@ -46,42 +46,53 @@
 
         let layerIndex;
 
-        let demoListView = $('#demoList')
+        let fileListView = $('#fileList')
             , uploadListIns = upload.render({
-            elem: '#testList'
+            elem: '#btn-select-file'
             , url: '/system/file/upload' //改成您自己的上传接口
             , accept: 'file'
             , method: 'post'
             , multiple: true
+            // 设置文件最大可允许上传的大小，单位 KB 0（即不限制）
+            // , size: 1024*5 //最大允许上传的文件大小
+            // , exts: 'jpg|png|gif|bmp|jpeg' //允许上传的文件后缀
             , auto: false
-            , bindAction: '#testListAction'
+            , bindAction: '#fileSubmit'
             , choose: function (obj) {
+                //将每次选择的文件追加到文件队列
                 let files = this.files = obj.pushFile();
+                //file得到文件对象   //index得到文件索引
                 obj.preview(function (index, file) {
                     let tr = $(['<tr id="upload-' + index + '">'
                         , '<td>' + file.name + '</td>'
-                        , '<td>' + (file.size / 1024).toFixed(1) + 'kb</td>'
+                        , '<td>' + renderSize(file.size) + '</td>'
                         , '<td>'
-                        , '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
-                        , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                        , '<button class="layui-btn layui-btn-xs file-reload layui-hide">重传</button>'
+                        , '<button class="layui-btn layui-btn-xs layui-btn-danger file-delete">删除</button>'
                         , '</td>'
                         , '</tr>'].join(''));
 
-                    tr.find('.demo-reload').on('click', function () {
+                    tr.find('.file-reload').on('click', function () {
                         obj.upload(index, file);
                     });
 
-                    tr.find('.demo-delete').on('click', function () {
+                    $('[type="reset"]').click(function () {
+                        delete files[index];
+                        tr.remove();
+                    })
+
+                    tr.find('.file-delete').on('click', function () {
                         delete files[index];
                         tr.remove();
                         uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
                     });
-                    demoListView.append(tr);
+
+                    fileListView.append(tr);
                 });
             }
             , done: function (res, index, upload) {
                 if (res.success) {
-                    let tr = demoListView.find('tr#upload-' + index)
+                    let tr = fileListView.find('tr#upload-' + index)
                         , tds = tr.children();
                     tds.eq(2).html('&nbsp;<button class="layui-btn layui-btn-xs">完成</button>'); //清空操作
                     return delete this.files[index];
@@ -89,9 +100,9 @@
                 this.error(index, upload);
             }
             , error: function (index) {
-                let tr = demoListView.find('tr#upload-' + index)
+                let tr = fileListView.find('tr#upload-' + index)
                     , tds = tr.children();
-                tds.eq(2).find('.demo-reload').removeClass('layui-hide');
+                tds.eq(2).find('.file-reload').removeClass('layui-hide');
             }
             , allDone: function () {
                 layer.close(layerIndex);
@@ -105,6 +116,20 @@
             }
         });
     })
+
+
+    function renderSize(filesize){
+        if(null==filesize||filesize===''){
+            return "0 B";
+        }
+        let unitArr = ["B","KB","MB","GB"];
+        let index = 0;
+        let srcSize = parseFloat(filesize);
+        index = Math.floor(Math.log(srcSize)/Math.log(1024));
+        let size = srcSize/Math.pow(1024,index);
+        size=size.toFixed(1);//保留的小数位数
+        return size+' '+unitArr[index];
+    }
 </script>
 <script>
 </script>

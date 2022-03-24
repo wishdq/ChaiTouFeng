@@ -1,4 +1,4 @@
-package com.weiyu.chaitoufeng.domain.system;
+package com.weiyu.chaitoufeng.domain.base;
 
 import lombok.Data;
 import org.springframework.security.core.CredentialsContainer;

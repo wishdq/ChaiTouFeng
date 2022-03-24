@@ -8,56 +8,56 @@
     <div class="mainBox">
         <div class="main-container">
             <div class="main-container">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">账号</label>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">用户名:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="username" placeholder="请输入标题"
-                               type="text">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="username" placeholder="请输入用户名"
+                               type="text" maxlength="20" show-word-limit >
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">密&emsp;码:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="password" placeholder="请输入用户密码"
+                               type="text" maxlength="20" show-word-limit>
+                    </div>
+                </div>
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">邮&emsp;箱:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="email" placeholder="请输入用户邮箱"
+                               type="text" maxlength="30" clearable >
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">姓&emsp;名:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="realName" placeholder="请输入用户姓名"
+                               type="text" maxlength="10" show-word-limit>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">电&emsp;话:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="phone" placeholder="请输入用户手机号"
+                               type="text" maxlength="11" show-word-limit>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">姓名</label>
+                    <label class="layui-form-label">性&emsp;别:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="realName" placeholder="请输入标题"
-                               type="text">
+                        <input name="sex" title="男" type="radio" value="1">
+                        <input checked name="sex" title="女" type="radio" value="0">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">邮箱</label>
-                    <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" name="email" placeholder="请输入标题"
-                               type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
-                    <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="password" placeholder="请输入标题"
-                               type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">电话</label>
-                    <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" name="phone" placeholder="请输入标题"
-                               type="text">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">性别</label>
-                    <div class="layui-input-block">
-                        <input name="sex" title="男" type="radio" value="0">
-                        <input checked name="sex" title="女" type="radio" value="1">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">部门</label>
+                    <label class="layui-form-label">部&emsp;门:</label>
                     <div class="layui-input-block">
                         <ul class="dtree" data-id="0" id="selectParent" name="deptId"></ul>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">角色</label>
+                    <label class="layui-form-label">角&emsp;色:</label>
                     <div class="layui-input-block">
                         <input lay-skin="primary" name="roleIds" th:each="sysRole:${sysRoles}"
                                th:title="${sysRole.roleName}" th:value="${sysRole.roleId}" type="checkbox">
@@ -81,10 +81,13 @@
 </form>
 <th:block th:include="common :: footer"/>
 <script>
-    layui.use(['form', 'jquery', 'dtree'], function () {
+    layui.use(['form', 'jquery', 'dtree', 'inputAttr'], function () {
         let form = layui.form;
         let $ = layui.jquery;
         let dtree = layui.dtree;
+        let inputAttr = layui.inputAttr;
+
+        inputAttr.render();
 
         dtree.renderSelect({
             elem: "#selectParent",
@@ -125,8 +128,6 @@
             return false;
         });
     })
-</script>
-<script>
 </script>
 </body>
 </html>

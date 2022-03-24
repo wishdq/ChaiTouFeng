@@ -37,6 +37,7 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.1</version>
         </dependency>
+        <!--自定义的类和配置文件绑定一般没有提示。-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -149,10 +150,22 @@
             <version>1.4.1</version>
         </dependency>
 
+        <!--<dependency>-->
+        <!--    <groupId>org.activiti</groupId>-->
+        <!--    <artifactId>activiti-engine</artifactId>-->
+        <!--    <version>7-201802-EA</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-engine</artifactId>
-            <version>7-201802-EA</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>2.6.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
         </dependency>
 
     </dependencies>

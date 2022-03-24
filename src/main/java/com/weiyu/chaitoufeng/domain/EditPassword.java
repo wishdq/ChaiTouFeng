@@ -10,19 +10,16 @@ import lombok.Data;
 @Data
 public class EditPassword {
 
-    /**
-     * 旧密码
-     */
+    // 要修改的用户id
+    private String userId;
+
+    // 旧密码
     private String oldPassword;
 
-    /**
-     * 新密码
-     */
+    // 新密码
     private String newPassword;
 
-    /**
-     * 确认密码
-     */
+    // 确认密码
     private String confirmPassword;
 
 }

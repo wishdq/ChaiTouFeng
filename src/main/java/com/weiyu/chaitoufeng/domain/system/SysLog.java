@@ -23,98 +23,60 @@ import java.util.Map;
 @AllArgsConstructor
 public class SysLog {
 
-    /**
-     * 编号
-     */
+    //编号
     private String id;
 
-    /**
-     * 标题
-     */
+    //标题
     private String title;
 
-    /**
-     * 描述
-     */
+    //描述
     private String description;
 
-    /**
-     * 业务类型
-     */
+    //业务类型
     private BusinessType businessType;
 
-    /**
-     * 请求方式
-     */
+    //请求方式
     private RequestMethod requestMethod;
 
-    /**
-     * 请求的方法
-     */
+    //请求的方法
     private String method;
 
-    /**
-     * 请求的连接
-     */
+    //请求的连接
     private String operateUrl;
 
-    /**
-     * 用户 IP 地址
-     */
+    //用户 IP 地址
     private String operateAddress;
 
-    /**
-     * 请 求 参 数
-     */
+    //请 求 参 数
     private String requestParam;
 
-    /**
-     * 获 取 请 求 体
-     */
+    //获 取 请 求 体
     private String requestBody;
 
-    /**
-     * 接 口 响 应 数 据
-     */
+    //接 口 响 应 数 据
     private String responseBody;
 
-    /**
-     * 接 口 执 行 状 态
-     */
+    //接 口 执 行 状 态
     private boolean success;
 
-    /**
-     * 日 志 类 型
-     */
+    //日 志 类 型
     private LoggingType loggingType;
 
-    /**
-     * 异 常 信 息
-     */
+    //异 常 信 息
     private String errorMsg;
 
-    /**
-     * 使用浏览器
-     */
+    //使用浏览器
     private String browser;
 
-    /**
-     * 操作系统
-     */
+    //操作系统
     private String systemOs;
 
-    /**
-     * 操 作 时 间
-     */
+    //操 作 时 间
     private LocalDateTime createTime;
 
-    /**
-     * 操 作 人 员 名 称
-     */
+    //操 作 人 员 名 称
     private String operateName;
 
-    /**
-     * 扩 展 信 息
-     */
+    //扩 展 信 息
     private Map<String, String> map = new HashMap<>();
 }

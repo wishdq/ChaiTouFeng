@@ -12,19 +12,13 @@ import java.io.Serializable;
 @Data
 public class ResultTree implements Serializable {
 
-    /**
-     * 状态信息
-     */
+    // 状态信息
     private Status status = new Status();
 
-    /**
-     * 返回数据
-     */
+    // 返回数据
     private Object data;
 
-    /**
-     * 所需内部类
-     */
+    //  状态信息所需内部类
     @Data
     public class Status {
 

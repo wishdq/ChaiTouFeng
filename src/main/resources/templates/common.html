@@ -11,9 +11,36 @@
     <meta content="" name="description">
     <title th:text="${title}"></title>
     <link rel="stylesheet" th:href="@{/component/pear/css/pear.css}">
-</head>
+    <style>
+        .layui-form-item{
+            margin-top: 4px;
+            margin-bottom: 4px;
 
+        }
+        .layui-card-body{
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+    </style>
+</head>
 <body>
+
+<p th:fragment="scorlling (type)">
+    <style>
+        ${type}::-webkit-scrollbar{
+            height: 8px;
+            width: 8px;
+        }
+        ${type}::-webkit-scrollbar-corner{
+            background-color: transparent;
+        }
+        ${type}::-webkit-scrollbar-thumb{
+            background-color: #639b8f;
+            background-image: -webkit-linear-gradient( 45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
+            border-radius: 2em;
+        }
+    </style>
+</p>
 
 <div th:fragment="footer">
 <!--通用 JAVASCRIPT -->

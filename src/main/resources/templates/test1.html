@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>layout 管理系统大布局 - Layui</title>
+  <link rel="stylesheet" href="../static/component/layui/css/layui.css">
+  <link rel="stylesheet" href="../static/component/pear/css/pear.css">
+  <!--<script src="../static/component/pear/pear.js"></script>-->
+</head>
+<body>
+<!--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">-->
+<!--  <legend>简洁风格的Tab</legend>-->
+<!--</fieldset>-->
+
+<!--<div class="layui-tab layui-tab-brief" lay-filter="systemConfig">-->
+<!--  <ul class="layui-tab-title">-->
+<!--    &lt;!&ndash;点击该Tab的任一标题，观察地址栏变化，再刷新页面。选项卡将会自动定位到上一次切换的项&ndash;&gt;-->
+<!--    <li lay-id="1" class="layui-this" >网站设置</li>-->
+<!--    <li lay-id="2">用户管理</li>-->
+<!--    <li lay-id="3">权限分配</li>-->
+<!--    <li lay-id="4">商品管理</li>-->
+<!--    <li lay-id="5">订单管理</li>-->
+<!--  </ul>-->
+<!--  <div class="layui-tab-content" style="height: 100px;">-->
+<!--    <div class="layui-tab-item layui-show">内容不一样是要有，因为你可以监听tab事件（阅读下文档就是了）</div>-->
+<!--    <div class="layui-tab-item">内容2</div>-->
+<!--    <div class="layui-tab-item">内容3</div>-->
+<!--    <div class="layui-tab-item">内容4</div>-->
+<!--    <div class="layui-tab-item">内容5</div>-->
+<!--  </div>-->
+<!--</div>-->
+<div style="width: 800px;height: 800px">
+  <form action="javascript:void(0);" class="layui-form">
+    <div class="mainBox">
+      <div class="main-container">
+        <div class="layui-upload">
+          <button class="pear-btn pear-btn-primary pear-btn-sm" id="btn-select-file" type="button">选择多文件</button>
+          <div class="layui-upload-list">
+            <table class="layui-table">
+              <thead>
+              <tr>
+                <th>文件名</th>
+                <th>大小</th>
+                <th>操作</th>
+              </tr>
+              </thead>
+              <tbody id="fileList"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="button-container">
+        <button class="pear-btn pear-btn-primary pear-btn-sm" id="fileSubmit" type="submit">
+          <i class="layui-icon layui-icon-ok"></i>
+          提交
+        </button>
+        <button class="pear-btn pear-btn-sm" type="reset">
+          <i class="layui-icon layui-icon-refresh"></i>
+          重置
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="../static/component/layui/layui.js"></script>
+<script>
+  layui.use(['form', 'jquery', 'upload', 'layer'], function () {
+    let upload = layui.upload;
+    let $ = layui.jquery;
+    let layer = layui.layer;
+
+    let layerIndex;
+
+    let fileListView = $('#fileList')
+            , uploadListIns = upload.render({
+      elem: '#btn-select-file'
+      , url: '/system/file/upload' //改成您自己的上传接口
+      , accept: 'file'
+      , method: 'post'
+      , multiple: true
+      // 设置文件最大可允许上传的大小，单位 KB 0（即不限制）
+      // , size: 1024*5 //最大允许上传的文件大小
+      // , exts: 'jpg|png|gif|bmp|jpeg' //允许上传的文件后缀
+      , auto: false
+      , bindAction: '#fileSubmit'
+      , choose: function (obj) {
+          //将每次选择的文件追加到文件队列
+          let files = this.files = obj.pushFile();
+          //file得到文件对象   //index得到文件索引
+          obj.preview(function (index, file) {
+            console.log(index); //得到文件索引
+            let tr = $(['<tr id="upload-' + index + '">'
+              , '<td>' + file.name + '</td>'
+              , '<td>' + renderSize(file.size) + '</td>'
+              , '<td>'
+              , '<button class="layui-btn layui-btn-xs file-reload layui-hide">重传</button>'
+              , '<button class="layui-btn layui-btn-xs layui-btn-danger file-delete">删除</button>'
+              , '</td>'
+              , '</tr>'].join(''));
+
+            tr.find('.file-reload').on('click', function () {
+              obj.upload(index, file);
+            });
+
+            $('[type="reset"]').click(function () {
+                // for (let indexKey in index) {
+                //     console.log(indexKey)
+                // }
+              console.log(index)
+              delete files[index];
+              tr.remove();
+              console.log(index)
+              // // console.log(index[0])
+              // console.log(index)
+              // console.log(tr.find('.file-delete'))
+              // tr.find('.file-delete').each(function (index) {
+              //   console.log(index)
+              // })
+            })
+
+            tr.find('.file-delete').on('click', function () {
+              console.log(index)
+              console.log(uploadListIns.config.files)
+              // console.log(files)
+              // console.log(files)
+              delete files[index];
+              // console.log(files)
+              tr.remove();
+              // console.log(uploadListIns.config.elem.next()[0].value)
+              uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+            });
+
+            fileListView.append(tr);
+          });
+      }
+      , done: function (res, index, upload) {
+        if (res.success) {
+          let tr = fileListView.find('tr#upload-' + index)
+                  , tds = tr.children();
+          tds.eq(2).html('&nbsp;<button class="layui-btn layui-btn-xs">完成</button>'); //清空操作
+          return delete this.files[index];
+        }
+        this.error(index, upload);
+      }
+      , error: function (index) {
+        let tr = fileListView.find('tr#upload-' + index)
+                , tds = tr.children();
+        tds.eq(2).find('.file-reload').removeClass('layui-hide');
+      }
+      , allDone: function () {
+        layer.close(layerIndex);
+        layer.msg("上传完成", {icon: 1, time: 1200}, function () {
+          parent.layer.close(parent.layer.getFrameIndex(window.name));
+          parent.layui.table.reload("file-table");
+        })
+      },
+      before: function () {
+        layerIndex = layer.load();
+      }
+    });
+
+    // $('[type="reset"]').click(function () {
+    //   // delete files[1];
+    //   // tr.remove();
+    //   // console.log(uploadListIns)
+    //   // console.log(uploadListIns.config.elem.next()[0].value)
+    //   // console.log(uploadListIns)
+    //   console.log(uploadListIns.config.files)
+    //   for (let i = 0; i < uploadListIns.config; i++) {
+    //     console.log(1)
+    //   }
+      // for (let indexKey in uploadListIns) {
+      //   console.log(indexKey)
+      //   if (indexKey != null){
+      //     console.log(indexKey)
+      //     for (let indexKeyKey in indexKey) {
+      //       console.log(indexKeyKey)
+      //     }
+      //   }
+      // }
+    // })
+  })
+
+
+
+
+  function renderSize(filesize){
+    if(null==filesize||filesize===''){
+      return "0 B";
+    }
+    let unitArr = ["B","KB","MB","GB"];
+    let index = 0;
+    let srcSize = parseFloat(filesize);
+    index = Math.floor(Math.log(srcSize)/Math.log(1024));
+    let size = srcSize/Math.pow(1024,index);
+    size=size.toFixed(1);//保留的小数位数
+    return size+' '+unitArr[index];
+  }
+</script>
+<script>
+  layui.use('element', function(){
+    var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+    //触发事件
+    var active = {
+      tabAdd: function(){
+        //新增一个Tab项
+        element.tabAdd('demo', {
+          title: '新选项'+ (Math.random()*1000|0) //用于演示
+          ,content: '内容'+ (Math.random()*1000|0)
+          ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+        })
+      }
+      ,tabDelete: function(othis){
+        //删除指定Tab项
+        element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+        othis.addClass('layui-btn-disabled');
+      }
+      ,tabChange: function(){
+        //切换到指定Tab项
+        element.tabChange('demo', '22'); //切换到：用户管理
+      }
+    };
+
+    $('.site-demo-active').on('click', function(){
+      var othis = $(this), type = othis.data('type');
+      active[type] ? active[type].call(this, othis) : '';
+    });
+
+    //Hash地址的定位
+    var layid = location.hash.replace(/^#test=/, '');
+    element.tabChange('test', layid);
+
+    element.on('tab(systemConfig)', function(elem){
+      location.hash = 'test='+ $(this).attr('lay-id');
+    });
+
+  });
+</script>
+<!--<script>-->
+<!--  -->
+<!--  layui.use(['element', 'layer', 'util'],function () {-->
+<!--    var element = layui.element-->
+<!--            ,layer = layui.layer-->
+<!--            ,util = layui.util-->
+<!--            ,$ = layui.$;-->
+
+<!--    $('#btn').click(-->
+<!--            function (){-->
+<!--              layer.msg('<p style="float: left;color: #faa633">提示:</p><br>&emsp;&emsp;密码长度不能少于5位', {-->
+<!--                time: 20000, //20s后自动关闭-->
+<!--                btn: ['了解'],-->
+<!--              });-->
+
+<!--            })-->
+<!--  })-->
+<!--</script>-->
+</body>
+</html>

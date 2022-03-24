@@ -16,7 +16,6 @@ public class ResultController {
 
     /**
      * Describe: 返回 Tree 数据
-     * Param data
      * Return Tree数据
      */
     protected static ResultTree dataTree(Object data) {
@@ -27,7 +26,6 @@ public class ResultController {
 
     /**
      * Describe: 返回数据表格数据 分页
-     * Param data
      * Return 表格分页数据
      */
     public static ResultTable pageTable(Object data, long count) {
@@ -36,7 +34,6 @@ public class ResultController {
 
     /**
      * Describe: 返回数据表格数据
-     * Param data
      * Return 表格分页数据
      */
     protected static ResultTable dataTable(Object data) {
@@ -45,7 +42,6 @@ public class ResultController {
 
     /**
      * Describe: 返回树状表格数据 分页
-     * Param data
      * Return 表格分页数据
      */
     protected static ResultTable treeTable(Object data) {
@@ -59,30 +55,18 @@ public class ResultController {
         return Result.success();
     }
 
-    /**
-     * 成功操作
-     */
     public Result success(String msg) {
         return Result.success(msg);
     }
 
-    /**
-     * 成功操作
-     */
     public Result success(Object data) {
         return Result.success(data);
     }
 
-    /**
-     * 成功操作
-     */
     public Result success(String msg, Object data) {
         return Result.success(msg, data);
     }
 
-    /**
-     * 成功操作
-     */
     public Result success(int code, String message, Object data) {
         return Result.success(code, message, data);
     }
@@ -94,23 +78,14 @@ public class ResultController {
         return Result.failure();
     }
 
-    /**
-     * 失败操作
-     */
     public Result failure(String msg) {
         return Result.failure(msg);
     }
 
-    /**
-     * 失败操作
-     */
     public Result failure(String msg, Object data) {
         return Result.failure(msg, data);
     }
 
-    /**
-     * 失败操作
-     */
     public Result failure(int code, String msg, Object data) {
         return Result.failure(code, msg, data);
     }
@@ -122,16 +97,10 @@ public class ResultController {
         return Result.decide(b);
     }
 
-    /**
-     * 选择返回
-     */
     public Result decide(Boolean b, String success, String failure) {
         return Result.decide(b, success, failure);
     }
 
-    /**
-     * 选择返回
-     */
     public Result decide(int result) {
         if (result > 0) {
             return Result.decide(true);
@@ -140,9 +109,6 @@ public class ResultController {
         }
     }
 
-    /**
-     * 选择返回
-     */
     public Result decide(int result, String success, String failure) {
         if (result > 0) {
             return Result.decide(true, success, failure);
@@ -169,5 +135,11 @@ public class ResultController {
         modelAndView.addAllObjects(params);
         return modelAndView;
     }
+    ////
+    //public ModelAndView addData(Map<String,?> paras){
+    //    ModelAndView modelAndView = new ModelAndView();
+    //    modelAndView.addAllObjects(paras);
+    //    return modelAndView;
+    //}
 
 }
