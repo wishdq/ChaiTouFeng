@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="common :: header('日志列表')"/>
 </head>
@@ -34,7 +34,8 @@
 </script>
 
 <script id="log-bar" type="text/html">
-    <button class="pear-btn pear-btn-sm pear-btn-primary" lay-event="details">
+    <button sec:authorize="hasPermission('/system/log/info','sys:log:info')"
+            class="pear-btn pear-btn-sm pear-btn-primary" lay-event="details">
         <i class="pear-icon pear-icon-edit"></i>
     </button>
 </script>

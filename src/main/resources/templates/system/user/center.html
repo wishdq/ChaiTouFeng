@@ -32,7 +32,7 @@
             <div class="layui-card-body" style="padding: 25px;">
                 <div class="text-center layui-text">
                     <div class="user-info-head" id="userInfoHead">
-                        <img alt="" height="115px" id="avatar" src="" width="115px">
+                        <img alt="" height="115px" id="avatar" th:src="'/system/file/download/'+${userInfo.avatar}" src="" width="115px">
                     </div>
                     <h2 style="padding-top: 20px;font-size: 20px;" th:text="${userInfo.realName}"></h2>
                     <p style="padding-top: 8px;margin-top: 10px;font-size: 13.5px;">China ， 中国</p>
@@ -207,6 +207,7 @@
 </div>
 <th:block th:include="common :: footer"/>
 <script >
+
     layui.use(['element', 'jquery', 'layer', 'form', 'convert', 'inputAttr'], function () {
         let $ = layui.jquery;
         let layer = layui.layer;
@@ -215,6 +216,14 @@
         let inputAttr = layui.inputAttr;
 
         inputAttr.render();
+
+        // window.onload = function(){
+        //     let image = new Image();
+        //     image.src = "/system/file/download/" + [[${userInfo.avatar}]];
+        //     image.onload = function () {
+        //         $("#avatar").attr("src", convert.imageToBase64(image));
+        //     }
+        // }
 
         $(".edit-password").click(function () {
             let userId = $('[name="userId"]').val().trim();
@@ -228,11 +237,7 @@
             return false;
         })
 
-        let image = new Image();
-        image.src = "/system/file/download/" + [[${userInfo.avatar}]];
-        image.onload = function () {
-            $("#avatar").attr("src", convert.imageToBase64(image));
-        }
+
 
         $("#avatar").click(function () {
             layer.open({
@@ -240,6 +245,7 @@
                 title: '更换图片',
                 shade: 0.1,
                 area: ["900px", "500px"],
+                maxmin:true,
                 content: '/system/user/profile/' + [[${userInfo.userId}]],
                 btn: ['确定', '取消'],
                 yes: function (index, layero) {

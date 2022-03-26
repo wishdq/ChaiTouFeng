@@ -20,7 +20,9 @@ spring:
   servlet:
     # 配置文件上传大小
     multipart:
+      # 单个文件的最大值
       max-file-size: 10MB
+      # 上传文件总的最大值
       max-request-size: 50MB
 
   datasource:

@@ -78,6 +78,7 @@ public class SysOnlineController extends BaseController {
      */
     @DeleteMapping("/remove/{onlineId}")
     @ResponseBody
+    @PreAuthorize("hasPermission('/system/online/remove','sys:online:remove')")
     public Result remove(@PathVariable String onlineId) {
         // 从sessionRegistry中获取所有的用户信息
         List<Object> principals = sessionRegistry.getAllPrincipals();

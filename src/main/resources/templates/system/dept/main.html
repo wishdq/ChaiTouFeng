@@ -87,7 +87,7 @@
             cols: [
                 [
                     {type: 'checkbox'},
-                    {field: 'deptName', minWidth: 200, title: '部门名称'},
+                    {field: 'deptName', title: '部门名称',minWidth: 200},
                     {field: 'leader', title: '负责人'},
                     {field: 'phone', title: '联系方式'},
                     {field: 'email', title: '邮箱'},
@@ -100,14 +100,14 @@
         });
 
         form.on('submit(dept-query)', function (data) {
-            var keyword = data.field.deptName;
-            var $tds = $('#dept-table').next('.treeTable').find('.layui-table-body tbody tr td');
-            if (!keyword) {
+            let keyword = data.field.deptName.trim();
+            let $tds = $('#dept-table').next('.treeTable').find('.layui-table-body tbody tr td');
+            if (keyword==='') {
                 $tds.css('background-color', 'transparent');
-                layer.msg("请输入关键字", {icon: 5});
+                layer.msg("请输入关键字", {icon: 5,time:1000});
                 return;
             }
-            var searchCount = 0;
+            let searchCount = 0;
             $tds.each(function () {
                 $(this).css('background-color', 'transparent');
                 if ($(this).text().indexOf(keyword) >= 0) {

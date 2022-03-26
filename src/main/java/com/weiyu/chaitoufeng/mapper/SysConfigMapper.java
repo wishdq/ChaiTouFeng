@@ -1,6 +1,7 @@
 package com.weiyu.chaitoufeng.mapper;
 
 import com.weiyu.chaitoufeng.domain.system.SysConfig;
+import com.weiyu.chaitoufeng.domain.system.SysConfigGroup;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,6 +21,7 @@ public interface SysConfigMapper {
      * Return: 执行结果
      */
     List<SysConfig> selectList(SysConfig param);
+
 
     /**
      * Describe: 添加系统配置
@@ -62,5 +64,8 @@ public interface SysConfigMapper {
      * Return: SysConfig
      */
     Integer deleteByIds(String[] id);
+
+
+    List<SysConfigGroup> selectTree();
 
 }

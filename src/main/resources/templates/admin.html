@@ -28,18 +28,21 @@
         <!-- 顶 部 右 侧 菜 单 -->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item layui-hide-xs">
-                <a class="fullScreen layui-icon layui-icon-screen-full"
-                                                        href="#"></a></li>
+                <a class="fullScreen layui-icon layui-icon-screen-full" href="#"></a></li>
             <li class="layui-nav-item layui-hide-xs">
-                <a class="layui-icon layui-icon-website"
-                   href="http://www.pearadmin.com"></a></li>
+                <a class="layui-icon layui-icon-website" href="http://www.pearadmin.com"></a></li>
             <li class="layui-nav-item layui-hide-xs message"></li>
             <li class="layui-nav-item user">
                 <!-- 头 像 -->
-                <!--class layui-icon-username-->
                 <a class="layui-icon" href="javascript:;">
-                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
-                    <!--<span th:text="${currentUserInfo}">tester</span>-->
+                    <span th:if="${not #strings.isEmpty(#authentication.principal.avatar)}">
+                        <img th:src="'/system/file/download/'+${#authentication.principal.avatar}" class="layui-nav-img">
+                    </span>
+                    <span th:if="${#strings.isEmpty(#authentication.principal.avatar)}">
+                        <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+                    </span>
+                    <span>[[${#authentication.principal.realName}]]</span>
+                    <i class="layui-icon layui-icon-down layui-nav-more"></i>
                 </a>
                 <!-- 功 能 菜 单 -->
                 <dl class="layui-nav-child">
@@ -62,44 +65,45 @@
         </div>
         <!-- 菜 单 内 容 -->
         <div class="layui-side-scroll">
-            <!--<div id="sideMenu"></div>-->
-            <div id="sideMenu" style="height: 100%;">
-                <div style="height:100%!important;" class="pear-side-scroll layui-side-scroll dark-theme">
-                    <ul lay-filter="sideMenu" class="layui-nav arrow   pear-menu layui-nav-tree pear-nav-tree">
-                        <li class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" menu-type="0" menu-id="1">
-                                <i class="layui-icon layui-icon-set-fill"></i>
-                                <span>系统管理</span><i class="layui-icon layui-icon-down layui-nav-more"></i></a>
-                            <dl class="layui-nav-child" style="height: auto;">
-                                <dd class="layui-nav-itemed layui-this">
-                                    <a class="site-demo-active" menu-type="1" menu-url="/system/user/main" menu-id="1322085079861690368" menu-title="用户管理" menu-icon="layui-icon layui-icon layui-icon layui-icon layui-icon-rate" href="javascript:;">
-                                    <i class="layui-icon layui-icon layui-icon layui-icon layui-icon-rate"></i>
-                                    <span>用户管理</span></a></dd>
-                                <dd><a class="site-demo-active" menu-type="1" menu-url="/system/file/main" menu-id="1304793451996381184" menu-title="文件管理" menu-icon="layui-icon layui-icon layui-icon-read" href="javascript:;">
-                                    <i class="layui-icon layui-icon layui-icon-read"></i>
-                                    <span>文件管理</span></a></dd>
-
-                            </dl>
-                        </li>
-
-                        <li class="layui-nav-item">
-                            <a href="javascript:;" menu-type="0" menu-id="694203021537574912">
-                                <i class="layui-icon  layui-icon-console"></i>
-                                <span>系统监控</span><i class="layui-icon layui-icon-down layui-nav-more"></i></a>
-                            <dl class="layui-nav-child">
-                                <dd class="">
-                                    <a class="site-demo-active" menu-type="1" menu-url="/system/online/main" menu-id="1330865171429588992" menu-title="在线用户" menu-icon="layui-icon layui-icon layui-icon-username" href="javascript:;">
-                                        <i class="layui-icon layui-icon layui-icon-username"></i>
-                                        <span>在线用户</span></a></dd>
-                                <dd class="">
-                                    <a class="site-demo-active" menu-type="1" menu-url="/schedule/job/main" menu-id="442650770626711552" menu-title="定时任务" menu-icon="layui-icon layui-icon layui-icon layui-icon  layui-icon-chat" href="javascript:;">
-                                        <i class="layui-icon layui-icon layui-icon layui-icon  layui-icon-chat"></i>
-                                        <span>定时任务</span></a></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
+            <div id="sideMenu">
             </div>
+            <!--<div id="sideMenu" style="height: 100%;">-->
+            <!--    <div style="height:100%!important;" class="pear-side-scroll layui-side-scroll dark-theme">-->
+            <!--        <ul lay-filter="sideMenu" class="layui-nav arrow   pear-menu layui-nav-tree pear-nav-tree">-->
+            <!--            <li class="layui-nav-item layui-nav-itemed">-->
+            <!--                <a href="javascript:;" menu-type="0" menu-id="1">-->
+            <!--                    <i class="layui-icon layui-icon-set-fill"></i>-->
+            <!--                    <span>系统管理</span><i class="layui-icon layui-icon-down layui-nav-more"></i></a>-->
+            <!--                <dl class="layui-nav-child" style="height: auto;">-->
+            <!--                    <dd class="layui-nav-itemed layui-this">-->
+            <!--                        <a class="site-demo-active" menu-type="1" menu-url="/system/user/main" menu-id="1322085079861690368" menu-title="用户管理" menu-icon="layui-icon layui-icon layui-icon layui-icon layui-icon-rate" href="javascript:;">-->
+            <!--                        <i class="layui-icon layui-icon layui-icon layui-icon layui-icon-rate"></i>-->
+            <!--                        <span>用户管理</span></a></dd>-->
+            <!--                    <dd><a class="site-demo-active" menu-type="1" menu-url="/system/file/main" menu-id="1304793451996381184" menu-title="文件管理" menu-icon="layui-icon layui-icon layui-icon-read" href="javascript:;">-->
+            <!--                        <i class="layui-icon layui-icon layui-icon-read"></i>-->
+            <!--                        <span>文件管理</span></a></dd>-->
+
+            <!--                </dl>-->
+            <!--            </li>-->
+
+            <!--            <li class="layui-nav-item">-->
+            <!--                <a href="javascript:;" menu-type="0" menu-id="694203021537574912">-->
+            <!--                    <i class="layui-icon  layui-icon-console"></i>-->
+            <!--                    <span>系统监控</span><i class="layui-icon layui-icon-down layui-nav-more"></i></a>-->
+            <!--                <dl class="layui-nav-child">-->
+            <!--                    <dd class="">-->
+            <!--                        <a class="site-demo-active" menu-type="1" menu-url="/system/online/main" menu-id="1330865171429588992" menu-title="在线用户" menu-icon="layui-icon layui-icon layui-icon-username" href="javascript:;">-->
+            <!--                            <i class="layui-icon layui-icon layui-icon-username"></i>-->
+            <!--                            <span>在线用户</span></a></dd>-->
+            <!--                    <dd class="">-->
+            <!--                        <a class="site-demo-active" menu-type="1" menu-url="/schedule/job/main" menu-id="442650770626711552" menu-title="定时任务" menu-icon="layui-icon layui-icon layui-icon layui-icon  layui-icon-chat" href="javascript:;">-->
+            <!--                            <i class="layui-icon layui-icon layui-icon layui-icon  layui-icon-chat"></i>-->
+            <!--                            <span>定时任务</span></a></dd>-->
+            <!--                </dl>-->
+            <!--            </li>-->
+            <!--        </ul>-->
+            <!--    </div>-->
+            <!--</div>-->
         </div>
     </div>
     <!-- 视 图 页 面 -->

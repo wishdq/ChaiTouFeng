@@ -10,7 +10,7 @@
     <div class="layui-card-body">
         <form action="" class="layui-form" lay-filter="user-query-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">用 户:</label>
+                <label class="layui-form-label">姓 名:</label>
                 <div class="layui-input-inline">
                     <input class="layui-input" name="realName" placeholder="请输入用户姓名" type="text">
                 </div>
@@ -32,7 +32,7 @@
 </div>
 <div class="user-left user-collapsed">
     <div class="layui-card">
-        <div class="layui-card-body" style="height: 618px">
+        <div class="layui-card-body" style="height: 606px">
             <div class="button button-primary user-group" user-group=""> 全 部 用 户</div>
             <div class="button button-default user-group" user-group="-1"> 默 认 分 组</div>
             <div class="user-tree-scroll" style="height: 470px;overflow: auto">
@@ -159,7 +159,7 @@
             skin: "laySimple",
             icon: "-1",    // 二级图标设置为隐藏
             initLevel: "2",  // 指定初始展开节点级别
-            width: "210",
+            width: "180",
             // height: "full-186",
             response: {treeId: "deptId", parentId: "parentId", title: "deptName"},
         });

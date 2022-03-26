@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
 import com.weiyu.chaitoufeng.domain.system.SysConfig;
+import com.weiyu.chaitoufeng.domain.system.SysConfigGroup;
 import com.weiyu.chaitoufeng.mapper.SysConfigMapper;
 import com.weiyu.chaitoufeng.service.ISysConfigService;
 import org.springframework.stereotype.Service;
@@ -35,13 +36,18 @@ public class SysConfigServiceImpl implements ISysConfigService {
         return sysConfigMapper.selectList(param);
     }
 
+    @Override
+    public List<SysConfigGroup> tree() {
+        return sysConfigMapper.selectTree();
+    }
+
     /**
      * Describe: 根据条件查询系统配置列表数据 分页
      * Param: SysConfig
      * Return: PageInfo<SysConfig>
      */
     @Override
-    public PageInfo<SysConfig> page(SysConfig param, PageDomain pageDomain) {
+    public PageInfo<SysConfig> page(PageDomain pageDomain,SysConfig param) {
         PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
         List<SysConfig> list = sysConfigMapper.selectList(param);
         return new PageInfo<>(list);

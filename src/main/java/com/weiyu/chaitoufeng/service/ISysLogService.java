@@ -21,6 +21,13 @@ public interface ISysLogService {
     boolean save(SysLog sysLog);
 
     /**
+     * Aop存储日志
+     *
+     * @param log 日志对象
+     */
+    Boolean aopSaveLog(SysLog log);
+
+    /**
      * Describe: 执 行 查 询 操 作
      * Param: loggingType
      * Return: 日志列表
@@ -40,5 +47,6 @@ public interface ISysLogService {
      * Return: 日志列表
      */
     List<SysLog> selectTopLoginLog(String operateName);
+
 }
 

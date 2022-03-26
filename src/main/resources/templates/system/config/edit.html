@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('系统配置修改')"/>
+    <th:block th:include="common :: scorlling ('textarea')"/>
+</head>
+<body>
+<form action="" class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configId"
+                               placeholder="请输入标题" th:value="${sysConfig.configId}" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">配 置 名 称:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configName" placeholder="请输入配置名称"
+                               th:value="${sysConfig.configName}" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline" id="configTypeItem">
+                    <label class="layui-form-label">配 置 类 型:</label>
+                    <div class="layui-input-block">
+                        <select id="configType" name="configType">
+                            <option value=""></option>
+                            <option th:selected="${sysConfig.configType eq 'system'}" value="system">system</option>
+                            <option th:selected="${sysConfig.configType eq 'custom'}"value="custom">custom</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">配 置 标 识:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configCode" placeholder="请输入配置标识"
+                               th:value="${sysConfig.configCode}" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">配 置 值:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configValue" placeholder="请输入配置值"
+                               th:value="${sysConfig.configValue}" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描 述:</label>
+                    <div class="layui-input-block">
+                        <textarea class="layui-textarea" name="remark" placeholder="请输入配置描述"
+                                  th:text="${sysConfig.remark}"></textarea>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button class="pear-btn pear-btn-primary pear-btn-sm" lay-filter="dict-type-update" lay-submit=""
+                    type="submit">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button class="pear-btn pear-btn-sm" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['form', 'jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        form.on('submit(dict-type-update)', function (data) {
+            $.ajax({
+                url: '/system/config/update',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("config-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

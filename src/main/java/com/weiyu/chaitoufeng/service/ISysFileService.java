@@ -25,7 +25,7 @@ public interface ISysFileService {
     /**
      * 文 件 列 表
      */
-    List<SysFile> data();
+    List<SysFile> data(SysFile sysFile);
 
     /**
      * 删 除 文 件

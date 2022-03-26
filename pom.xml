@@ -93,6 +93,7 @@
         <!--    </exclusions>-->
         <!--</dependency>-->
         <!--Java工具包类库-->
+        <!-- 工具类 -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -156,6 +157,7 @@
         <!--    <version>7-201802-EA</version>-->
         <!--</dependency>-->
 
+        <!-- Aop 切面编程 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -166,6 +168,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>31.1-jre</version>
+        </dependency>
+        <!-- 网络工具 -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.8.0</version>
         </dependency>
 
     </dependencies>

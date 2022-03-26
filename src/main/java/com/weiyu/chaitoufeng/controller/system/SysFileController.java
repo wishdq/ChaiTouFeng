@@ -10,6 +10,7 @@ import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
 import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.domain.system.SysFile;
+import com.weiyu.chaitoufeng.domain.system.SysRole;
 import com.weiyu.chaitoufeng.service.ISysFileService;
 import io.swagger.annotations.Api;
 import org.apache.logging.log4j.util.Strings;
@@ -84,10 +85,12 @@ public class SysFileController extends BaseController {
      */
     @GetMapping("data")
     @PreAuthorize("hasPermission('/system/file/data','sys:file:data')")
-    public ResultTable data(PageDomain pageDomain) {
+    public ResultTable data(PageDomain pageDomain,SysFile sysFile) {
         PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
-        PageInfo<SysFile> pageInfo = new PageInfo<>(getFileService().data());
+        PageInfo<SysFile> pageInfo = new PageInfo<>(getFileService().data(sysFile));
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
+        //PageInfo<SysRole> pageInfo = fileServiceMap.page(sysFile, pageDomain);
+        //return pageTable(pageInfo.getList(), pageInfo.getTotal());
     }
 
     /**

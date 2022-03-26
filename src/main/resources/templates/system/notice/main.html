@@ -8,17 +8,16 @@
     <div class="layui-card-body">
         <div class="col-sm-12 search-collapse">
             <form class="layui-form" id="formId">
-
                 <div class="layui-form-item">
-                    <label class="layui-form-label">标题：</label>
+                    <label class="layui-form-label">标 题:</label>
                     <div class="layui-input-inline">
                         <input class="layui-input" lay-required name="title" placeholder="请输入标题" type="text"/>
                     </div>
 
-                    <label class="layui-form-label">类型：</label>
+                    <label class="layui-form-label">类 型:</label>
                     <div class="layui-input-inline">
                         <select dict-code="sys_notice_type" lay-required name="type">
-                            <option value="">所有</option>
+                            <option value="">消息类型</option>
                         </select>
                     </div>
                     <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="notice-query" lay-submit>
@@ -45,8 +44,8 @@
                 新增
             </button>
             <button sec:authorize="hasPermission('/system/notice/remove','system:notice:remove')"
-                    class="pear-btn pear-btn-md" lay-event="batchRemove">
-                <i class="layui-icon layui-icon-delete"></i>
+                    class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+                <i class="pear-icon pear-icon-ashbin"></i>
                 删除
             </button>
         </script>
@@ -80,6 +79,10 @@
     {{# } }}
 </script>
 
+<script id="notice-createTime" type="text/html">
+    {{layui.util.toDateString(d.createTime,  "yyyy-MM-dd HH:mm:ss")}}
+</script>
+
 <th:block th:include="common :: footer"/>
 <script>
     layui.use(['table', 'form', 'jquery', 'dictionary'], function () {
@@ -97,6 +100,7 @@
                 {field: 'senderName', title: '发送人'},
                 {field: 'acceptName', title: '接收者', templet: "#notice-accept"},
                 {field: 'type', title: '类型', templet: "#notice-type"},
+                {title: '发布时间', field: 'createTime',templet:'#notice-createTime', align: 'center', width:165, sort: true},
                 {title: '操作', toolbar: '#notice-bar', align: 'center', width: 100,unresize: true}
             ]
         ]
@@ -143,7 +147,7 @@
                 type: 2,
                 title: '新增消息',
                 shade: 0.1,
-                area: ['550px', '500px'],
+                area: ['680px', '400px'],
                 content: prefix + 'add'
             });
         }
@@ -153,7 +157,7 @@
                 type: 2,
                 title: '修改消息',
                 shade: 0.1,
-                area: ['550px', '500px'],
+                area: ['680px', '400px'],
                 content: prefix + 'edit?id=' + obj.data['id']
             });
         }

@@ -136,8 +136,8 @@ public class SysFileServiceImpl implements ISysFileService {
      * Return: File
      */
     @Override
-    public List<SysFile> data() {
-        return fileMapper.selectList();
+    public List<SysFile> data(SysFile sysFile) {
+        return fileMapper.selectList(sysFile);
     }
 
 

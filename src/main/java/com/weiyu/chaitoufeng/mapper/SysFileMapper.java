@@ -26,7 +26,7 @@ public interface SysFileMapper {
      * Param: null
      * Return: List<File>
      */
-    List<SysFile> selectList();
+    List<SysFile> selectList(SysFile sysFile);
 
     /**
      * Describe: 根据 Id 查询文件信息

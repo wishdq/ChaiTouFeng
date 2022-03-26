@@ -3,6 +3,7 @@ package com.weiyu.chaitoufeng.service;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
 import com.weiyu.chaitoufeng.domain.system.SysConfig;
+import com.weiyu.chaitoufeng.domain.system.SysConfigGroup;
 
 import java.util.List;
 
@@ -20,12 +21,13 @@ public interface ISysConfigService {
      */
     List<SysConfig> list(SysConfig param);
 
+
     /**
      * Describe: 根据条件查询系统配置列表数据 分页
      * Param: SysConfig
      * Return: PageInfo<SysConfig>
      */
-    PageInfo<SysConfig> page(SysConfig param, PageDomain pageDomain);
+    PageInfo<SysConfig> page(PageDomain pageDomain,SysConfig param);
 
     /**
      * Describe: 根据 Id 查询系统配置
@@ -68,4 +70,9 @@ public interface ISysConfigService {
      * Return: Boolean
      */
     Boolean batchRemove(String[] ids);
+
+    /**
+     * 获取配置树
+     */
+    List<SysConfigGroup> tree();
 }

@@ -2,6 +2,7 @@ package com.weiyu.chaitoufeng.domain.system;
 
 import com.weiyu.chaitoufeng.domain.BaseDomain;
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
  * Author: wish_dq
  */
 @Data
+@Alias("SysFile")
 public class SysFile extends BaseDomain {
 
     /**

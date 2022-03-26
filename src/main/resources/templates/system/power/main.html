@@ -79,7 +79,6 @@
         let $ = layui.jquery;
         let treetable = layui.treetable;
         let popup = layui.popup;
-        let open_flag = false;
 
         let MODULE_PATH = "/system/power/";
 
@@ -116,7 +115,7 @@
         });
 
         form.on('submit(power-query)', function (data) {
-            treetable.search("#power-table", data.field.powerName)
+            treetable.search("#power-table", data.field.powerName.trim())
             return false;
         });
 
@@ -133,7 +132,8 @@
                 window.add();
             } else if (obj.event === 'refresh') {
                 window.refresh();
-            }else if (obj.event === 'expand-fold'){
+            }
+            else if (obj.event === 'expand-fold'){
                 window.expand_fold();
             }
         });
@@ -212,18 +212,15 @@
         }
 
         window.expand_fold = function () {
-            if (open_flag === false){
-                $('.expand-fold')
-                    .toggleClass('layui-icon-triangle-d')
-                    .toggleClass('layui-icon-triangle-r');
+            let isDR = $('.expand-fold');
+            if (isDR.hasClass('layui-icon-triangle-d')){
+                isDR.removeClass('layui-icon-triangle-d')
+                isDR.addClass('layui-icon-triangle-r');
                 treetable.foldAll('#power-table');
-                open_flag = true;
             } else {
-                $('.expand-fold')
-                    .toggleClass('layui-icon-triangle-r')
-                    .toggleClass('layui-icon-triangle-d');
+                isDR.removeClass('layui-icon-triangle-r')
+                isDR.addClass('layui-icon-triangle-d');
                 treetable.expandAll('#power-table');
-                open_flag = false;
             }
         }
     })

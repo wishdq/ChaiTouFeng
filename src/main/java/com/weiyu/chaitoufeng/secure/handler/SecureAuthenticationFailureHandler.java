@@ -2,8 +2,13 @@ package com.weiyu.chaitoufeng.secure.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.weiyu.chaitoufeng.common.exception.MyCaptchaException;
+import com.weiyu.chaitoufeng.common.logging.BusinessType;
+import com.weiyu.chaitoufeng.common.logging.LoggingType;
 import com.weiyu.chaitoufeng.common.result.Result;
+import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.common.tools.ServletUtil;
+import com.weiyu.chaitoufeng.domain.system.SysLog;
+import com.weiyu.chaitoufeng.service.ISysLogService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -12,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,6 +29,12 @@ import java.io.IOException;
  */
 @Component
 public class SecureAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
+    /**
+     * 引 入 日 志 服 务
+     */
+    @Resource
+    private ISysLogService sysLogService;
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
@@ -44,6 +56,16 @@ public class SecureAuthenticationFailureHandler implements AuthenticationFailure
         if (e instanceof DisabledException) {
             result.setMsg("用户未启用");
         }
+
+        SysLog sysLog = new SysLog();
+        sysLog.setId(SequenceUtil.makeStringId());
+        sysLog.setTitle("登录");
+        sysLog.setDescription(result.getMsg());
+        sysLog.setBusinessType(BusinessType.OTHER);
+        sysLog.setSuccess(false);
+        sysLog.setLoggingType(LoggingType.LOGIN);
+        sysLogService.save(sysLog);
+
         ServletUtil.write(JSON.toJSONString(result));
     }
 }

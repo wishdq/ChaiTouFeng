@@ -1,8 +1,13 @@
 package com.weiyu.chaitoufeng.secure.handler;
 
+import com.weiyu.chaitoufeng.common.logging.BusinessType;
+import com.weiyu.chaitoufeng.common.logging.LoggingType;
+import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
+import com.weiyu.chaitoufeng.domain.system.SysLog;
 import com.weiyu.chaitoufeng.secure.session.SecureSessionService;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
+import com.weiyu.chaitoufeng.service.ISysLogService;
 import com.weiyu.chaitoufeng.service.ISysUserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionRegistry;
@@ -23,6 +28,9 @@ import java.time.LocalDateTime;
 public class SecureRememberMeHandler implements AuthenticationSuccessHandler {
 
     @Resource
+    private ISysLogService sysLogService;
+
+    @Resource
     private ISysUserService sysUserService;
 
     @Resource
@@ -30,6 +38,16 @@ public class SecureRememberMeHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+
+        // 记录日志
+        SysLog sysLog = new SysLog();
+        sysLog.setId(SequenceUtil.makeStringId());
+        sysLog.setTitle("Remember Me");
+        sysLog.setDescription("登录成功");
+        sysLog.setBusinessType(BusinessType.OTHER);
+        sysLog.setSuccess(true);
+        sysLog.setLoggingType(LoggingType.LOGIN);
+        sysLogService.save(sysLog);
 
         LocalDateTime now = LocalDateTime.now();
         // 根据id  更新用户 最近登录时间

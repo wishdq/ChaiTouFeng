@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
+import javax.servlet.MultipartConfigElement;
 import java.time.Duration;
 
 import static io.lettuce.core.GeoArgs.Unit.m;
@@ -13,12 +15,13 @@ import static io.lettuce.core.GeoArgs.Unit.m;
 @SpringBootTest
 class ChaiTouFengApplicationTests {
 
+    @Resource
+    MultipartConfigElement multipartConfigElement;
 
     @Test
     void contextLoads() {
-        String size = FileUtil.getPrintSize(3911680);
-        System.out.println(size);
-        //System.out.println(27.5 <1024);
+        System.out.println(multipartConfigElement.getMaxFileSize());
+        System.out.println(multipartConfigElement.getMaxRequestSize());
     }
 
 }

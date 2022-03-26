@@ -1,10 +1,15 @@
 package com.weiyu.chaitoufeng.secure.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.weiyu.chaitoufeng.common.logging.BusinessType;
+import com.weiyu.chaitoufeng.common.logging.LoggingType;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
+import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.common.tools.ServletUtil;
+import com.weiyu.chaitoufeng.domain.system.SysLog;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
+import com.weiyu.chaitoufeng.service.ISysLogService;
 import com.weiyu.chaitoufeng.service.ISysUserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -24,12 +29,23 @@ import java.time.LocalDateTime;
 @Component
 public class SecureAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+    @Resource
+    private ISysLogService sysLogService;
 
     @Resource
     private ISysUserService sysUserService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+
+        SysLog sysLog = new SysLog();
+        sysLog.setId(SequenceUtil.makeStringId());
+        sysLog.setTitle("登录");
+        sysLog.setDescription("登录成功");
+        sysLog.setBusinessType(BusinessType.OTHER);
+        sysLog.setSuccess(true);
+        sysLog.setLoggingType(LoggingType.LOGIN);
+        sysLogService.save(sysLog);
 
         // 通过id更新登录用户信息登录时间
         SysUser sysUser = new SysUser();

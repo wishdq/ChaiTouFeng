@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('系统配置新增')"/>
+    <th:block th:include="common :: header('系统配置新增')"/>
+    <th:block th:include="common :: scorlling ('textarea')"/>
 </head>
 <body>
 <form action="" class="layui-form">
     <div class="mainBox">
         <div class="main-container">
             <div class="main-container">
-                <div class="layui-form-item">
+                <div class="layui-form-item layui-inline">
                     <label class="layui-form-label">配 置 名 称:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configName" placeholder="请输入标题"
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configName" placeholder="请输入配置名称"
                                type="text">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">标识</label>
+                <div class="layui-form-item layui-inline" id="configTypeItem">
+                    <label class="layui-form-label">配 置 类 型:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configCode" placeholder="请输入标题"
+                        <select id="configType" name="configType">
+                            <option value=""></option>
+                            <option value="system">system</option>
+                            <option value="custom">custom</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">配 置 标 识:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configCode" placeholder="请输入配置标识"
                                type="text">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">值</label>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">配 置 值:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configValue" placeholder="请输入标题"
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="configValue" placeholder="请输入配置值"
                                type="text">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">描述</label>
+                    <label class="layui-form-label">描 述:</label>
                     <div class="layui-input-block">
-                        <textarea class="layui-textarea" name="remark" placeholder="请输入描述"></textarea>
+                        <textarea class="layui-textarea" name="remark" placeholder="请输入配置描述"></textarea>
                     </div>
                 </div>
             </div>
@@ -40,7 +52,7 @@
     </div>
     <div class="bottom">
         <div class="button-container">
-            <button class="pear-btn pear-btn-primary pear-btn-sm" lay-filter="dict-type-save" lay-submit=""
+            <button class="pear-btn pear-btn-primary pear-btn-sm" lay-filter="btn-config-save" lay-submit=""
                     type="submit">
                 <i class="layui-icon layui-icon-ok"></i>
                 提交
@@ -52,13 +64,15 @@
         </div>
     </div>
 </form>
-<th:block th:include="include :: footer"/>
+<th:block th:include="common :: footer"/>
 <script>
     layui.use(['form', 'jquery'], function () {
         let form = layui.form;
         let $ = layui.jquery;
 
-        form.on('submit(dict-type-save)', function (data) {
+        form.on('submit(btn-config-save)', function (data) {
+            // console.log(data.field.configType)
+            // console.log($("#configType").val())
             $.ajax({
                 url: '/system/config/save',
                 data: JSON.stringify(data.field),

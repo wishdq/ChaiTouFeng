@@ -46,12 +46,12 @@
 }
 
 .user-main {
-    width: calc(100% - 250px);
+    width: calc(100% - 224px);
     float: right;
 }
 
 .user-left {
-    width: 240px;
+    width: 210px;
     float: left;
 }
 
