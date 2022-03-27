@@ -5,7 +5,7 @@ import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.domain.poetry.PoemsCiPai;
+import com.weiyu.chaitoufeng.domain.poetry.PoemCiPai;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
 import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.service.poetry.PoemsCiPaiService;
@@ -40,8 +40,8 @@ public class PoemsCiPaiController extends BaseController {
 
     @GetMapping("data")
     @PreAuthorize("hasPermission('/poetry/ciPai/data','poetry:ciPai:data')")
-    public ResultTable data(PageDomain pageDomain, PoemsCiPai param) {
-        PageInfo<PoemsCiPai> pageInfo = ciPaiService.page(param, pageDomain);
+    public ResultTable data(PageDomain pageDomain, PoemCiPai param) {
+        PageInfo<PoemCiPai> pageInfo = ciPaiService.page(param, pageDomain);
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
     }
 
@@ -55,7 +55,7 @@ public class PoemsCiPaiController extends BaseController {
 
     @PostMapping("save")
     @PreAuthorize("hasPermission('/poetry/ciPai/add','poetry:ciPai:add')")
-    public Result save(@RequestBody PoemsCiPai ciPai) {
+    public Result save(@RequestBody PoemCiPai ciPai) {
         ciPai.setCiPaiId(SequenceUtil.makeStringId());
         ciPai.setUpdateTime(LocalDateTime.now());
         boolean result = ciPaiService.save(ciPai);
@@ -65,7 +65,7 @@ public class PoemsCiPaiController extends BaseController {
     @GetMapping("edit")
     @PreAuthorize("hasPermission('/poetry/ciPai/edit','poetry:ciPai:edit')")
     public ModelAndView edit(Model model, String ciPaiId) {
-        PoemsCiPai ciPai = ciPaiService.getById(ciPaiId);
+        PoemCiPai ciPai = ciPaiService.getById(ciPaiId);
         model.addAttribute("ciPai",ciPai);
         System.out.println(ciPai.getDescription());
         return jumpPage(MODULE_PATH + "edit");
@@ -74,7 +74,7 @@ public class PoemsCiPaiController extends BaseController {
 
     @PutMapping("update")
     @PreAuthorize("hasPermission('/poetry/ciPai/edit','poetry:ciPai:edit')")
-    public Result update(@RequestBody PoemsCiPai ciPai) {
+    public Result update(@RequestBody PoemCiPai ciPai) {
         boolean result = ciPaiService.updateById(ciPai);
         return decide(result);
     }

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.weiyu.chaitoufeng.mapper.poetry.PoemsCiPaiMapper">
+<mapper namespace="com.weiyu.chaitoufeng.mapper.poetry.PoemCiPaiMapper">
 
-    <resultMap id="PoemsCiPaiMap" type="PoemsCiPai">
+    <resultMap id="PoemCiPaiMap" type="PoemCiPai">
         <id column="ci_pai_id" property="ciPaiId"></id>
         <result column="name" property="name"></result>
         <result column="description" property="description"></result>
         <result column="update_time" property="updateTime"></result>
     </resultMap>
 
-    <select id="selectList" resultMap="PoemsCiPaiMap">
-        select * from poems_ci_pai
+    <select id="selectList" resultMap="PoemCiPaiMap">
+        select * from poem_ci_pai
         <where>
             <if test="ciPaiId!=null and ciPaiId!=''">
                 and ci_pai_id like "%"#{ciPaiId}"%"
@@ -24,8 +24,8 @@
         </where>
     </select>
 
-    <select id="getById" resultMap="PoemsCiPaiMap">
-        select * from poems_ci_pai
+    <select id="getById" resultMap="PoemCiPaiMap">
+        select * from poem_ci_pai
         <where>
             <if test="ciPaiId!=null and ciPaiId!=''">
                 and ci_pai_id = #{ciPaiId}
@@ -35,8 +35,8 @@
 
 
     <!-- 新增 SysConfig 数据 -->
-    <insert id="insert" parameterType="PoemsCiPai">
-        insert into poems_ci_pai
+    <insert id="insert" parameterType="PoemCiPai">
+        insert into poem_ci_pai
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="ciPaiId!=null">
                 ci_pai_id,
@@ -68,8 +68,8 @@
     </insert>
 
     <!-- 根据 Id 修改系统配置数据 -->
-    <update id="updateById" parameterType="PoemsCiPai">
-        update poems_ci_pai
+    <update id="updateById" parameterType="PoemCiPai">
+        update poem_ci_pai
         <set>
             <if test="ciPaiId!=null and ciPaiId!=''">
                 ci_pai_id = #{ciPaiId},
@@ -87,13 +87,13 @@
     <!-- 根据 Id 删除系统配置数据 -->
     <delete id="deleteById" parameterType="string">
         delete
-        from poems_ci_pai
+        from poem_ci_pai
         where ci_pai_id = #{ciPaiId}
     </delete>
 
     <!-- 根据 Id 批量删除系统配置数据 -->
     <delete id="deleteByIds" parameterType="string">
-        delete from poems_ci_pai where ci_pai_id in
+        delete from poem_ci_pai where ci_pai_id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

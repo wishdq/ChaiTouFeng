@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generator.mapper.PoemDynastyMapper">
+
+    <resultMap id="BaseResultMap" type="com.weiyu.chaitoufeng.domain.poetry.PoemDynasty">
+            <id property="id" column="dynasty_id" jdbcType="SMALLINT"/>
+            <result property="parentName" column="parent_name" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="pinyin" column="pinyin" jdbcType="VARCHAR"/>
+            <result property="startEnd" column="start_end" jdbcType="VARCHAR"/>
+            <result property="capital" column="capital" jdbcType="VARCHAR"/>
+            <result property="nowLocation" column="now_location" jdbcType="VARCHAR"/>
+            <result property="nation" column="nation" jdbcType="VARCHAR"/>
+            <result property="stateFounder" column="state_founder" jdbcType="VARCHAR"/>
+            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,parent_name,name,
+        pinyin,start_end,capital,
+        now_location,nation,state_founder,
+        updated_at
+    </sql>
+</mapper>

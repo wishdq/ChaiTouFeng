@@ -2,10 +2,9 @@ package com.weiyu.chaitoufeng.service.poetry.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.weiyu.chaitoufeng.domain.poetry.PoemsCiPai;
+import com.weiyu.chaitoufeng.domain.poetry.PoemCiPai;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
-import com.weiyu.chaitoufeng.domain.system.SysUser;
-import com.weiyu.chaitoufeng.mapper.poetry.PoemsCiPaiMapper;
+import com.weiyu.chaitoufeng.mapper.poetry.PoemCiPaiMapper;
 import com.weiyu.chaitoufeng.service.poetry.PoemsCiPaiService;
 import org.springframework.stereotype.Service;
 
@@ -21,27 +20,27 @@ import java.util.List;
 public class PoemsCiPaiServiceImpl implements PoemsCiPaiService{
 
     @Resource
-    PoemsCiPaiMapper ciPaiMapper;
+    PoemCiPaiMapper ciPaiMapper;
 
     @Override
-    public List<PoemsCiPai> list(PoemsCiPai ciPai) {
+    public List<PoemCiPai> list(PoemCiPai ciPai) {
         return ciPaiMapper.selectList(ciPai);
     }
 
     @Override
-    public PageInfo<PoemsCiPai> page(PoemsCiPai ciPai, PageDomain pageDomain) {
+    public PageInfo<PoemCiPai> page(PoemCiPai ciPai, PageDomain pageDomain) {
         PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
-        List<PoemsCiPai> ciPais = ciPaiMapper.selectList(ciPai);
+        List<PoemCiPai> ciPais = ciPaiMapper.selectList(ciPai);
         return new PageInfo<>(ciPais);
     }
 
     @Override
-    public PoemsCiPai getById(String ciPaiId) {
+    public PoemCiPai getById(String ciPaiId) {
         return ciPaiMapper.getById(ciPaiId);
     }
 
     @Override
-    public boolean save(PoemsCiPai entity) {
+    public boolean save(PoemCiPai entity) {
         return ciPaiMapper.insert(entity);
     }
 
@@ -56,7 +55,7 @@ public class PoemsCiPaiServiceImpl implements PoemsCiPaiService{
     }
 
     @Override
-    public boolean updateById(PoemsCiPai ciPaiId) {
+    public boolean updateById(PoemCiPai ciPaiId) {
         return ciPaiMapper.updateById(ciPaiId);
     }
 }

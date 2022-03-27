@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('朝代新增')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">序 号:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="dynastyId" placeholder=""
+                               maxlength="10" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">统 称:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input"  name="parentName" placeholder="请输入词牌名"
+                               maxlength="10" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">朝 代:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input"  name="name" placeholder="请输入词牌名"
+                               maxlength="10" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">起 止:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input"  name="startEnd" placeholder="请输入词牌名"
+                               maxlength="20" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">首 都:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input"  name="capital" placeholder="请输入词牌名"
+                               maxlength="10" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">当 今 位 置:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input"  name="name" placeholder="请输入词牌名"
+                               maxlength="20" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">民 族:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input"  name="nation" placeholder="请输入词牌名"
+                               maxlength="10" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">创 立 者:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input"  name="stateFounder" placeholder="请输入词牌名"
+                               maxlength="10" show-word-limit type="text" >
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button class="pear-btn pear-btn-primary pear-btn-sm" lay-filter="ci-pai-save" lay-submit="" type="submit">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button class="pear-btn pear-btn-sm" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['form', 'jquery', 'inputAttr'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let inputAttr = layui.inputAttr;
+
+        inputAttr.render();
+
+        form.on('submit(ci-pai-save)', function (data) {
+            $.ajax({
+                url: '/poetry/dynasty/save',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dynasty-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+
+    })
+</script>
+</body>
+</html>

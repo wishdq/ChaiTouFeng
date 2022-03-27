@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weiyu.chaitoufeng.mapper.poetry.PoemDynastyMapper">
+
+    <resultMap id="PoemDynastyMap" type="PoemDynasty">
+        <id column="dynasty_id" property="dynastyId"></id>
+        <result column="parent_name" property="parentName"></result>
+        <result column="name" property="name"></result>
+        <result column="start_end" property="startEnd"></result>
+        <result column="capital" property="capital"></result>
+        <result column="now_location" property="nowLocation"></result>
+        <result column="nation" property="nation"></result>
+        <result column="state_founder" property="stateFounder"></result>
+        <result column="updated_time" property="updatedTime"></result>
+    </resultMap>
+
+    <select id="selectList" resultMap="PoemDynastyMap">
+        select * from poem_dynasty
+        <where>
+            <if test="dynastyId!=null and dynastyId!=''">
+                and dynasty_id like "%"#{dynastyId}"%"
+            </if>
+            <if test="parentName!=null and parentName!=''">
+                and parent_name like "%"#{parentName}"%"
+            </if>
+            <if test="name!=null and name!=''">
+                and name like "%"#{name}"%"
+            </if>
+            <if test="startEnd!=null and startEnd!=''">
+                and start_end like "%"#{startEnd}"%"
+            </if>
+            <if test="capital!=null and capital!=''">
+                and capital like "%"#{capital}"%"
+            </if>
+            <if test="nowLocation!=null and nowLocation!=''">
+                and now_location like "%"#{nowLocation}"%"
+            </if>
+            <if test="nation!=null and nation!=''">
+                and nation like "%"#{nation}"%"
+            </if>
+            <if test="stateFounder!=null and stateFounder!=''">
+                and state_founder like "%"#{stateFounder}"%"
+            </if>
+            <if test="updatedTime!=null and updatedTime!=''">
+                and updated_time like "%"#{updatedTime}"%"
+            </if>
+        </where>
+        order by dynasty_id asc
+    </select>
+
+    <select id="getById" resultMap="PoemDynastyMap">
+        select * from poem_dynasty
+        <where>
+            <if test="dynastyId!=null and dynastyId!=''">
+                and dynasty_id = #{dynastyId}
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 新增 SysConfig 数据 -->
+    <insert id="insert" parameterType="PoemDynasty">
+        insert into poem_dynasty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dynastyId!=null">
+                dynasty_id,
+            </if>
+            <if test="parentName!=null">
+                parent_name,
+            </if>
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="startEnd!=null">
+                start_end,
+            </if>
+            <if test="capital!=null">
+                capital,
+            </if>
+            <if test="nowLocation!=null">
+                now_location,
+            </if>
+            <if test="nation!=null">
+                nation,
+            </if>
+            <if test="stateFounder!=null">
+                state_founder,
+            </if>
+            <if test="updatedTime!=null">
+                updated_time,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="dynastyId!=null">
+                #{dynastyId},
+            </if>
+            <if test="parentName!=null">
+                #{parentName},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="startEnd!=null">
+                #{startEnd},
+            </if>
+            <if test="capital!=null">
+                #{capital},
+            </if>
+            <if test="nowLocation!=null">
+                #{nowLocation},
+            </if>
+            <if test="nation!=null">
+                #{nation},
+            </if>
+            <if test="stateFounder!=null">
+                #{stateFounder},
+            </if>
+            <if test="updatedTime!=null">
+                #{updatedTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据 Id 修改系统配置数据 -->
+    <update id="updateById" parameterType="PoemCiPai">
+        update poem_dynasty
+        <set>
+            <if test="dynastyId!=null and dynastyId!=''">
+                dynasty_id = #{dynastyId},
+            </if>
+            <if test="parentName!=null ">
+                parent_name = #{parentName},
+            </if>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="startEnd!=null ">
+                start_end = #{startEnd},
+            </if>
+            <if test="capital!=null">
+                capital = #{capital},
+            </if>
+            <if test="nowLocation!=null">
+                now_location = #{nowLocation},
+            </if>
+            <if test="nation!=null">
+                nation = #{nation},
+            </if>
+            <if test="stateFounder!=null">
+                state_founder = #{stateFounder},
+            </if>
+            <if test="updatedTime!=null">
+                updated_time = #{updatedTime},
+            </if>
+        </set>
+        where dynasty_id = #{dynastyId}
+    </update>
+
+    <!-- 根据 Id 删除系统配置数据 -->
+    <delete id="deleteById" parameterType="string">
+        delete
+        from poem_dynasty
+        where dynasty_id = #{dynastyId}
+    </delete>
+
+</mapper>
