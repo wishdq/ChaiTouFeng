@@ -2,16 +2,15 @@ package com.weiyu.chaitoufeng.controller.system;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.weiyu.chaitoufeng.common.constant.CommonConstant;
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.config.property.SysFileTemplateProperty;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.service.system.ISysFileService;
+import com.weiyu.chaitoufeng.common.constant.CommonConstant;
 import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.domain.system.SysFile;
-import com.weiyu.chaitoufeng.domain.system.SysRole;
-import com.weiyu.chaitoufeng.service.ISysFileService;
 import io.swagger.annotations.Api;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +84,7 @@ public class SysFileController extends BaseController {
      */
     @GetMapping("data")
     @PreAuthorize("hasPermission('/system/file/data','sys:file:data')")
-    public ResultTable data(PageDomain pageDomain,SysFile sysFile) {
+    public ResultTable data(PageDomain pageDomain, SysFile sysFile) {
         PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
         PageInfo<SysFile> pageInfo = new PageInfo<>(getFileService().data(sysFile));
         return pageTable(pageInfo.getList(), pageInfo.getTotal());

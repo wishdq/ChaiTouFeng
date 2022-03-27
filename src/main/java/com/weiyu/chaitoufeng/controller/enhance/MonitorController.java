@@ -1,9 +1,9 @@
 package com.weiyu.chaitoufeng.controller.enhance;
 
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
-import com.weiyu.chaitoufeng.common.server.CpuInfo;
 import com.weiyu.chaitoufeng.common.tools.SystemUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
+import com.weiyu.chaitoufeng.common.server.CpuInfo;
 import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;

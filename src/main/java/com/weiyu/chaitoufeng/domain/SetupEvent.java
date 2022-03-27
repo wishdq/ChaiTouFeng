@@ -9,18 +9,18 @@ import java.util.Map;
  * Since: 2022-03-23 20:54
  * Author: wish_dq
  */
-public class SetupEvent extends ApplicationEvent {
-
-    private Map<String, String> mailConfig;
-
-    public SetupEvent(Object source, Map<String, String> mailConfig) {
-        super(source);
-        this.mailConfig = mailConfig;
-    }
-
-    public Map<String, String> getMailConfig() {
-        return mailConfig;
-    }
-
-}
+//public class SetupEvent extends ApplicationEvent {
+//
+//    private Map<String, String> mailConfig;
+//
+//    public SetupEvent(Object source, Map<String, String> mailConfig) {
+//        super(source);
+//        this.mailConfig = mailConfig;
+//    }
+//
+//    public Map<String, String> getMailConfig() {
+//        return mailConfig;
+//    }
+//
+//}
 

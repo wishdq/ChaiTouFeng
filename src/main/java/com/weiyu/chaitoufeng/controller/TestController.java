@@ -4,7 +4,6 @@ import com.weiyu.chaitoufeng.common.repeatsubmit.NoRepeatSubmit;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Description:

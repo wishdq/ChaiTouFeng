@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weiyu.chaitoufeng.mapper.poetry.PoemsCiPaiMapper">
+
+    <resultMap id="PoemsCiPaiMap" type="PoemsCiPai">
+        <id column="ci_pai_id" property="ciPaiId"></id>
+        <result column="name" property="name"></result>
+        <result column="description" property="description"></result>
+        <result column="update_time" property="updateTime"></result>
+    </resultMap>
+
+    <select id="selectList" resultMap="PoemsCiPaiMap">
+        select * from poems_ci_pai
+        <where>
+            <if test="ciPaiId!=null and ciPaiId!=''">
+                and ci_pai_id like "%"#{ciPaiId}"%"
+            </if>
+            <if test="name!=null and name!=''">
+                and name like "%"#{name}"%"
+            </if>
+            <if test="description!=null and description!=''">
+                and description like "%"#{description}"%"
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultMap="PoemsCiPaiMap">
+        select * from poems_ci_pai
+        <where>
+            <if test="ciPaiId!=null and ciPaiId!=''">
+                and ci_pai_id = #{ciPaiId}
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 新增 SysConfig 数据 -->
+    <insert id="insert" parameterType="PoemsCiPai">
+        insert into poems_ci_pai
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ciPaiId!=null">
+                ci_pai_id,
+            </if>
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="description!=null">
+                description,
+            </if>
+            <if test="updateTime!=null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="ciPaiId!=null">
+                #{ciPaiId},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="description!=null">
+                #{description},
+            </if>
+            <if test="updateTime!=null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据 Id 修改系统配置数据 -->
+    <update id="updateById" parameterType="PoemsCiPai">
+        update poems_ci_pai
+        <set>
+            <if test="ciPaiId!=null and ciPaiId!=''">
+                ci_pai_id = #{ciPaiId},
+            </if>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="description!=null and description!=''">
+                description = #{description},
+            </if>
+        </set>
+        where ci_pai_id = #{ciPaiId}
+    </update>
+
+    <!-- 根据 Id 删除系统配置数据 -->
+    <delete id="deleteById" parameterType="string">
+        delete
+        from poems_ci_pai
+        where ci_pai_id = #{ciPaiId}
+    </delete>
+
+    <!-- 根据 Id 批量删除系统配置数据 -->
+    <delete id="deleteByIds" parameterType="string">
+        delete from poems_ci_pai where ci_pai_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

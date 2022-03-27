@@ -11,7 +11,7 @@ public class ControllerConstant {
     public final static String API_SYSTEM_PREFIX = "/system/";
 
     // 代码生成基础路径
-    public final static String API_GENERATOR_PREFIX = "/generate/";
+    public final static String API_Poetry_PREFIX = "/poetry/";
 
     // 定时任务基础路径
     public final static String API_SCHEDULE_PREFIX = "/schedule/";

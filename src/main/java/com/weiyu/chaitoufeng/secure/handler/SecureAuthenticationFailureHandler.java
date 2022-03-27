@@ -8,7 +8,7 @@ import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.common.tools.ServletUtil;
 import com.weiyu.chaitoufeng.domain.system.SysLog;
-import com.weiyu.chaitoufeng.service.ISysLogService;
+import com.weiyu.chaitoufeng.service.system.ISysLogService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;

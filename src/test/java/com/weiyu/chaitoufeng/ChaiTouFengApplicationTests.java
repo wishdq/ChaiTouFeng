@@ -1,6 +1,5 @@
 package com.weiyu.chaitoufeng;
 
-import com.weiyu.chaitoufeng.common.server.CpuInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

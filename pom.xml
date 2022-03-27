@@ -20,6 +20,8 @@
         <activiti.version>6.0.0</activiti.version>
     </properties>
 
+
+
     <dependencies>
 
         <dependency>
@@ -184,6 +186,8 @@
 
     </dependencies>
 
+
+
     <build>
         <plugins>
             <plugin>
@@ -199,6 +203,22 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <!-- 加 载 .Java 下 的 XML 文 件 -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <!-- 加 载 .Java 下 的 XML 文 件 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>

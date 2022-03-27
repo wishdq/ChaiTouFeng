@@ -2,7 +2,6 @@ package com.weiyu.chaitoufeng.common.logging;
 
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.domain.system.SysLog;
-import com.weiyu.chaitoufeng.service.ISysLogService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,7 +22,7 @@ import java.lang.reflect.Method;
 public class LoggingAspect {
 
     @Resource
-    private ISysLogService logService;
+    private LoggingFactory logFactory;
 
     /**
      * 切 面 编 程
@@ -54,7 +53,7 @@ public class LoggingAspect {
             sysLog.setErrorMsg(exception.getMessage());
             throw exception;
         } finally {
-            logService.aopSaveLog(sysLog);
+            logFactory.record(sysLog);
         }
         return result;
     }
@@ -62,15 +61,15 @@ public class LoggingAspect {
     /**
      * 获 取 注 解
      */
-    public com.weiyu.chaitoufeng.common.logging.Logging getLogging(ProceedingJoinPoint point) {
+    public Logging getLogging(ProceedingJoinPoint point) {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Class<? extends Object> targetClass = point.getTarget().getClass();
-        com.weiyu.chaitoufeng.common.logging.Logging targetLogging = targetClass.getAnnotation(com.weiyu.chaitoufeng.common.logging.Logging.class);
+        Logging targetLogging = targetClass.getAnnotation(Logging.class);
         if (targetLogging != null) {
             return targetLogging;
         } else {
             Method method = signature.getMethod();
-            com.weiyu.chaitoufeng.common.logging.Logging logging = method.getAnnotation(com.weiyu.chaitoufeng.common.logging.Logging.class);
+            Logging logging = method.getAnnotation(Logging.class);
             return logging;
         }
     }

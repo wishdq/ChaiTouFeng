@@ -1,15 +1,15 @@
 package com.weiyu.chaitoufeng.controller.system;
 
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
+import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
-import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.domain.response.ResultTree;
+import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.domain.system.SysPower;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
-import com.weiyu.chaitoufeng.service.ISysPowerService;
+import com.weiyu.chaitoufeng.service.system.ISysPowerService;
 import io.swagger.annotations.Api;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.access.prepost.PreAuthorize;

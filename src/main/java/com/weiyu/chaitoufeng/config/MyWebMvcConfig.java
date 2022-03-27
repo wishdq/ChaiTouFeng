@@ -2,7 +2,6 @@ package com.weiyu.chaitoufeng.config;
 
 import com.weiyu.chaitoufeng.config.property.SecurityProperty;
 import com.weiyu.chaitoufeng.domain.interceptor.RepeatSubmitInterceptor;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

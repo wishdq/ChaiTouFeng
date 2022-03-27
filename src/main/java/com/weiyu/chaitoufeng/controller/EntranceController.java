@@ -2,16 +2,15 @@ package com.weiyu.chaitoufeng.controller;
 
 
 import com.weiyu.chaitoufeng.common.logging.BusinessType;
-import com.weiyu.chaitoufeng.common.logging.Logging;
-import com.weiyu.chaitoufeng.secure.session.SecureSessionService;
-import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
+import com.weiyu.chaitoufeng.secure.session.SecureSessionService;
+import com.weiyu.chaitoufeng.common.logging.Logging;
+import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;

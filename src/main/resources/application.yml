@@ -75,7 +75,7 @@ server:
 
 mybatis-plus:
   # 配 置 扫 描
-  mapper-locations: classpath*:mapper/**.xml
+  mapper-locations: classpath*:**/xml/**.xml
   #  扫描Entity, 加入此设置方可在Mybatis的XML文件中使用实体类的Alias
   type-aliases-package: com.weiyu.chaitoufeng.domain.*
   configuration:

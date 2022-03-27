@@ -2,14 +2,14 @@ package com.weiyu.chaitoufeng.controller.system;
 
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
+import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
-import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
-import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.domain.response.ResultTree;
 import com.weiyu.chaitoufeng.domain.system.SysRole;
-import com.weiyu.chaitoufeng.service.ISysRoleService;
+import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.response.ResultTable;
+import com.weiyu.chaitoufeng.service.system.ISysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;

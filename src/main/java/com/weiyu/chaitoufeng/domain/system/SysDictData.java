@@ -5,10 +5,11 @@ import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
 /**
- * Description: 字典值领域模型
- * Since: 2022-03-21 0:17
+ * Description:
+ * Since: 2022-03-27 21:38
  * Author: wish_dq
  */
+
 @Data
 @Alias("SysDictData")
 public class SysDictData extends BaseDomain {
@@ -44,4 +45,3 @@ public class SysDictData extends BaseDomain {
     private String enable;
 
 }
-

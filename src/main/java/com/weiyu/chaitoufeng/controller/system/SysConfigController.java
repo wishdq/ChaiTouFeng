@@ -1,35 +1,25 @@
 package com.weiyu.chaitoufeng.controller.system;
 
-import cn.hutool.core.map.MapUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.weiyu.chaitoufeng.common.constant.ConfigurationConstant;
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
+import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
-import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.domain.SetupEvent;
+import com.weiyu.chaitoufeng.domain.response.ResultTree;
+import com.weiyu.chaitoufeng.domain.system.SysConfigGroup;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
 import com.weiyu.chaitoufeng.domain.response.ResultTable;
-import com.weiyu.chaitoufeng.domain.response.ResultTree;
 import com.weiyu.chaitoufeng.domain.system.SysConfig;
-import com.weiyu.chaitoufeng.domain.system.SysConfigGroup;
-import com.weiyu.chaitoufeng.domain.system.SysDept;
-import com.weiyu.chaitoufeng.domain.system.SysUser;
-import com.weiyu.chaitoufeng.service.ISysConfigService;
+import com.weiyu.chaitoufeng.service.system.ISysConfigService;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 
 /**

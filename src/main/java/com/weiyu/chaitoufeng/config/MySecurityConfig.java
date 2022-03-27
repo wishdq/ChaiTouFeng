@@ -1,7 +1,7 @@
 package com.weiyu.chaitoufeng.config;
 
 import com.weiyu.chaitoufeng.config.property.SecurityProperty;
-import com.weiyu.chaitoufeng.secure.*;
+import com.weiyu.chaitoufeng.secure.MySecureCaptcha;
 import com.weiyu.chaitoufeng.secure.handler.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

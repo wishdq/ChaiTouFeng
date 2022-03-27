@@ -2,8 +2,8 @@ package com.weiyu.chaitoufeng.domain.secure;
 
 import com.weiyu.chaitoufeng.domain.system.SysPower;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
-import com.weiyu.chaitoufeng.mapper.SysPowerMapper;
-import com.weiyu.chaitoufeng.mapper.SysUserMapper;
+import com.weiyu.chaitoufeng.mapper.system.SysPowerMapper;
+import com.weiyu.chaitoufeng.mapper.system.SysUserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

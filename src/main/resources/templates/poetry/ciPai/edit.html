@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('词牌修改')"/>
+    <th:block th:include="common :: scorlling ('textarea')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">词 牌 名:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="name" placeholder="请输入词牌名"
+                              th:value="${ciPai.name}" maxlength="30" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">描 述 信 息:</label>
+                    <div class="layui-input-block">
+                        <textarea style="height: 200px" class="layui-textarea" name="description" placeholder="请输入词牌描述信息"
+                                  th:text="${ciPai.description}" maxlength="1000" show-word-limit></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button class="pear-btn pear-btn-primary pear-btn-sm" lay-filter="ci-pai-save" lay-submit="" type="submit">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button class="pear-btn pear-btn-sm" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['form', 'jquery', 'inputAttr'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let inputAttr = layui.inputAttr;
+
+        inputAttr.render();
+
+        form.on('submit(ci-pai-save)', function (data) {
+            $.ajax({
+                url: '/poetry/ciPai/update',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("ciPai-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+
+    })
+</script>
+</body>
+</html>
