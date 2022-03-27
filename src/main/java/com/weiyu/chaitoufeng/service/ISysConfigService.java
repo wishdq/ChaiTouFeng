@@ -75,4 +75,16 @@ public interface ISysConfigService {
      * 获取配置树
      */
     List<SysConfigGroup> tree();
+
+    List<SysConfigGroup> groupData();
+
+    SysConfigGroup getGroupById(String id);
+
+    Boolean addGroup(SysConfigGroup configGroup);
+
+    Boolean updateGroup(SysConfigGroup configGroup);
+
+    Boolean removeGroup(String id);
+
+
 }

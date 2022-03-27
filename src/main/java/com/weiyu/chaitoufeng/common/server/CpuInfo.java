@@ -29,83 +29,47 @@ public class CpuInfo {
     private MemInfo memInfo;
 
     /**
-     * 核心数
+     * CPU相关
      */
+    // 核心数
     private int cpuNum;
-
-    /**
-     * CPU总的使用率
-     */
-    private double total;
-
-    /**
-     * CPU系统使用率
-     */
+    //  CPU总的使用率
+    private double totalUsed;
+    // CPU系统使用率
     private double sys;
-
-    /**
-     * CPU用户使用率
-     */
+    // CPU用户使用率
     private double used;
-
-    /**
-     * CPU当前等待率
-     */
+    //CPU当前等待率
     private double wait;
-
-    /**
-     * CPU当前空闲率
-     */
+    //CPU当前空闲率
     private double free;
 
     /**
-     * 服务器名称
+     * System信息
      */
+    //服务器名称
     private String sysInfoComputerName;
-
-    /**
-     * 服务器Ip
-     */
+    //服务器Ip
     private String sysInfoComputerIp;
-
-    /**
-     * 项目路径
-     */
+    //项目路径
     private String sysInfoUserDir;
-
-    /**
-     * 操作系统
-     */
+    //操作系统
     private String sysInfoOsName;
-
-    /**
-     * 系统架构
-     */
+    //系统架构
     private String sysInfoOsArch;
 
     /**
-     * 当前JVM占用的内存总数(M)
+     * JDK信息
      */
+    //当前JVM占用的内存总数(M)
     private double jvmInfoTotal;
-
-    /**
-     * JVM最大可用内存总数(M)
-     */
+    //JVM最大可用内存总数(M)
     private double jvmInfoMax;
-
-    /**
-     * JVM空闲内存(M)
-     */
+    //JVM空闲内存(M)
     private double jvmInfoFree;
-
-    /**
-     * JDK版本
-     */
+    //JDK版本
     private String jvmInfoVersion;
-
-    /**
-     * JDK路径
-     */
+    //JDK路径
     private String jvmInfoHome;
 
     public double getJvmInfoTotal() {

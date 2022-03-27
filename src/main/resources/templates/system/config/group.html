@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('系统配置组管理')"/>
+</head>
+<body>
+<div class="mainBox">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <table id="config-group-table" lay-filter="config-group-table"></table>
+        </div>
+    </div>
+</div>
+
+<script id="group-toolbar" type="text/html">
+    <button sec:authorize="hasPermission('/system/config/group/add','sys:config:group:add')"
+            class="pear-btn pear-btn-primary pear-btn-md" plain lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<script id="group-bar" type="text/html">
+    <button sec:authorize="hasPermission('/system/config/group/remove','sys:config:group:remove')"
+            class="pear-btn pear-btn-danger pear-btn-sm" plain lay-event="remove"><i class="pear-icon pear-icon-ashbin"></i>
+    </button>
+</script>
+
+<script id="group-enable" type="text/html">
+    <input type="checkbox" name="enable" value="{{d.configGroupId}}" lay-skin="switch" lay-text="启用|禁用"
+           lay-filter="group-enable" {{ d.enable== true ? 'checked' : '' }} />
+</script>
+
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery', 'popup'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+
+        let MODULE_PATH = "/system/config/group/";
+
+        let cols = [
+            [
+                {title: '配置组名', field: 'name', align: 'center',edit:'text'},
+                {title: '状态', field: 'enable', align: 'center', templet: '#group-enable',unresize: true, width: 95},
+                {title: '排序',field: 'sort',align: 'center',edit:'text'},
+                {title: '操作', toolbar: '#group-bar', align: 'center',  unresize: true}
+            ]
+        ]
+
+        table.render({
+            elem: '#config-group-table',
+            url: MODULE_PATH + 'data',
+            cols: cols,
+            skin: 'line',
+            page:false,
+            toolbar: '#group-toolbar',
+            text: {none: '暂无分组信息'},
+            defaultToolbar: [{
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+                title: "刷新"
+            }, 'filter', 'print', 'exports'],
+        });
+
+        //监听单元格编辑
+        table.on('edit(config-group-table)', function(obj){
+            let data = obj.data //得到所在修改过的行所有键值
+            $.ajax({
+                url: '/system/config/group/' + 'update',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            // parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            // parent.layui.table.reload("config-group-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+        });
+
+        table.on('tool(config-group-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            }
+        });
+
+        table.on('toolbar(config-group-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            }
+        });
+
+        form.on('switch(group-enable)', function (obj) {
+            let operate;
+            if (obj.elem.checked) {
+                operate = "enable";
+            } else {
+                operate = "disable";
+            }
+            let loading = layer.load();
+            $.ajax({
+                url: '/system/config/group/' + operate,
+                data: JSON.stringify({configGroupId: this.value}),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    layer.close(loading);
+                    if (result.success) {
+                        popup.success(result.msg);
+                    } else {
+                        popup.failure(result.msg);
+                    }
+                }
+            })
+        });
+
+        window.add = function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: ['400px', '300px'],
+                content: MODULE_PATH + 'add'
+            });
+        }
+
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该用户', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove/" + obj.data['configGroupId'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                obj.del();
+                            });
+                        } else {
+                            popup.failure(result.msg);
+                        }
+                    }
+                })
+            });
+        }
+
+
+        window.refresh = function (param) {
+            table.reload('config-group-table', {where: param});
+        }
+    })
+</script>
+</body>
+</html>

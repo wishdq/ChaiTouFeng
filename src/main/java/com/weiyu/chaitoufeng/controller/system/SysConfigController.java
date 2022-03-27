@@ -1,6 +1,8 @@
 package com.weiyu.chaitoufeng.controller.system;
 
 import cn.hutool.core.map.MapUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.common.constant.ConfigurationConstant;
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
@@ -44,6 +46,7 @@ public class SysConfigController extends BaseController implements ApplicationEv
     @Resource
     private ISysConfigService sysConfigService;
 
+
     //@Resource
     //private SysConfig sysConfig ;
 
@@ -68,20 +71,11 @@ public class SysConfigController extends BaseController implements ApplicationEv
     @GetMapping("data")
     @PreAuthorize("hasPermission('/system/config/data','sys:config:data')")
     public ResultTable data(PageDomain pageDomain, SysConfig param) {
-        //System.out.println(param.toString());
-        //System.out.println(pageDomain.toString());
         PageInfo<SysConfig> pageInfo = sysConfigService.page(pageDomain,param);
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
     }
 
-    /**
-     * Describe: 获取配置组树状数据结构
-     */
-    @GetMapping("tree")
-    public ResultTree tree() {
-        List<SysConfigGroup> data = sysConfigService.tree();
-        return dataTree(data);
-    }
+
 
     /**
      * Describe: 数据字典类型新增视图
@@ -90,7 +84,9 @@ public class SysConfigController extends BaseController implements ApplicationEv
      */
     @GetMapping("add")
     @PreAuthorize("hasPermission('/system/config/add','sys:config:add')")
-    public ModelAndView add() {
+    public ModelAndView add(Model model) {
+        List<SysConfigGroup> configGroups = sysConfigService.groupData();
+        model.addAttribute("configGroups",configGroups);
         return jumpPage(MODULE_PATH + "add");
     }
 
@@ -117,6 +113,8 @@ public class SysConfigController extends BaseController implements ApplicationEv
     @PreAuthorize("hasPermission('/system/config/edit','sys:config:edit')")
     public ModelAndView edit(Model model, String configId) {
         model.addAttribute("sysConfig", sysConfigService.getById(configId));
+        List<SysConfigGroup> configGroups = sysConfigService.groupData();
+        model.addAttribute("configGroups",configGroups);
         return jumpPage(MODULE_PATH + "edit");
     }
 
@@ -173,9 +171,78 @@ public class SysConfigController extends BaseController implements ApplicationEv
     }
 
 
+    /**
+     * Describe: 获取配置组树状数据结构
+     */
+    @GetMapping("tree")
+    public ResultTree tree() {
+        List<SysConfigGroup> data = sysConfigService.tree();
+        return dataTree(data);
+    }
+
+    @GetMapping("group")
+    @PreAuthorize("hasPermission('/system/config/group','sys:config:group')")
+    public ModelAndView group(){
+        return jumpPage(MODULE_PATH + "group");
+    }
+
+    @GetMapping("group/data")
+    @PreAuthorize("hasPermission('/system/config/group/data','sys:config:group:data')")
+    public ResultTable groupDate(PageDomain pageDomain){
+        List<SysConfigGroup> list = sysConfigService.groupData();
+        PageInfo<SysConfigGroup> pageInfo = new PageInfo<>(list);
+        return pageTable(pageInfo.getList(),pageInfo.getTotal());
+    }
+
+    @PutMapping("group/{isEnable}")
+    public Result groupEnable(@PathVariable("isEnable") String isEnable,@RequestBody SysConfigGroup configGroup){
+        if("enable".equals(isEnable)) {
+            configGroup.setEnable("1");
+        }else if ("disable".equals(isEnable)){
+            configGroup.setEnable("0");
+        }
+        Boolean result = sysConfigService.updateGroup(configGroup);
+        return decide(result);
+    }
+
+    @GetMapping("group/add")
+    @PreAuthorize("hasPermission('/system/config/group/add','sys:config:group:add')")
+    public ModelAndView groupAdd(){
+        return jumpPage(MODULE_PATH + "groupAdd");
+    }
+
+    @PostMapping("group/save")
+    public Result addConfigGroupSave(@RequestBody SysConfigGroup configGroup){
+        configGroup.setConfigGroupId(SequenceUtil.makeStringId());
+        configGroup.setGroupParentId("1");
+        boolean result = sysConfigService.addGroup(configGroup);
+        return decide(result);
+    }
+
+    //@GetMapping("group/edit")
+    //public ModelAndView groupEdit(@RequestParam("configGroupId") String configGroupId,Model model){
+    //    model.addAttribute("configGroup",sysConfigService.getGroupById(configGroupId));
+    //    return jumpPage(MODULE_PATH+"groupEdit");
+    //}
+
+    @PostMapping("group/update")
+    public Result groupUpdate(@RequestBody SysConfigGroup configGroup){
+        Boolean result = sysConfigService.updateGroup(configGroup);
+        return decide(result);
+    }
 
 
-
+    @DeleteMapping("group/remove/{id}")
+    @PreAuthorize("hasPermission('/system/config/group/remove','sys:config:group:remove')")
+    public Result groupDelete(@PathVariable String id){
+        SysConfig sysConfig = new SysConfig();
+        sysConfig.setConfigGroupId(id);
+        if (sysConfigService.list(sysConfig).size() > 0) {
+            return failure("请先删除配置组下设置");
+        }
+        Boolean result = sysConfigService.removeGroup(id);
+        return decide(result);
+    }
     //@GetMapping("main")
     //@PreAuthorize("hasPermission('/system/config/main','sys:config:main')")
     //public ModelAndView main(Model model) {

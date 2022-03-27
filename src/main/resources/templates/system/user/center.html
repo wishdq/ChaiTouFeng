@@ -52,7 +52,7 @@
                 <ul class="list">
                     <li class="list-item" th:each="log:${logs}">
                         <span class="title" th:text="${log.title}"></span>
-                        <span class="footer" th:text="${log.createTime}"></span></li>
+                        <span class="footer" th:text="${#strings.contains(log.createTime,'T') ? #strings.replace(log.createTime,'T',' '): log.createTime}"></span></li>
                 </ul>
             </div>
         </div>

@@ -16,6 +16,8 @@ import oshi.util.Util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -26,18 +28,18 @@ import java.util.Properties;
  */
 public class SystemUtil {
 
-    private static final int WAIT_SECOND = 110;
+    private static final int WAIT_SECOND = 1000;
 
     public static CpuInfo getCpu() {
         CpuInfo cpu = new CpuInfo();
-        SystemInfo si = new SystemInfo();
-        HardwareAbstractionLayer hal = si.getHardware();
-        setCpuInfo(hal.getProcessor(), cpu);
-        MemInfo memInfo = setMemInfo(hal.getMemory());
+        SystemInfo systemInfo = new SystemInfo();
+        HardwareAbstractionLayer hardware = systemInfo.getHardware();
+        setCpuInfo(hardware.getProcessor(), cpu);
+        MemInfo memInfo = setMemInfo(hardware.getMemory());
         cpu.setMemInfo(memInfo);
         setSysInfo(cpu);
         setJvmInfo(cpu);
-        setSysFiles(si.getOperatingSystem(), cpu);
+        setSysFiles(systemInfo.getOperatingSystem(), cpu);
         return cpu;
     }
     private static void setSysInfo(CpuInfo cpu) {
@@ -124,8 +126,11 @@ public class SystemUtil {
     private static void setCpuInfo(CentralProcessor processor, CpuInfo cpu) {
         // CPU信息
         long[] prevTicks = processor.getSystemCpuLoadTicks();
+        // 睡眠1s
         Util.sleep(WAIT_SECOND);
         long[] ticks = processor.getSystemCpuLoadTicks();
+        //返回当前系统利用率
+        //processor.getSystemCpuLoadBetweenTicks(prevTicks);
         long nice = ticks[CentralProcessor.TickType.NICE.getIndex()] - prevTicks[CentralProcessor.TickType.NICE.getIndex()];
         long irq = ticks[CentralProcessor.TickType.IRQ.getIndex()] - prevTicks[CentralProcessor.TickType.IRQ.getIndex()];
         long softirq = ticks[CentralProcessor.TickType.SOFTIRQ.getIndex()] - prevTicks[CentralProcessor.TickType.SOFTIRQ.getIndex()];
@@ -135,12 +140,15 @@ public class SystemUtil {
         long iowait = ticks[CentralProcessor.TickType.IOWAIT.getIndex()] - prevTicks[CentralProcessor.TickType.IOWAIT.getIndex()];
         long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
         long totalCpu = user + nice + cSys + idle + iowait + irq + softirq + steal;
+
         cpu.setCpuNum(processor.getLogicalProcessorCount());
-        cpu.setTotal(totalCpu);
-        cpu.setSys(cSys);
-        cpu.setUsed(user);
-        cpu.setWait(iowait);
-        cpu.setFree(idle);
+
+        cpu.setSys(NumberUtil.mul(NumberUtil.div(cSys,totalCpu,4),100));
+        cpu.setUsed(NumberUtil.mul(NumberUtil.div(user,totalCpu,4),100));
+        cpu.setWait(NumberUtil.mul(NumberUtil.div(iowait,totalCpu,4),100));
+        cpu.setFree(NumberUtil.mul(NumberUtil.div(idle,totalCpu,4),100));
+        cpu.setTotalUsed(NumberUtil.mul(NumberUtil.div(totalCpu-idle,totalCpu,4),100));
+
     }
 
     /**

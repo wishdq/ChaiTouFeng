@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:include="common :: header('系统配置组新增')"/>
+</head>
+<body>
+<form action="" class="layui-form">
+  <div class="mainBox">
+    <div class="main-container">
+      <div class="main-container">
+        <div class="layui-form-item layui-inline">
+          <label class="layui-form-label ">组 名:</label>
+          <div class="layui-input-block">
+            <input autocomplete="off" class="layui-input" lay-verify="required" name="name" placeholder="请输入角色名称"
+                   type="text">
+          </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+          <label class="layui-form-label">状 态:</label>
+          <div class="layui-input-block">
+            <input name="enable" title="开启" type="radio" value="1">
+            <input checked name="enable" title="关闭" type="radio" value="0">
+          </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+          <label class="layui-form-label">排&emsp;序:</label>
+          <div class="layui-input-block">
+            <input autocomplete="off" class="layui-input" name="sort" placeholder="请输入配置组排序号"
+                   type="text">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="button-container">
+      <button class="pear-btn pear-btn-primary pear-btn-sm" lay-filter="addConfigSave" lay-submit=""
+              type="submit">
+        <i class="layui-icon layui-icon-ok"></i>
+        提交
+      </button>
+      <button class="pear-btn pear-btn-sm" type="reset">
+        <i class="layui-icon layui-icon-refresh"></i>
+        重置
+      </button>
+    </div>
+  </div>
+</form>
+<th:block th:include="common :: footer"/>
+<script>
+  layui.use(['form', 'jquery'], function () {
+    let form = layui.form;
+    let $ = layui.jquery;
+
+    form.on('submit(addConfigSave)', function (data) {
+      $.ajax({
+        url: '/system/config/group/' + 'save',
+        data: JSON.stringify(data.field),
+        dataType: 'json',
+        contentType: 'application/json',
+        type: 'post',
+        success: function (result) {
+          if (result.success) {
+            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+              parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+              parent.layui.table.reload("config-group-table");
+            });
+          } else {
+            layer.msg(result.msg, {icon: 2, time: 1000});
+          }
+        }
+      })
+      return false;
+    });
+  })
+</script>
+</body>
+</html>

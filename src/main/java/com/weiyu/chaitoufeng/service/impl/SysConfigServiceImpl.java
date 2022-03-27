@@ -36,10 +36,7 @@ public class SysConfigServiceImpl implements ISysConfigService {
         return sysConfigMapper.selectList(param);
     }
 
-    @Override
-    public List<SysConfigGroup> tree() {
-        return sysConfigMapper.selectTree();
-    }
+
 
     /**
      * Describe: 根据条件查询系统配置列表数据 分页
@@ -117,4 +114,43 @@ public class SysConfigServiceImpl implements ISysConfigService {
         return result > 0;
     }
 
+    /**
+     * 配置组
+     */
+
+    @Override
+    public List<SysConfigGroup> tree() {
+        return sysConfigMapper.groupTree();
+    }
+
+    @Override
+    public List<SysConfigGroup> groupData() {
+        return sysConfigMapper.groupList(null);
+    }
+
+    @Override
+    public SysConfigGroup getGroupById(String id) {
+        SysConfigGroup configGroup = new SysConfigGroup();
+        configGroup.setConfigGroupId(id);
+        return sysConfigMapper.groupList(configGroup).get(0);
+    }
+
+
+    @Override
+    public Boolean addGroup(SysConfigGroup configGroup) {
+        Integer result = sysConfigMapper.insertGroup(configGroup);
+        return result > 0;
+    }
+
+    @Override
+    public Boolean updateGroup(SysConfigGroup configGroup) {
+        int result = sysConfigMapper.updateGroupById(configGroup);
+        return result > 0;
+    }
+
+    @Override
+    public Boolean removeGroup(String id) {
+        Integer result = sysConfigMapper.deleteGroupById(id);
+        return result > 0;
+    }
 }

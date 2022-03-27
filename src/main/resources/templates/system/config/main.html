@@ -72,6 +72,11 @@
         <i class="pear-icon pear-icon-modular"></i>
         高级
     </button>
+    <button sec:authorize="hasPermission('/system/config/group','sys:config:group')"
+            class="pear-btn pear-btn-md layui-hide" id="group" lay-event="group">
+        <i class="layui-icon layui-icon-snowflake"></i>
+        组管理
+    </button>
 </script>
 
 <script id="config-bar" type="text/html">
@@ -118,13 +123,13 @@
         let cols = [
             [
                 {type: 'checkbox'},
-                {title: '类型', field: 'configType', align: 'center',templet: '#tpl-configType'},
+                {title: '类型', field: 'configType', hide:true, align: 'center',templet: '#tpl-configType'},
                 {title: '配置名称', field: 'configName', align: 'center', width: 120},
                 {title: '配置标识', field: 'configCode', align: 'center',minWidth:85},
                 {title: '配置值', field: 'configValue', align: 'center',minWidth:75},
                 {title: '具体描述', field: 'remark', align: 'center',minWidth:85},
                 {title: '状态', field: 'enable', align: 'center', templet: '#config-enable',unresize: true, width: 95},
-                {title: '创建时间', field: 'createTime', align: 'center', templet: '#config-createTime'},
+                {title: '创建时间', field: 'createTime',hide:true, align: 'center', templet: '#config-createTime'},
                 {title: '操作', toolbar: '#config-bar', width: 100, align: 'center',unresize: true}
             ]
         ]
@@ -167,7 +172,10 @@
             } else if (obj.event === 'collapsed') {
                 $('.user-left').toggleClass("user-collapsed");
                 $('.user-main').toggleClass("user-collapsed");
+                $('#group').toggleClass('layui-hide')
                 table.resize();
+            } else if (obj.event === 'group'){
+                window.group();
             }
         });
 
@@ -200,7 +208,6 @@
                 }
             })
         });
-
 
         dtree.render({
             elem: "#config-tree",
@@ -310,265 +317,20 @@
             });
         }
 
+        window.group = function (){
+            layer.open({
+                type: 2,
+                title: '配置组管理',
+                maxmin: true,
+                shade: 0.1,
+                area: ['1000px', '500px'],
+                content: MODULE_PATH + 'group'
+            });
+        }
+
         window.refresh = function (param) {
             table.reload('config-table', {where: param});
         }
     })
 </script>
-
-
-
-
-<!--<div class="layui-card layui-card-body">-->
-<!--    <div class="layui-tab layui-tab-brief">-->
-<!--        <ul class="layui-tab-title">-->
-<!--            <li class="layui-this">网站设置</li>-->
-<!--            <li >邮箱设置</li>-->
-<!--            <li>权限分配</li>-->
-<!--            <li>商品管理</li>-->
-<!--            <li>其它设置</li>-->
-<!--        </ul>-->
-<!--        <div class="layui-tab-content">-->
-<!--            <div class="layui-tab-item">-->
-<!--                <div class="layui-card">-->
-<!--                    <div class="layui-card-body">-->
-<!--                        <form action="" class="layui-form">-->
-<!--                            <div class="layui-form-item">-->
-<!--                                <label class="layui-form-label">配置名称</label>-->
-<!--                                <div class="layui-input-inline">-->
-<!--                                    <input class="layui-input" name="configName" placeholder="" type="text">-->
-<!--                                </div>-->
-<!--                                <label class="layui-form-label">配置标识</label>-->
-<!--                                <div class="layui-input-inline">-->
-<!--                                    <input class="layui-input" name="configCode" placeholder="" type="text">-->
-<!--                                </div>-->
-<!--                                <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="config-query" lay-submit>-->
-<!--                                    <i class="layui-icon layui-icon-search"></i>-->
-<!--                                    查询-->
-<!--                                </button>-->
-<!--                                <button class="pear-btn pear-btn-md" type="reset">-->
-<!--                                    <i class="layui-icon layui-icon-refresh"></i>-->
-<!--                                    重置-->
-<!--                                </button>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="layui-card">-->
-<!--                    <div class="layui-card-body">-->
-<!--                        <table id="config-table" lay-filter="config-table"></table>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="layui-tab-item" style="padding-top: 30px;padding-bottom: 50px;">-->
-<!--                <div class="layui-form-item">-->
-<!--                    <label class="layui-form-label">主机</label>-->
-<!--                    <div class="layui-input-block">-->
-<!--                        <input class="layui-input" name="mailHost" placeholder="请输入主机地址"-->
-<!--                               th:value="${setup.mailHost}" type="text">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <br/>-->
-<!--                <div class="layui-form-item">-->
-<!--                    <label class="layui-form-label">端口</label>-->
-<!--                    <div class="layui-input-block">-->
-<!--                        <input class="layui-input" name="mailPort" placeholder="请输入开放端口"-->
-<!--                               th:value="${setup.mailPort}" type="text">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <br/>-->
-<!--                <div class="layui-form-item">-->
-<!--                    <label class="layui-form-label">来源</label>-->
-<!--                    <div class="layui-input-block">-->
-<!--                        <input class="layui-input" name="mailFrom" placeholder="请输入来源"-->
-<!--                               th:value="${setup.mailFrom}" type="text">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <br/>-->
-<!--                <div class="layui-form-item">-->
-<!--                    <label class="layui-form-label">用户</label>-->
-<!--                    <div class="layui-input-block">-->
-<!--                        <input class="layui-input" name="mailUser" placeholder="请输入用户"-->
-<!--                               th:value="${setup.mailUser}" type="text">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <br/>-->
-<!--                <div class="layui-form-item">-->
-<!--                    <label class="layui-form-label">密码</label>-->
-<!--                    <div class="layui-input-block">-->
-<!--                        <input class="layui-input" name="mailPass" placeholder="请输入密码"-->
-<!--                               th:value="${setup.mailPass}" type="text">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="layui-tab-item">内容3</div>-->
-<!--            <div class="layui-tab-item">内容4</div>-->
-<!--            <div class="layui-tab-item">内容5</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-
-<!--<script>-->
-<!--    layui.use(['element', 'form', 'popup', 'jquery'], function () {-->
-<!--        let form = layui.form;-->
-<!--        let popup = layui.popup;-->
-<!--        let $ = layui.jquery;-->
-
-<!--        form.on('submit(setup-save)', function (data) {-->
-<!--            $.ajax({-->
-<!--                url: '/system/config/save',-->
-<!--                data: JSON.stringify(data.field),-->
-<!--                dataType: 'json',-->
-<!--                contentType: 'application/json',-->
-<!--                type: 'put',-->
-<!--                success: function (result) {-->
-<!--                    if (result.success) {-->
-<!--                        popup.success(result.msg, function () {-->
-<!--                            window.location.reload();-->
-<!--                        });-->
-<!--                    } else {-->
-<!--                        popup.failure(result.msg);-->
-<!--                    }-->
-<!--                }-->
-<!--            });-->
-<!--            return false;-->
-<!--        });-->
-<!--    })-->
-<!--</script>-->
-<!--<script>-->
-<!--    layui.use(['table', 'form', 'jquery', 'common', 'popup'], function () {-->
-<!--        let table = layui.table;-->
-<!--        let form = layui.form;-->
-<!--        let $ = layui.jquery;-->
-<!--        let common = layui.common;-->
-<!--        let popup = layui.popup;-->
-
-<!--        let MODULE_PATH = "/system/config/";-->
-
-<!--        let cols = [-->
-<!--            [-->
-<!--                {type: 'checkbox'},-->
-<!--                {title: '配置名称', field: 'configName', align: 'center', width: 120},-->
-<!--                {title: '类型', field: 'configType', align: 'center'},-->
-<!--                {title: '配置值', field: 'configValue', align: 'center'},-->
-<!--                {title: '具体描述', field: 'remark', align: 'center'},-->
-<!--                {title: '创建时间', field: 'createTime', align: 'center', templet: '#user-createTime'},-->
-<!--                {title: '操作', toolbar: '#config-bar', align: 'center', width: 130}-->
-<!--            ]-->
-<!--        ]-->
-
-<!--        table.render({-->
-<!--            elem: '#config-table',-->
-<!--            url: MODULE_PATH + 'data',-->
-<!--            page: true,-->
-<!--            cols: cols,-->
-<!--            skin: 'line',-->
-<!--            toolbar: '#config-toolbar',-->
-<!--            defaultToolbar: [{-->
-<!--                title: '刷新',-->
-<!--                layEvent: 'refresh',-->
-<!--                icon: 'layui-icon-refresh',-->
-<!--            }, 'filter', 'print', 'exports']-->
-<!--        });-->
-
-<!--        table.on('tool(config-table)', function (obj) {-->
-<!--            if (obj.event === 'remove') {-->
-<!--                window.remove(obj);-->
-<!--            } else if (obj.event === 'edit') {-->
-<!--                window.edit(obj);-->
-<!--            }-->
-<!--        });-->
-
-<!--        table.on('toolbar(config-table)', function (obj) {-->
-<!--            if (obj.event === 'add') {-->
-<!--                window.add();-->
-<!--            } else if (obj.event === 'refresh') {-->
-<!--                window.refresh();-->
-<!--            } else if (obj.event === 'batchRemove') {-->
-<!--                window.batchRemove(obj);-->
-<!--            }-->
-<!--        });-->
-
-<!--        form.on('submit(config-query)', function (data) {-->
-<!--            window.refresh(data.field);-->
-<!--            return false;-->
-<!--        });-->
-
-<!--        window.add = function () {-->
-<!--            layer.open({-->
-<!--                type: 2,-->
-<!--                title: '新增',-->
-<!--                shade: 0.1,-->
-<!--                area: ['550px', '500px'],-->
-<!--                content: MODULE_PATH + 'add'-->
-<!--            });-->
-<!--        }-->
-
-<!--        window.edit = function (obj) {-->
-<!--            layer.open({-->
-<!--                type: 2,-->
-<!--                title: '修改',-->
-<!--                shade: 0.1,-->
-<!--                area: ['550px', '500px'],-->
-<!--                content: MODULE_PATH + 'edit?configId=' + obj.data['configId']-->
-<!--            });-->
-<!--        }-->
-
-<!--        window.remove = function (obj) {-->
-<!--            layer.confirm('确定要删除该配置', {icon: 3, title: '提示'}, function (index) {-->
-<!--                layer.close(index);-->
-<!--                let loading = layer.load();-->
-<!--                $.ajax({-->
-<!--                    url: MODULE_PATH + "remove/" + obj.data['configId'],-->
-<!--                    dataType: 'json',-->
-<!--                    type: 'delete',-->
-<!--                    success: function (result) {-->
-<!--                        layer.close(loading);-->
-<!--                        if (result.success) {-->
-<!--                            popup.success(result.msg, function () {-->
-<!--                                table.reload('config-table');-->
-<!--                            });-->
-<!--                        } else {-->
-<!--                            popup.failure(result.msg);-->
-<!--                        }-->
-<!--                    }-->
-<!--                })-->
-<!--            });-->
-<!--        }-->
-
-<!--        window.batchRemove = function (obj) {-->
-<!--            let ids = common.checkField(obj, 'configId');-->
-<!--            if (common.isEmpty(ids)) {-->
-<!--                popup.warning("未选中数据");-->
-<!--                return false;-->
-<!--            }-->
-<!--            layer.confirm('确定要删除选中配置', {icon: 3, title: '提示'}, function (index) {-->
-<!--                layer.close(index);-->
-<!--                let loading = layer.load();-->
-<!--                $.ajax({-->
-<!--                    url: MODULE_PATH + "batchRemove/" + ids,-->
-<!--                    dataType: 'json',-->
-<!--                    type: 'delete',-->
-<!--                    success: function (result) {-->
-<!--                        layer.close(loading);-->
-<!--                        if (result.success) {-->
-<!--                            popup.success(result.msg, function () {-->
-<!--                                table.reload('config-table');-->
-<!--                            });-->
-<!--                        } else {-->
-<!--                            popup.failure(result.msg);-->
-<!--                        }-->
-<!--                    }-->
-<!--                });-->
-<!--            });-->
-<!--        }-->
-
-<!--        window.refresh = function (param) {-->
-<!--            table.reload('config-table', {where: param});-->
-<!--        }-->
-<!--    })-->
-<!--</script>-->
 </html>

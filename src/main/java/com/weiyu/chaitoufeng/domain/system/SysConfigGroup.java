@@ -6,12 +6,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 /**
  * 系统配置组
  */
 @TableName(value ="sys_config_group")
 @Data
+@Alias("SysConfigGroup")
 public class SysConfigGroup implements Serializable {
     /**
      * 配置组id
@@ -30,9 +32,9 @@ public class SysConfigGroup implements Serializable {
     private String name;
 
     /**
-     * 状态
+     * 是否启用
      */
-    private String status;
+    private String enable;
 
     /**
      * 排序

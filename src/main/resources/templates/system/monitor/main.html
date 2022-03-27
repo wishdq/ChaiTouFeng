@@ -11,7 +11,7 @@
             <div class="layui-col-md6">
                 <div class="layui-card">
                     <div class="layui-card-header">
-                        主机信息
+                        CPU 信息
                     </div>
                     <div class="layui-card-body">
                         <div class="layui-row layui-col-space10">
@@ -24,19 +24,19 @@
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
                                 <div class="pear-card2">
                                     <div class="title">空闲率</div>
-                                    <div class="count pear-text" th:text="${cpu.free + '%'}">32</div>
+                                    <div class="count pear-text" th:text="${cpu.free + ' %'}">32</div>
                                 </div>
                             </div>
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
                                 <div class="pear-card2">
                                     <div class="title">等待率</div>
-                                    <div class="count pear-text" th:text="${cpu.wait + '%'}"></div>
+                                    <div class="count pear-text" th:text="${cpu.wait + ' %'}"></div>
                                 </div>
                             </div>
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
                                 <div class="pear-card2">
                                     <div class="title">使用率</div>
-                                    <div class="count pear-text" th:text="${cpu.used + '%'}"></div>
+                                    <div class="count pear-text" th:text="${cpu.totalUsed + ' %'}"></div>
                                 </div>
                             </div>
                         </div>
@@ -46,26 +46,26 @@
             <div class="layui-col-md6">
                 <div class="layui-card">
                     <div class="layui-card-header">
-                        内存监控
+                        RAM 监控
                     </div>
                     <div class="layui-card-body">
                         <div class="layui-row layui-col-space10">
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
                                 <div class="pear-card2">
                                     <div class="title">空闲内存</div>
-                                    <div class="count pear-text" th:text="${cpu.memInfo.free + 'G'}"></div>
+                                    <div class="count pear-text" th:text="${cpu.memInfo.free + ' G'}"></div>
                                 </div>
                             </div>
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
                                 <div class="pear-card2">
                                     <div class="title">最大内存</div>
-                                    <div class="count pear-text" th:text="${cpu.memInfo.total + 'G'}"></div>
+                                    <div class="count pear-text" th:text="${cpu.memInfo.total + ' G'}"></div>
                                 </div>
                             </div>
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
                                 <div class="pear-card2">
                                     <div class="title">已用内存</div>
-                                    <div class="count pear-text" th:text="${cpu.memInfo.used + 'G'}"></div>
+                                    <div class="count pear-text" th:text="${cpu.memInfo.used + ' G'}"></div>
                                 </div>
                             </div>
                             <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
@@ -98,12 +98,12 @@
                 <ul class="pear-card-status">
                     <li th:each="sysFile:${cpu.sysFiles}">
                         <p th:text="${sysFile.typeName}"></p>
-                        磁盘大小&nbsp;<span th:text="${sysFile.total}"></span>&nbsp;&nbsp;
-                        空闲大小&nbsp;<span th:text="${sysFile.free}"></span>&nbsp;&nbsp;
+                        容量&nbsp;<span th:text="${sysFile.total}"></span>&nbsp;&nbsp;
+                        空闲&nbsp;<span th:text="${sysFile.free}"></span>&nbsp;&nbsp;
                         <br/>
                         <br/>
-                        已经使用&nbsp;<span th:text="${sysFile.used}"></span>&nbsp;&nbsp;
-                        使用概率&nbsp;<span th:text="${sysFile.usage + '%'}"></span>
+                        已用&nbsp;<span th:text="${sysFile.used}"></span>&nbsp;&nbsp;
+                        使用率&nbsp;<span th:text="${sysFile.usage + ' %'}"></span>
                         <br/>
                         <a class="pear-btn pear-btn-xs pear-btn-primary pear-reply" data-id="1"
                            href="javascript:;">详情</a>

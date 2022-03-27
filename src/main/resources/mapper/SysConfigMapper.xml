@@ -63,6 +63,9 @@
             <if test="configId!=null">
                 config_id,
             </if>
+            <if test="configGroupId!=null">
+                config_group_id,
+            </if>
             <if test="configName!=null">
                 config_name,
             </if>
@@ -82,6 +85,9 @@
         <trim prefix="values(" suffix=")" suffixOverrides=",">
             <if test="configId!=null">
                 #{configId},
+            </if>
+            <if test="configGroupId!=null">
+                #{configGroupId},
             </if>
             <if test="configName!=null">
                 #{configName},
@@ -107,6 +113,9 @@
         <set>
             <if test="configName!=null and configName!=''">
                 config_name = #{configName},
+            </if>
+            <if test="configGroupId!=null">
+                config_group_id = #{configGroupId},
             </if>
             <if test="configCode!=null and configCode!=''">
                 config_code = #{configCode},
@@ -143,8 +152,8 @@
     </delete>
 
     <!--获取配置组-->
-    <select id="selectTree" resultType="com.weiyu.chaitoufeng.domain.system.SysConfigGroup">
-        select * from sys_config_group order by sort asc
+    <select id="groupTree" resultType="com.weiyu.chaitoufeng.domain.system.SysConfigGroup">
+        select * from sys_config_group where enable='1' order by sort asc
         <!--<where>-->
         <!--    config_type = 'custom'-->
         <!--    <if test="configCode!=null and configCode!=''">-->
@@ -155,5 +164,84 @@
         <!--    </if>-->
         <!--</where>-->
     </select>
+
+    <select id="groupList" parameterType="SysConfigGroup" resultType="SysConfigGroup">
+        select * from sys_config_group
+        <where>
+            <if test="configGroupId != null and configGroupId != ''">
+                config_group_id = #{configGroupId}
+            </if>
+        </where>
+        order by sort asc
+    </select>
+
+    <!--<select id="getGroupById" parameterType="string" resultType="SysConfigGroup">-->
+    <!--    select * from sys_config_group-->
+    <!--</select>-->
+
+    <update id="updateGroupById" parameterType="SysConfigGroup">
+        update sys_config_group
+        <set>
+            <if test="configGroupId != null and configGroupId != ''">
+                config_group_id = #{configGroupId},
+            </if>
+            <if test="groupParentId != null and groupParentId != ''">
+                group_parent_id = #{groupParentId},
+            </if>
+            <if test="name!=null and name != ''">
+                name = #{name},
+            </if>
+            <if test="enable != null and enable != ''">
+                enable = #{enable},
+            </if>
+            <if test="sort != null and sort != ''">
+                sort = #{sort},
+            </if>
+        </set>
+        where config_group_id = #{configGroupId}
+    </update>
+
+    <delete id="deleteGroupById" parameterType="string">
+        delete from sys_config_group
+        where config_group_id = #{configGroupId}
+    </delete>
+
+    <insert id="insertGroup" parameterType="SysConfigGroup">
+        insert into sys_config_group
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="configGroupId != null and configGroupId != ''">
+                    config_group_id,
+                </if>
+                <if test="groupParentId != null and groupParentId != ''">
+                    group_parent_id,
+                </if>
+                <if test="name!=null and name != ''">
+                    name,
+                </if>
+                <if test="enable != null and enable != ''">
+                    enable,
+                </if>
+                <if test="sort != null and sort != ''">
+                    sort,
+                </if>
+            </trim>
+            <trim prefix="values(" suffix=")" suffixOverrides=",">
+                <if test="configGroupId != null and configGroupId != ''">
+                    #{configGroupId},
+                </if>
+                <if test="groupParentId != null and groupParentId != ''">
+                    #{groupParentId},
+                </if>
+                <if test="name!=null and name != ''">
+                    #{name},
+                </if>
+                <if test="enable != null and enable != ''">
+                    #{enable},
+                </if>
+                <if test="sort != null and sort != ''">
+                    #{sort},
+                </if>
+            </trim>
+    </insert>
 
 </mapper>

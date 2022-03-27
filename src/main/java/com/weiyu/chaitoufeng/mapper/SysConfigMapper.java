@@ -2,6 +2,7 @@ package com.weiyu.chaitoufeng.mapper;
 
 import com.weiyu.chaitoufeng.domain.system.SysConfig;
 import com.weiyu.chaitoufeng.domain.system.SysConfigGroup;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -66,6 +67,17 @@ public interface SysConfigMapper {
     Integer deleteByIds(String[] id);
 
 
-    List<SysConfigGroup> selectTree();
+    List<SysConfigGroup> groupTree();
+
+    List<SysConfigGroup> groupList(SysConfigGroup configGroup);
+
+    //SysConfigGroup getGroupById();
+
+    Integer updateGroupById(SysConfigGroup configGroup);
+
+    Integer deleteGroupById(String id);
+
+    Integer insertGroup(SysConfigGroup configGroup);
+
 
 }

@@ -41,6 +41,18 @@
                                type="text">
                     </div>
                 </div>
+
+                <div class="layui-form-item layui-inline" id="configGroupItem">
+                    <label class="layui-form-label">分 组:</label>
+                    <div class="layui-input-block">
+                        <select id="configGroupType" name="configGroupId">
+                            <option value=""></option>
+                            <option th:each="group,stat:${configGroups}" th:value="${group.configGroupId}" th:text="${group.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">描 述:</label>
                     <div class="layui-input-block">
@@ -71,8 +83,6 @@
         let $ = layui.jquery;
 
         form.on('submit(btn-config-save)', function (data) {
-            // console.log(data.field.configType)
-            // console.log($("#configType").val())
             $.ajax({
                 url: '/system/config/save',
                 data: JSON.stringify(data.field),
