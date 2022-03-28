@@ -67,7 +67,6 @@ public class PoemsCiPaiController extends BaseController {
     public ModelAndView edit(Model model, String ciPaiId) {
         PoemCiPai ciPai = ciPaiService.getById(ciPaiId);
         model.addAttribute("ciPai",ciPai);
-        System.out.println(ciPai.getDescription());
         return jumpPage(MODULE_PATH + "edit");
     }
 

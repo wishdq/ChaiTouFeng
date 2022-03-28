@@ -1,7 +1,6 @@
 #----------------spring配置------------------------
 spring:
   profiles:
-    # 运 行 环 境
     active: dev
   web:
     resources:
@@ -56,7 +55,6 @@ server:
 
 #----------------mybatis配置规则-----------------
 mybatis-plus:
-  # 配 置 扫 描
   mapper-locations: classpath*:**/xml/**.xml
   #  扫描Entity, 加入此设置方可在Mybatis的XML文件中使用实体类的Alias
   type-aliases-package: com.weiyu.chaitoufeng.domain.*
@@ -65,7 +63,6 @@ mybatis-plus:
 
 #-------------- Pear 插 件 配 置 信 息---------------
 chaitoufeng:
-  # 权 限 配 置
   security:
     # 开 启 超 级 管 理 员 账 号 -- 不需要验证权限
     super-auth-open: true

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('古诗新增')"/>
+    <th:block th:include="common :: scorlling ('textarea')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标 题:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="title" placeholder="请输入古诗标题"
+                               maxlength="50"  lay-verify="required" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">朝 代:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="dynasty" placeholder="请输入朝代"
+                               maxlength="10" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">作 者:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="author" placeholder="请输入作者"
+                               maxlength="30" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类 型:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="type" placeholder="请输入类型"
+                               type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标 签:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="tags" placeholder="请输入标签"
+                               type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内 容:</label>
+                    <div class="layui-input-block">
+                        <textarea style="height: 150px" lay-verify="required" class="layui-textarea" name="content" placeholder="请输入内容"
+                                 ></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button class="pear-btn pear-btn-primary pear-btn-sm" lay-filter="poem-save" lay-submit="" type="submit">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button class="pear-btn pear-btn-sm" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['form', 'jquery', 'inputAttr'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let inputAttr = layui.inputAttr;
+
+        inputAttr.render();
+
+        form.on('submit(poem-save)', function (data) {
+            $.ajax({
+                url: '/poetry/poem/save',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("poem-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+
+    })
+</script>
+</body>
+</html>

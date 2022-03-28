@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiyu.chaitoufeng.mapper.poetry.PoemMapper">
+
+    <resultMap id="PoemMap" type="Poem">
+            <id property="poemId" column="poem_id" jdbcType="VARCHAR"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="dynasty" column="dynasty" jdbcType="VARCHAR"/>
+            <result property="author" column="author" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+            <result property="tags" column="tags" jdbcType="VARCHAR"/>
+            <result property="zhujie" column="zhujie" jdbcType="VARCHAR"/>
+            <result property="shangxi" column="shangxi" jdbcType="VARCHAR"/>
+            <result property="yiwen" column="yiwen" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--<sql id="Base_Column_List">-->
+    <!--    poem_id,title,dynasty,-->
+    <!--    author,content,type,-->
+    <!--    tags,zhujie,shangxi,-->
+    <!--    yiwen-->
+    <!--</sql>-->
+
+    <select id="selectList" resultMap="PoemMap">
+        select * from poem
+        <where>
+            <if test="poemId!=null and poemId!=''">
+                and poem_id like "%"#{poemId}"%"
+            </if>
+            <if test="title!=null and title!=''">
+                and title like "%"#{title}"%"
+            </if>
+            <if test="dynasty!=null and dynasty!=''">
+                and dynasty like "%"#{dynasty}"%"
+            </if>
+            <if test="author!=null and author!=''">
+                and author like "%"#{author}"%"
+            </if>
+            <if test="content!=null and content!=''">
+                and content like "%"#{content}"%"
+            </if>
+
+
+            <if test="type!=null and type!=''">
+                and type like "%"#{type}"%"
+            </if>
+            <if test="tags!=null and tags!=''">
+                and tags like "%"#{tags}"%"
+            </if>
+            <if test="zhujie!=null and zhujie!=''">
+                and zhujie like "%"#{zhujie}"%"
+            </if>
+            <if test="shangxi!=null and shangxi!=''">
+                and shangxi like "%"#{shangxi}"%"
+            </if>
+            <if test="yiwen!=null and yiwen!=''">
+                and yiwen like "%"#{yiwen}"%"
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                and update_time like "%"#{updateTime}"%"
+            </if>
+        </where>
+    </select>
+
+</mapper>

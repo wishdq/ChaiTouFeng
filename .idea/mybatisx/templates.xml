@@ -63,8 +63,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="PoemAuthor" />
-                  <option name="tableName" value="poem_author" />
+                  <option name="className" value="Poem" />
+                  <option name="tableName" value="poem" />
                 </TableUIInfo>
               </list>
             </option>

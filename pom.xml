@@ -20,10 +20,7 @@
         <activiti.version>6.0.0</activiti.version>
     </properties>
 
-
-
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -72,29 +69,6 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>2.6.4</version>
         </dependency>
-        <!--数据库访问框架-->
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-        <!--    <version>2.6.3</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--    <groupId>org.activiti</groupId>-->
-        <!--    <artifactId>activiti-spring-boot-starter-basic</artifactId>-->
-        <!--    <version>6.0.0</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--    <groupId>org.activiti</groupId>-->
-        <!--    <artifactId>activiti-json-converter</artifactId>-->
-        <!--    <version>${activiti.version}</version>-->
-        <!--    <exclusions>-->
-        <!--        <exclusion>-->
-        <!--            <groupId>org.activiti</groupId>-->
-        <!--            <artifactId>activiti-bpmn-model</artifactId>-->
-        <!--        </exclusion>-->
-        <!--    </exclusions>-->
-        <!--</dependency>-->
-        <!--Java工具包类库-->
         <!-- 工具类 -->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -124,11 +98,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.security</groupId>-->
-        <!--    <artifactId>spring-security-config</artifactId>-->
-        <!--    <version>5.5.2</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -152,20 +121,12 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.4.1</version>
         </dependency>
-
-        <!--<dependency>-->
-        <!--    <groupId>org.activiti</groupId>-->
-        <!--    <artifactId>activiti-engine</artifactId>-->
-        <!--    <version>7-201802-EA</version>-->
-        <!--</dependency>-->
-
         <!-- Aop 切面编程 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
             <version>2.6.4</version>
         </dependency>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -177,13 +138,6 @@
             <artifactId>commons-net</artifactId>
             <version>3.8.0</version>
         </dependency>
-
-        <!--<dependency>-->
-        <!--    <groupId>com.github.oshi</groupId>-->
-        <!--    <artifactId>oshi-json</artifactId>-->
-        <!--    <version>3.6.1</version>-->
-        <!--</dependency>-->
-
     </dependencies>
 
 

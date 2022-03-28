@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('古诗列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form action="" class="layui-form">
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">作 者:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="author" placeholder="请输入作者" type="text">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">朝 代:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="dynasty" placeholder="请输入朝代" type="text">
+                </div>
+            </div>
+            <button class="pear-btn pear-btn-md pear-btn-primary layui-inline" lay-filter="poem-query" lay-submit>
+                <i class="layui-icon layui-icon-search"></i>
+                查询
+            </button>
+            <br>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">标 题:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="title" placeholder="请输入标题" type="text">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">内 容:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="content" placeholder="请输入内容" type="text">
+                </div>
+            </div>
+            <button class="pear-btn pear-btn-md layui-inline" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="poem-table" lay-filter="poem-table"></table>
+    </div>
+</div>
+</body>
+
+<script id="poem-toolbar" type="text/html">
+    <button sec:authorize="hasPermission('/poetry/poem/add','poetry:poem:add')"
+            class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+    <button sec:authorize="hasPermission('/poetry/poem/remove','poetry:poem:remove')"
+            class="pear-btn pear-btn-danger pear-btn-md"
+            lay-event="batchRemove">
+        <i class="pear-icon pear-icon-ashbin"></i>
+        删除
+    </button>
+</script>
+
+<script id="poem-bar" type="text/html">
+    <button sec:authorize="hasPermission('/poetry/poem/edit','poetry:poem:edit')"
+            class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>
+    </button>
+    <button sec:authorize="hasPermission('/poetry/poem/remove','poetry:poem:remove')"
+            class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+</script>
+
+
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery', 'popup', 'common'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+        let common = layui.common;
+
+        let MODULE_PATH = "/poetry/poem/";
+
+        let cols = [
+            [
+                {type: 'checkbox'},
+                {title: '标题', field: 'title',edit:'text',width: 120},
+                {title: '朝代', field: 'dynasty',edit:'text', align: 'center',width: 60},
+                {title: '作者', field: 'author', edit:'text',align: 'center',width: 100},
+                {title: '内容', field: 'content'},
+                {title: '类型', field: 'type', edit:'text',align: 'center',width: 80},
+                {title: '标签', field: 'tags',align: 'center'},
+                {title: '操作', toolbar: '#poem-bar', align: 'center',width: 100, unresize: true}
+            ]
+        ]
+
+        table.render({
+            elem: '#poem-table',
+            url: MODULE_PATH + 'data',
+            page: true,
+            cols: cols,
+            skin: 'line',
+            toolbar: '#poem-toolbar',
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+
+        //监听单元格编辑
+        table.on('edit(poem-table)', function(obj){
+            let data = obj.data //得到所在修改过的行所有键值
+            $.ajax({
+                url: MODULE_PATH + 'update',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            // parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            // parent.layui.table.reload("config-group-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+        });
+
+        table.on('tool(poem-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        table.on('toolbar(poem-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        form.on('submit(poem-query)', function (data) {
+            table.reload('poem-table', {where: data.field})
+            return false;
+        });
+
+        window.add = function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: ['500px', '400px'],
+                content: MODULE_PATH + 'add'
+            });
+        }
+
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '修改',
+                shade: 0.1,
+                area: ['500px', '400px'],
+                content: MODULE_PATH + 'edit?poemId=' + obj.data['poemId']
+            });
+        }
+
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该角色', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove/" + obj.data['poemId'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        window.batchRemove = function (obj) {
+            let ids = common.checkField(obj, 'poemId');
+            if (common.isEmpty(ids)) {
+                popup.warning("未选中数据");
+                return false;
+            }
+            layer.confirm('确定要删除选中角色', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "batchRemove/" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                table.reload('poem-table');
+                            });
+                        } else {
+                            popup.failure(result.msg);
+                        }
+                    }
+                })
+            });
+        }
+
+        window.refresh = function () {
+            table.reload('poem-table');
+        }
+    })
+</script>
+</html>
