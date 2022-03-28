@@ -1,5 +1,8 @@
 package com.weiyu.chaitoufeng.config;
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,16 +19,27 @@ import javax.servlet.MultipartConfigElement;
 public class MyWebConfig {
 
     /**
+     * Mybatis-plus 分页
+     * @return
+     */
+    //@Bean
+    //public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    //    MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+    //    interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+    //    return interceptor;
+    //}
+
+    /**
      * 文件上传配置
      */
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        // 单个数据大小
-        factory.setMaxFileSize(DataSize.parse("30MB")); // KB,MB
-        //总上传数据大小
-        factory.setMaxRequestSize(DataSize.parse("100MB"));
-        return factory.createMultipartConfig();
-    }
+    //@Bean
+    //public MultipartConfigElement multipartConfigElement() {
+    //    MultipartConfigFactory factory = new MultipartConfigFactory();
+    //    // 单个数据大小
+    //    factory.setMaxFileSize(DataSize.parse("30MB")); // KB,MB
+    //    //总上传数据大小
+    //    factory.setMaxRequestSize(DataSize.parse("100MB"));
+    //    return factory.createMultipartConfig();
+    //}
 
 }

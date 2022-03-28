@@ -3,17 +3,17 @@
 <mapper namespace="com.weiyu.chaitoufeng.mapper.system.SysFileMapper">
     
     <resultMap id="SysFileMap" type="SysFile">
-        <id column="id" property="id"></id>
-        <result column="file_name" property="fileName"></result>
-        <result column="file_desc" property="fileDesc"></result>
-        <result column="file_path" property="filePath"></result>
-        <result column="file_type" property="fileType"></result>
-        <result column="create_by" property="createBy"></result>
-        <result column="create_time" property="createTime"></result>
-        <result column="update_by" property="updateBy"></result>
-        <result column="update_time" property="updateTime"></result>
-        <result column="remark" property="remark"></result>
-        <result column="target_date" property="targetDate"></result>
+        <id column="id" property="id"/>
+        <result column="file_name" property="fileName"/>
+        <result column="file_desc" property="fileDesc"/>
+        <result column="file_path" property="filePath"/>
+        <result column="file_type" property="fileType"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+        <result column="target_date" property="targetDate"/>
     </resultMap>
 
     <!-- 列 表 查 询 -->
@@ -31,15 +31,16 @@
     </select>
 
     <!-- 根据 ID 查询 -->
-    <select id="selectById" resultType="com.weiyu.chaitoufeng.domain.system.SysFile">
-        select id          as id,
-               file_name   as fileName,
-               file_desc   as fileDesc,
-               file_path   as filePath,
-               file_type   as fileType,
-               file_size   as fileSize,
-               create_by   as createBy,
-               create_time as createTime
+    <select id="selectById" resultMap="SysFileMap">
+        select *
+--                id          as id,
+--                file_name   as fileName,
+--                file_desc   as fileDesc,
+--                file_path   as filePath,
+--                file_type   as fileType,
+--                file_size   as fileSize,
+--                create_by   as createBy,
+--                create_time as createTime
         from sys_file
         where id = #{id}
     </select>

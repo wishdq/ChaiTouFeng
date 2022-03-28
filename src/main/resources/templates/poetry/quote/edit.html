@@ -12,22 +12,36 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">Id:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="ciPaiId" placeholder=""
-                               th:value="${ciPai.ciPaiId}" maxlength="30" show-word-limit type="text" >
+                        <input autocomplete="off" class="layui-input" name="quoteId" placeholder=""
+                               th:value="${quote.quoteId}" type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">词 牌 名:</label>
+                    <label class="layui-form-label">标 题:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="name" placeholder="请输入词牌名"
-                              th:value="${ciPai.name}" maxlength="30" show-word-limit type="text" >
+                        <input autocomplete="off" class="layui-input" name="title" placeholder="请输入名句标题"
+                               th:value="${quote.title}" maxlength="70" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">作 者:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="author" placeholder="请输入名句作者"
+                               th:value="${quote.author}" maxlength="20" show-word-limit type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">描 述 信 息:</label>
+                    <label class="layui-form-label">朝 代:</label>
                     <div class="layui-input-block">
-                        <textarea style="height: 200px" class="layui-textarea" name="description" placeholder="请输入词牌描述信息"
-                                  th:text="${ciPai.description}" maxlength="1000" show-word-limit></textarea>
+                        <input autocomplete="off" class="layui-input" name="dynasty" placeholder="请输入名句朝代"
+                               th:value="${quote.dynasty}" maxlength="8" show-word-limit type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">句 子:</label>
+                    <div class="layui-input-block">
+                        <textarea style="height: 150px" lay-verify="required" class="layui-textarea" name="sentence" placeholder="请输入内容"
+                               th:text="${quote.sentence}"   maxlength="200" show-word-limit></textarea>
                     </div>
                 </div>
 
@@ -58,7 +72,7 @@
 
         form.on('submit(ci-pai-save)', function (data) {
             $.ajax({
-                url: '/poetry/ciPai/update',
+                url: '/poetry/quote/update',
                 data: JSON.stringify(data.field),
                 dataType: 'json',
                 contentType: 'application/json',
@@ -67,7 +81,7 @@
                     if (result.success) {
                         layer.msg(result.msg, {icon: 1, time: 1000}, function () {
                             parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
-                            parent.layui.table.reload("ciPai-table");
+                            parent.layui.table.reload("quote-table");
                         });
                     } else {
                         layer.msg(result.msg, {icon: 2, time: 1000});

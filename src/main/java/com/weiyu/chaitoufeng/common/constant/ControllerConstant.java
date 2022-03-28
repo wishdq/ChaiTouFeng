@@ -10,11 +10,11 @@ public class ControllerConstant {
     // 系统业务基础路径
     public final static String API_SYSTEM_PREFIX = "/system/";
 
-    // 代码生成基础路径
-    public final static String API_Poetry_PREFIX = "/poetry/";
+    // poetry基础路径
+    public final static String API_POETRY_PREFIX = "/poetry/";
 
-    // 定时任务基础路径
-    public final static String API_SCHEDULE_PREFIX = "/schedule/";
+    // poetry基础路径
+    //public final static String API_QUOTE_PREFIX = "/quote/";
 
     // 工作流程基础路径
     public final static String API_PROCESS_PREFIX = "/process/";

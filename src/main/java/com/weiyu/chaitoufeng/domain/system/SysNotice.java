@@ -2,6 +2,7 @@ package com.weiyu.chaitoufeng.domain.system;
 
 import com.weiyu.chaitoufeng.domain.BaseDomain;
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 /**
  * Description: 消息通知对象 sys_notice
@@ -9,6 +10,7 @@ import lombok.Data;
  * Author: wish_dq
  */
 @Data
+@Alias("SysNotice")
 public class SysNotice extends BaseDomain {
     /** 编号 */
     private String id;

@@ -34,15 +34,14 @@ layui.config({
     design: "design",
     common: "common",
     eleTree: "eleTree",
-    dictionary: 'dictionary',
     json: 'json',
     cropper: "cropper",
+    dictionary: "dictionary",
     yaml: "yaml",
     theme: "theme",
     message: "message",
     toast: "toast",
     inputAttr: "inputAttr/js/index",
-    iconExtend: "iconExtend/iconExtend"
 }).use(['layer', 'theme'], function () {
     layui.theme.changeTheme(window, false);
 });

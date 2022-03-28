@@ -1,16 +1,5 @@
 #----------------spring配置------------------------
 spring:
-#    mvc:
-  # Rest风格启用
-  #    hiddenmethod:
-  #      filter:
-  #        enabled: true
-  #开启[请求参数]内容协商模式
-  #    contentnegotiation:
-  #      favor-parameter: true
-  # 静态文件的请求前缀
-  #static-path-pattern: /static/**
-
   profiles:
     # 运 行 环 境
     active: dev
@@ -66,13 +55,6 @@ server:
 
 
 #----------------mybatis配置规则-----------------
-#mybatis:
-#  #config-location: classpath:mybatis/mybatis-config.xml  #全局配置文件位置
-#  mapper-locations: classpath*:/mapper/*.xml  #sql映射文件位置
-#  configuration: # 使用了此种，config-location变不能开启
-#    map-underscore-to-camel-case: true
-
-
 mybatis-plus:
   # 配 置 扫 描
   mapper-locations: classpath*:**/xml/**.xml
@@ -121,9 +103,8 @@ chaitoufeng:
     # ftp服务器密码
     password:
 
-# Page Helper 分页配置
+# --------------Page Helper 分页配置------------------
 pagehelper:
-  # 方 言
   helper-dialect: mysql
   params: count=countSql
   reasonable: true

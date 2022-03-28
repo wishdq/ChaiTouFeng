@@ -62,6 +62,8 @@ public class PoemDynasty implements Serializable {
      */
     private String stateFounder;
 
+    private int sort;
+
     /**
      * 更新时间
      */

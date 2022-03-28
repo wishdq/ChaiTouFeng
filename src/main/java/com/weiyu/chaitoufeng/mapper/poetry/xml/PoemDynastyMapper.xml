@@ -11,6 +11,7 @@
         <result column="now_location" property="nowLocation"></result>
         <result column="nation" property="nation"></result>
         <result column="state_founder" property="stateFounder"></result>
+        <result column="sort" property="sort"></result>
         <result column="updated_time" property="updatedTime"></result>
     </resultMap>
 
@@ -41,11 +42,14 @@
             <if test="stateFounder!=null and stateFounder!=''">
                 and state_founder like "%"#{stateFounder}"%"
             </if>
+            <if test="sort!=null and sort!=''">
+                and sort like "%"#{sort}"%"
+            </if>
             <if test="updatedTime!=null and updatedTime!=''">
                 and updated_time like "%"#{updatedTime}"%"
             </if>
         </where>
-        order by dynasty_id asc
+        order by sort asc
     </select>
 
     <select id="getById" resultMap="PoemDynastyMap">
@@ -86,6 +90,9 @@
             <if test="stateFounder!=null">
                 state_founder,
             </if>
+            <if test="sort!=null">
+                sort,
+            </if>
             <if test="updatedTime!=null">
                 updated_time,
             </if>
@@ -114,6 +121,9 @@
             </if>
             <if test="stateFounder!=null">
                 #{stateFounder},
+            </if>
+            <if test="sort!=null">
+                #{sort},
             </if>
             <if test="updatedTime!=null">
                 #{updatedTime},
@@ -148,6 +158,9 @@
             </if>
             <if test="stateFounder!=null">
                 state_founder = #{stateFounder},
+            </if>
+            <if test="sort!=null">
+                sort = #{sort},
             </if>
             <if test="updatedTime!=null">
                 updated_time = #{updatedTime},

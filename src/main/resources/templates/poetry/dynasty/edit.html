@@ -8,59 +8,67 @@
     <div class="mainBox">
         <div class="main-container">
             <div class="main-container">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">Id:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="dynastyId" placeholder=""
+                               th:value="${dynasty.dynastyId}" type="text" >
+                    </div>
+                </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">序 号:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="dynastyId" placeholder=""
-                              th:value="${dynasty.dynastyId}" maxlength="10" show-word-limit type="text" >
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="sort" placeholder=""
+                              th:value="${dynasty.sort}" maxlength="10" show-word-limit type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">统 称:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input"  name="parentName" placeholder="请输入词牌名"
+                        <input autocomplete="off" class="layui-input"  name="parentName" placeholder="请输入统称"
                                th:value="${dynasty.parentName}" maxlength="10" show-word-limit type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">朝 代:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input"  name="name" placeholder="请输入词牌名"
+                        <input autocomplete="off" class="layui-input"  name="name" placeholder="请输入朝代"
                                th:value="${dynasty.name}" maxlength="10" show-word-limit type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">起 止:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input"  name="startEnd" placeholder="请输入词牌名"
+                        <input autocomplete="off" class="layui-input"  name="startEnd" placeholder="请输入朝代起止"
                                th:value="${dynasty.startEnd}" maxlength="20" show-word-limit type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">首 都:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input"  name="capital" placeholder="请输入词牌名"
+                        <input autocomplete="off" class="layui-input"  name="capital" placeholder="请输入朝代都城"
                                th:value="${dynasty.capital}" maxlength="10" show-word-limit type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">当 今 位 置:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input"  name="name" placeholder="请输入词牌名"
+                        <input autocomplete="off" class="layui-input"  name="nowLocation" placeholder="请输入朝代都城当今位置"
                                th:value="${dynasty.nowLocation}" maxlength="20" show-word-limit type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">民 族:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input"  name="nation" placeholder="请输入词牌名"
+                        <input autocomplete="off" class="layui-input"  name="nation" placeholder="请输入建立朝代的民族"
                                th:value="${dynasty.nation}" maxlength="10" show-word-limit type="text" >
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">创 立 者:</label>
                     <div class="layui-input-block">
-                        <input autocomplete="off" class="layui-input"  name="stateFounder" placeholder="请输入词牌名"
+                        <input autocomplete="off" class="layui-input"  name="stateFounder" placeholder="请输入朝代建立者"
                                th:value="${dynasty.stateFounder}" maxlength="10" show-word-limit type="text" >
                     </div>
                 </div>

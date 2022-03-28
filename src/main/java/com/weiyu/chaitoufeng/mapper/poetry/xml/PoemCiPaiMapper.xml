@@ -3,10 +3,10 @@
 <mapper namespace="com.weiyu.chaitoufeng.mapper.poetry.PoemCiPaiMapper">
 
     <resultMap id="PoemCiPaiMap" type="PoemCiPai">
-        <id column="ci_pai_id" property="ciPaiId"></id>
-        <result column="name" property="name"></result>
-        <result column="description" property="description"></result>
-        <result column="update_time" property="updateTime"></result>
+        <id column="ci_pai_id" property="ciPaiId"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <select id="selectList" resultMap="PoemCiPaiMap">

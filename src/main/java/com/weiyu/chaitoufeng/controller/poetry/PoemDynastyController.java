@@ -1,8 +1,8 @@
 package com.weiyu.chaitoufeng.controller.poetry;
 
-import com.alibaba.fastjson.JSON;
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
 import com.weiyu.chaitoufeng.common.result.Result;
+import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.poetry.PoemDynasty;
 import com.weiyu.chaitoufeng.domain.request.PageDomain;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(ControllerConstant.API_Poetry_PREFIX + "dynasty")
+@RequestMapping(ControllerConstant.API_POETRY_PREFIX + "dynasty")
 public class PoemDynastyController extends BaseController {
 
     private final String MODULE_PATH = "poetry/dynasty/";
@@ -41,8 +41,6 @@ public class PoemDynastyController extends BaseController {
     @GetMapping("data")
     @PreAuthorize("hasPermission('/poetry/dynasty/data','poetry:dynasty:data')")
     public ResultTable data(PageDomain pageDomain, PoemDynasty param) {
-        //PageInfo<Poemdynasty> pageInfo = dynastyService.page(param, pageDomain);
-        //return pageTable(pageInfo.getList(), pageInfo.getTotal());
         List<PoemDynasty> dynasties = dynastyService.list();
         ResultTable resultTable = new ResultTable();
         resultTable.setCode(0);
@@ -62,7 +60,7 @@ public class PoemDynastyController extends BaseController {
     @PostMapping("save")
     @PreAuthorize("hasPermission('/poetry/dynasty/add','poetry:dynasty:add')")
     public Result save(@RequestBody PoemDynasty dynasty) {
-        //dynasty.setdynastyId(SequenceUtil.makeStringId());
+        dynasty.setDynastyId(SequenceUtil.makeStringId());
         dynasty.setUpdatedTime(LocalDateTime.now());
         boolean result = dynastyService.save(dynasty);
         return decide(result);

@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
  * Author: wish_dq
  */
 @RestController
-@RequestMapping(ControllerConstant.API_Poetry_PREFIX + "ciPai")
+@RequestMapping(ControllerConstant.API_POETRY_PREFIX + "ciPai")
 public class PoemsCiPaiController extends BaseController {
 
     private final String MODULE_PATH = "poetry/ciPai/";
@@ -93,6 +93,4 @@ public class PoemsCiPaiController extends BaseController {
         boolean result = ciPaiService.batchRemove(ids.split(","));
         return decide(result);
     }
-
-
 }

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="common :: header('词牌列表')"/>
+    <th:block th:include="common :: header('作者列表')"/>
 </head>
 <body class="pear-container">
 <div class="layui-card">
     <div class="layui-card-body">
         <form action="" class="layui-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">词 牌 名:</label>
+                <label class="layui-form-label">作 者:</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" name="name" placeholder="请输入词牌名" type="text">
+                    <input class="layui-input" name="name" placeholder="请输入作者" type="text">
                 </div>
-                <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="ciPai-query" lay-submit>
+                <label class="layui-form-label">朝 代:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="dynasty" placeholder="请输入朝代" type="text">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="author-query" lay-submit>
                     <i class="layui-icon layui-icon-search"></i>
                     查询
                 </button>
@@ -26,18 +30,18 @@
 </div>
 <div class="layui-card">
     <div class="layui-card-body">
-        <table id="ciPai-table" lay-filter="ciPai-table"></table>
+        <table id="author-table" lay-filter="author-table"></table>
     </div>
 </div>
 </body>
 
-<script id="ciPai-toolbar" type="text/html">
-    <button sec:authorize="hasPermission('/poetry/ciPai/add','poetry:ciPai:add')"
+<script id="author-toolbar" type="text/html">
+    <button sec:authorize="hasPermission('/poetry/author/add','poetry:author:add')"
             class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
         <i class="layui-icon layui-icon-add-1"></i>
         新增
     </button>
-    <button sec:authorize="hasPermission('/poetry/ciPai/remove','poetry:ciPai:remove')"
+    <button sec:authorize="hasPermission('/poetry/author/remove','poetry:author:remove')"
             class="pear-btn pear-btn-danger pear-btn-md"
             lay-event="batchRemove">
         <i class="pear-icon pear-icon-ashbin"></i>
@@ -45,11 +49,11 @@
     </button>
 </script>
 
-<script id="ciPai-bar" type="text/html">
-    <button sec:authorize="hasPermission('/poetry/ciPai/edit','poetry:ciPai:edit')"
+<script id="author-bar" type="text/html">
+    <button sec:authorize="hasPermission('/poetry/author/edit','poetry:author:edit')"
             class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>
     </button>
-    <button sec:authorize="hasPermission('/poetry/ciPai/remove','poetry:ciPai:remove')"
+    <button sec:authorize="hasPermission('/poetry/author/remove','poetry:author:remove')"
             class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
     </button>
 </script>
@@ -64,24 +68,25 @@
         let popup = layui.popup;
         let common = layui.common;
 
-        let MODULE_PATH = "/poetry/ciPai/";
+        let MODULE_PATH = "/poetry/author/";
 
         let cols = [
             [
                 {type: 'checkbox'},
-                {title: '词牌名', field: 'name', align: 'center',edit:'text',width: 150},
-                {title: '描述信息', field: 'description', align: 'center'},
-                {title: '操作', toolbar: '#ciPai-bar', align: 'center',width: 100, unresize: true}
+                {title: '作者', field: 'name', edit:'text',align: 'center',width: 100},
+                {title: '朝代', field: 'dynasty',edit:'text', align: 'center',width: 90},
+                {title: '简介', field: 'briefIntro',edit:'text'},
+                {title: '操作', toolbar: '#author-bar', align: 'center',width: 100, unresize: true}
             ]
         ]
 
         table.render({
-            elem: '#ciPai-table',
+            elem: '#author-table',
             url: MODULE_PATH + 'data',
             page: true,
             cols: cols,
             skin: 'line',
-            toolbar: '#ciPai-toolbar',
+            toolbar: '#author-toolbar',
             defaultToolbar: [{
                 title: '刷新',
                 layEvent: 'refresh',
@@ -91,7 +96,7 @@
 
 
         //监听单元格编辑
-        table.on('edit(ciPai-table)', function(obj){
+        table.on('edit(author-table)', function(obj){
             let data = obj.data //得到所在修改过的行所有键值
             $.ajax({
                 url: MODULE_PATH + 'update',
@@ -109,7 +114,7 @@
             })
         });
 
-        table.on('tool(ciPai-table)', function (obj) {
+        table.on('tool(author-table)', function (obj) {
             if (obj.event === 'remove') {
                 window.remove(obj);
             } else if (obj.event === 'edit') {
@@ -117,7 +122,7 @@
             }
         });
 
-        table.on('toolbar(ciPai-table)', function (obj) {
+        table.on('toolbar(author-table)', function (obj) {
             if (obj.event === 'add') {
                 window.add();
             } else if (obj.event === 'refresh') {
@@ -127,8 +132,8 @@
             }
         });
 
-        form.on('submit(ciPai-query)', function (data) {
-            table.reload('ciPai-table', {where: data.field})
+        form.on('submit(author-query)', function (data) {
+            table.reload('author-table', {where: data.field})
             return false;
         });
 
@@ -148,7 +153,7 @@
                 title: '修改',
                 shade: 0.1,
                 area: ['500px', '400px'],
-                content: MODULE_PATH + 'edit?ciPaiId=' + obj.data['ciPaiId']
+                content: MODULE_PATH + 'edit?authorId=' + obj.data['authorId']
             });
         }
 
@@ -157,7 +162,7 @@
                 layer.close(index);
                 let loading = layer.load();
                 $.ajax({
-                    url: MODULE_PATH + "remove/" + obj.data['ciPaiId'],
+                    url: MODULE_PATH + "remove/" + obj.data['authorId'],
                     dataType: 'json',
                     type: 'delete',
                     success: function (result) {
@@ -175,7 +180,7 @@
         }
 
         window.batchRemove = function (obj) {
-            let ids = common.checkField(obj, 'ciPaiId');
+            let ids = common.checkField(obj, 'authorId');
             if (common.isEmpty(ids)) {
                 popup.warning("未选中数据");
                 return false;
@@ -191,7 +196,7 @@
                         layer.close(loading);
                         if (result.success) {
                             popup.success(result.msg, function () {
-                                table.reload('ciPai-table');
+                                table.reload('author-table');
                             });
                         } else {
                             popup.failure(result.msg);
@@ -202,7 +207,7 @@
         }
 
         window.refresh = function () {
-            table.reload('ciPai-table');
+            table.reload('author-table');
         }
     })
 </script>

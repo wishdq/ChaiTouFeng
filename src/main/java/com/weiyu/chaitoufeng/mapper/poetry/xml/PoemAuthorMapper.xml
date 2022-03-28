@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiyu.chaitoufeng.mapper.poetry.PoemAuthorMapper">
+
+    <resultMap id="PoemAuthorMap" type="PoemAuthor">
+            <id property="authorId" column="author_id" jdbcType="OTHER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <!--<result property="namePy" column="name_py" jdbcType="VARCHAR"/>-->
+            <result property="dynasty" column="dynasty" jdbcType="VARCHAR"/>
+            <result property="briefIntro" column="brief_Intro" jdbcType="VARCHAR"/>
+            <result property="elseIntro" column="elseIntro" jdbcType="VARCHAR"/>
+            <!--<result property="birthYear" column="birth_year" jdbcType="VARCHAR"/>-->
+            <!--<result property="deadYear" column="dead_year" jdbcType="VARCHAR"/>-->
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <!--<result property="baiduWiki" column="baidu_wiki" jdbcType="VARCHAR"/>-->
+            <!--<result property="worksCount" column="works_count" jdbcType="SMALLINT"/>-->
+    </resultMap>
+
+
+    <select id="selectList" resultMap="PoemAuthorMap">
+        select * from poem_author
+        <where>
+            <if test="authorId!=null and authorId!=''">
+                and author_id like "%"#{authorId}"%"
+            </if>
+            <if test="name!=null and name!=''">
+                and name like "%"#{name}"%"
+            </if>
+            <if test="dynasty!=null and dynasty!=''">
+                and dynasty like "%"#{dynasty}"%"
+            </if>
+            <if test="briefIntro!=null and briefIntro!=''">
+                and brief_Intro like "%"#{briefIntro}"%"
+            </if>
+            <if test="elseIntro!=null and elseIntro!=''">
+                and else_Intro like "%"#{elseIntro}"%"
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                and update_time like "%"#{updateTime}"%"
+            </if>
+        </where>
+
+    </select>
+
+    <!-- 根据 Id 修改系统配置数据 -->
+    <update id="updateById" parameterType="PoemAuthor">
+        update poem_author
+        <set>
+            <if test="authorId!=null">
+                author_id = #{authorId},
+            </if>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="dynasty!=null">
+                dynasty = #{dynasty},
+            </if>
+            <if test="briefIntro!=null">
+                brief_Intro = #{briefIntro},
+            </if>
+            <if test="elseIntro!=null">
+                else_Intro = #{elseIntro},
+            </if>
+            <if test="updateTime!=null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where author_id = #{authorId}
+    </update>
+
+</mapper>

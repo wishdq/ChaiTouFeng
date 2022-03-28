@@ -165,12 +165,9 @@
         iconPicker.render({
             elem: '#icon',
             type: 'fontClass',
-            search: true,
+            search: false,
             page: true,
-            limit: 12,
-            click: function (data) {
-                console.log(data);
-            }
+            limit: 12
         });
 
         iconPicker.checkIcon("icon", [[${sysPower.icon}]]);
