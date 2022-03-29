@@ -3,9 +3,9 @@
 <mapper namespace="com.weiyu.chaitoufeng.mapper.system.SysUserRoleMapper">
 
     <resultMap id="SysUserRoleMap" type="SysUserRole">
-        <id column="id" property="id"></id>
-        <result column="user_id" property="userId"></result>
-        <result column="role_id" property="roleId"></result>
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="role_id" property="roleId"/>
     </resultMap>
 
     <insert id="batchInsert" parameterType="list">

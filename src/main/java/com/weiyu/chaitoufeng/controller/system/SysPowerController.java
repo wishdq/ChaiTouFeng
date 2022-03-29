@@ -1,16 +1,15 @@
 package com.weiyu.chaitoufeng.controller.system;
 
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
-import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
-import com.weiyu.chaitoufeng.domain.response.ResultTree;
-import com.weiyu.chaitoufeng.domain.response.ResultTable;
+import com.weiyu.chaitoufeng.controller.base.BaseController;
+import com.weiyu.chaitoufeng.domain.build.ResultTable;
+import com.weiyu.chaitoufeng.domain.build.ResultTree;
 import com.weiyu.chaitoufeng.domain.system.SysPower;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import com.weiyu.chaitoufeng.service.system.ISysPowerService;
-import io.swagger.annotations.Api;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
@@ -27,26 +26,19 @@ import java.util.List;
  * Author: wish_dq
  */
 @RestController
-@Api(tags = {"系统权限"})
 @RequestMapping(ControllerConstant.API_SYSTEM_PREFIX + "power")
 public class SysPowerController extends BaseController {
 
-    /**
-     * Describe: 基础路径
-     */
+    //基础路径
     private static String MODULE_PATH = "system/power/";
 
-    /**
-     * Describe: 权限模块服务
-     */
+    //权限模块服务
     @Resource
     private ISysPowerService sysPowerService;
 
 
     /**
      * Describe: 获取权限列表视图
-     * Param ModelAndView
-     * Return 权限列表视图
      */
     @GetMapping("main")
     @PreAuthorize("hasPermission('/system/power/main','sys:power:main')")
@@ -56,8 +48,6 @@ public class SysPowerController extends BaseController {
 
     /**
      * Describe: 获取权限列表数据
-     * Param ModelAndView
-     * Return 权限列表数据
      */
     @GetMapping("data")
     @PreAuthorize("hasPermission('/system/power/data','sys:power:data')")
@@ -67,8 +57,6 @@ public class SysPowerController extends BaseController {
 
     /**
      * Describe: 获取权限新增视图
-     * Param ModelAndView
-     * Return 权限新增视图
      */
     @GetMapping("add")
     @PreAuthorize("hasPermission('/system/power/add','sys:power:add')")
@@ -78,8 +66,6 @@ public class SysPowerController extends BaseController {
 
     /**
      * Describe: 获取权限修改视图
-     * Param ModelAndView
-     * Return 权限修改视图
      */
     @GetMapping("edit")
     @PreAuthorize("hasPermission('/system/power/edit','sys:power:edit')")
@@ -89,9 +75,7 @@ public class SysPowerController extends BaseController {
     }
 
     /**
-     * Describe: 保存权限信息
-     * Param: SysPower
-     * Return: ResuBean
+     * Describe: 保存权限信息n
      */
     @PostMapping("save")
     @PreAuthorize("hasPermission('/system/power/add','sys:power:add')")
@@ -106,8 +90,6 @@ public class SysPowerController extends BaseController {
 
     /**
      * Describe: 修改权限信息
-     * Param SysPower
-     * Return 执行结果
      */
     @PutMapping("update")
     @PreAuthorize("hasPermission('/system/power/edit','sys:power:edit')")
@@ -123,8 +105,6 @@ public class SysPowerController extends BaseController {
 
     /**
      * Describe: 根据 id 进行删除
-     * Param id
-     * Return Result
      */
     @DeleteMapping("remove/{id}")
     @PreAuthorize("hasPermission('/system/power/remove','sys:power:remove')")
@@ -138,8 +118,6 @@ public class SysPowerController extends BaseController {
 
     /**
      * Describe: 获取父级权限选择数据
-     * Param sysPower
-     * Return Result
      */
     @GetMapping("selectParent")
     public ResultTree selectParent(SysPower sysPower) {
@@ -154,8 +132,6 @@ public class SysPowerController extends BaseController {
 
     /**
      * Describe: 根据 Id 开启用户
-     * Param powerId
-     * Return Result
      */
     @PutMapping("enable")
     public Result enable(@RequestBody SysPower sysPower) {
@@ -166,8 +142,6 @@ public class SysPowerController extends BaseController {
 
     /**
      * Describe: 根据 Id 禁用用户
-     * Param powerId
-     * Return Result
      */
     @PutMapping("disable")
     public Result disable(@RequestBody SysPower sysPower) {

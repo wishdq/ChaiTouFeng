@@ -39,7 +39,6 @@ spring:
     timeout: 1000
 
 
-
 #---------------server配置--------------------
 server:
   port: 8080
@@ -60,6 +59,7 @@ mybatis-plus:
   type-aliases-package: com.weiyu.chaitoufeng.domain.*
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 
 #-------------- Pear 插 件 配 置 信 息---------------
 chaitoufeng:
@@ -89,16 +89,7 @@ chaitoufeng:
     windows-path: C:\Users\wish_dq\Desktop\毕业\ChaiTouFeng\home\uploads\
     # linux 上传路径
     linux-path: /home/uploads/
-    # 是否使用ftp服务器
-    ftp-use: false
-    #  ftp服务器地址
-    hostname:
-    # ftp服务器端口
-    port: 0000
-    # ftp服务器用户名
-    username:
-    # ftp服务器密码
-    password:
+
 
 # --------------Page Helper 分页配置------------------
 pagehelper:

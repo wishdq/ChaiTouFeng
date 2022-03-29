@@ -3,49 +3,30 @@
 <mapper namespace="com.weiyu.chaitoufeng.mapper.system.SysLogMapper">
 
     <resultMap id="SysLogMap" type="SysLog">
-        <id column="id" property="id"></id>
-        <result column="title" property="title"></result>
-        <result column="method" property="method"></result>
-        <result column="business_type" property="businessType"></result>
-        <result column="request_method" property="requestMethod"></result>
-        <result column="operate_name" property="operateName"></result>
-        <result column="create_time" property="createTime"></result>
-        <result column="operate_url" property="operateUrl"></result>
-        <result column="operate_address" property="operateAddress"></result>
-        <result column="request_param" property="requestParam"></result>
-        <result column="response_body" property="responseBody"></result>
-        <result column="success" property="success"></result>
-        <result column="error_msg" property="errorMsg"></result>
-        <result column="create_time" property="createTime"></result>
-        <result column="description" property="description"></result>
-        <result column="create_time" property="createTime"></result>
-        <result column="request_body" property="requestBody"></result>
-        <result column="logging_type" property="loggingType"></result>
-        <result column="browser" property="browser"></result>
-        <result column="system_os" property="systemOs"></result>
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="method" property="method"/>
+        <result column="business_type" property="businessType"/>
+        <result column="request_method" property="requestMethod"/>
+        <result column="operate_name" property="operateName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="operate_url" property="operateUrl"/>
+        <result column="operate_address" property="operateAddress"/>
+        <result column="request_param" property="requestParam"/>
+        <result column="response_body" property="responseBody"/>
+        <result column="success" property="success"/>
+        <result column="error_msg" property="errorMsg"/>
+        <result column="create_time" property="createTime"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="request_body" property="requestBody"/>
+        <result column="logging_type" property="loggingType"/>
+        <result column="browser" property="browser"/>
+        <result column="system_os" property="systemOs"/>
     </resultMap>
 
-    <select id="selectList" resultType="SysLog">
-        select
-        id as id,
-        title as title,
-        method as method,
-        business_type as businessType,
-        request_method as requestMethod,
-        operate_name as operateName,
-        operate_url as operateUrl,
-        operate_address as operateAddress,
-        request_param as requestParam,
-        response_body as responseBody,
-        success as success,
-        error_msg as errorMsg,
-        create_time as createTime,
-        description as description,
-        request_body as requestBody,
-        logging_type as loggingType,
-        browser as browser,
-        system_os as systemOs
-        from sys_logging
+    <select id="selectList" resultMap="SysLogMap">
+        select * from sys_logging
         where logging_type = #{loggingType}
         <if test="startTime!=null">
             and create_time &gt;= #{startTime}
@@ -57,26 +38,7 @@
     </select>
 
     <select id="selectTopLoginLog" resultMap="SysLogMap">
-        select *
---                id              as id,
---                title           as title,
---                method          as method,
---                business_type   as businessType,
---                request_method  as requestMethod,
---                operate_name    as operateName,
---                operate_url     as operateUrl,
---                operate_address as operateAddress,
---                request_param   as requestParam,
---                response_body   as responseBody,
---                success         as success,
---                error_msg       as errorMsg,
---                create_time     as createTime,
---                description     as description,
---                request_body    as requestBody,
---                logging_type    as loggingType,
---                browser         as browser,
---                system_os       as systemOs
-        from sys_logging
+        select * from sys_logging
         where logging_type = "LOGIN"
           and operate_name = #{operateName}
         order by create_time desc
@@ -199,27 +161,8 @@
         </trim>
     </insert>
 
-    <select id="getById" resultType="SysLog">
-        select
-        id as id,
-        title as title,
-        method as method,
-        business_type as businessType,
-        request_method as requestMethod,
-        operate_name as operateName,
-        operate_url as operateUrl,
-        operate_address as operateAddress,
-        request_param as requestParam,
-        response_body as responseBody,
-        success as success,
-        error_msg as errorMsg,
-        create_time as createTime,
-        description as description,
-        request_body as requestBody,
-        logging_type as loggingType,
-        browser as browser,
-        system_os as systemOs
-        from sys_logging
+    <select id="getById" resultMap="SysLogMap">
+        select * from sys_logging
         <where>
             <if test=" id != null and id != '' ">
                 id = #{id}

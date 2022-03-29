@@ -32,7 +32,6 @@ public class SecurityUtil {
     }
     /**
      * 验证当前用户是否登录
-     * @return boolean 是否登录
      */
     public static boolean isAuthentication() {
         // if security session eq s-id is not null to admin

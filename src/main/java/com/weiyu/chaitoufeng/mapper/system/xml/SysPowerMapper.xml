@@ -3,26 +3,26 @@
 <mapper namespace="com.weiyu.chaitoufeng.mapper.system.SysPowerMapper">
 
     <resultMap id="SysPowerMap" type="SysPower">
-        <id column="power_id" property="powerId"></id>
-        <result column="power_name" property="powerName"></result>
-        <result column="power_code" property="powerCode"></result>
-        <result column="power_url" property="powerUrl"></result>
-        <result column="parent_id" property="parentId"></result>
-        <result column="power_type" property="powerType"></result>
-        <result column="open_type" property="openType"></result>
-        <result column="icon" property="icon"></result>
-        <result column="sort" property="sort"></result>
+        <id column="power_id" property="powerId"/>
+        <result column="power_name" property="powerName"/>
+        <result column="power_code" property="powerCode"/>
+        <result column="power_url" property="powerUrl"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="power_type" property="powerType"/>
+        <result column="open_type" property="openType"/>
+        <result column="icon" property="icon"/>
+        <result column="sort" property="sort"/>
     </resultMap>
 
     <resultMap id="ResuMenuMap" type="com.weiyu.chaitoufeng.domain.system.SysMenu">
-        <id column="power_id" property="id"></id>
-        <result column="parent_id" property="parentId"></result>
-        <result column="power_name" property="title"></result>
-        <result column="username" property="username"></result>
-        <result column="power_type" property="type"></result>
-        <result column="icon" property="icon"></result>
-        <result column="open_type" property="openType"></result>
-        <result column="power_url" property="href"></result>
+        <id column="power_id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="power_name" property="title"/>
+        <result column="username" property="username"/>
+        <result column="power_type" property="type"/>
+        <result column="icon" property="icon"/>
+        <result column="open_type" property="openType"/>
+        <result column="power_url" property="href"/>
     </resultMap>
 
     <select id="selectMenuByUsername" parameterType="string" resultMap="ResuMenuMap">

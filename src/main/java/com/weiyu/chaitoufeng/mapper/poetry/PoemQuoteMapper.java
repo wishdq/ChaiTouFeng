@@ -29,10 +29,6 @@ public interface PoemQuoteMapper extends BaseMapper<PoemQuote> {
 
     int updateById(PoemQuote entity);
 
-
-    //@Delete("delete  from poem_quote where quote_id = #{quoteId}")
-    //int deleteById(String id);
-
     @Override
     int deleteById(Serializable id);
 

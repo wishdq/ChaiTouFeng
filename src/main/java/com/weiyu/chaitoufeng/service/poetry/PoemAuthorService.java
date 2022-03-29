@@ -3,9 +3,7 @@ package com.weiyu.chaitoufeng.service.poetry;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.poetry.PoemAuthor;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.weiyu.chaitoufeng.domain.poetry.PoemDynasty;
-import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 
 /**
 * @author wish_dq

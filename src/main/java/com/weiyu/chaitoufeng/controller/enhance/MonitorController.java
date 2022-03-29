@@ -1,10 +1,9 @@
 package com.weiyu.chaitoufeng.controller.enhance;
 
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
+import com.weiyu.chaitoufeng.common.server.CpuInfo;
 import com.weiyu.chaitoufeng.common.tools.SystemUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.common.server.CpuInfo;
-import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
  * Author: wish_dq
  */
 @RestController
-@Api(tags = {"服务监控"})
 @RequestMapping(ControllerConstant.API_SYSTEM_PREFIX + "monitor")
 public class MonitorController extends BaseController {
 

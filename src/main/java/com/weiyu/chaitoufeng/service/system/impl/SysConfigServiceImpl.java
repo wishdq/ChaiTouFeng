@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.service.system.ISysConfigService;
 import com.weiyu.chaitoufeng.domain.system.SysConfigGroup;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.system.SysConfig;
 import com.weiyu.chaitoufeng.mapper.system.SysConfigMapper;
 import org.springframework.stereotype.Service;
@@ -28,8 +28,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     /**
      * Describe: 根据条件查询系统配置列表数据
-     * Param: SysConfig
-     * Return: List<SysConfig>
      */
     @Override
     public List<SysConfig> list(SysConfig param) {
@@ -40,8 +38,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     /**
      * Describe: 根据条件查询系统配置列表数据 分页
-     * Param: SysConfig
-     * Return: PageInfo<SysConfig>
      */
     @Override
     public PageInfo<SysConfig> page(PageDomain pageDomain,SysConfig param) {
@@ -52,8 +48,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     /**
      * Describe: 保存系统配置数据
-     * Param: SysConfig
-     * Return: Boolean
      */
     @Override
     public Boolean save(SysConfig sysConfig) {
@@ -63,8 +57,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     /**
      * Describe: 根据 ID 查询系统配置
-     * Param: id
-     * Return: 返回系统配置信息
      */
     @Override
     public SysConfig getById(String id) {
@@ -73,8 +65,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     /**
      * Describe: 根据 Code 查询系统配置
-     * Param: code
-     * Return: 返回系统配置信息
      */
     @Override
     public SysConfig getByCode(String code) {
@@ -83,8 +73,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     /**
      * Describe: 根据 ID 修改系统配置
-     * Param: SysConfig
-     * Return: Boolean
      */
     @Override
     public Boolean updateById(SysConfig sysConfig) {
@@ -94,8 +82,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     /**
      * Describe: 根据 ID 删除系统配置
-     * Param: id
-     * Return: Boolean
      */
     @Override
     public Boolean remove(String id) {
@@ -105,8 +91,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     /**
      * Describe: 根据 ID 批量删除系统配置
-     * Param: ids
-     * Return: Boolean
      */
     @Override
     public Boolean batchRemove(String[] ids) {
@@ -126,13 +110,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
     @Override
     public List<SysConfigGroup> groupData() {
         return sysConfigMapper.groupList(null);
-    }
-
-    @Override
-    public SysConfigGroup getGroupById(String id) {
-        SysConfigGroup configGroup = new SysConfigGroup();
-        configGroup.setConfigGroupId(id);
-        return sysConfigMapper.groupList(configGroup).get(0);
     }
 
 

@@ -5,11 +5,10 @@ import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.ResultTable;
 import com.weiyu.chaitoufeng.domain.poetry.PoemAuthor;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
-import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.service.poetry.PoemAuthorService;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -90,7 +89,6 @@ public class PoemAuthorController extends BaseController {
     }
 
     @DeleteMapping("batchRemove/{ids}")
-    @ApiOperation(value = "批量删除系统配置数据")
     @PreAuthorize("hasPermission('/poetry/author/remove','poetry:author:remove')")
     public Result batchRemove(@PathVariable String ids) {
         boolean result = authorService.removeBatchByIds(Arrays.asList(ids.split(",")));

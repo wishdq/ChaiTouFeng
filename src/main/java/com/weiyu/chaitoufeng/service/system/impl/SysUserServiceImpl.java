@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.config.property.SecurityProperty;
 import com.weiyu.chaitoufeng.domain.system.SysMenu;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.system.SysRole;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import com.weiyu.chaitoufeng.domain.system.SysUserRole;
@@ -61,8 +61,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 根据条件查询用户列表数据
-     * Param: username
-     * Return: 返回用户列表数据
      */
     @Override
     public List<SysUser> list(SysUser param) {
@@ -71,8 +69,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 根据条件查询用户列表数据  分页
-     * Param: username
-     * Return: 返回分页用户列表数据
      */
     @Override
     public PageInfo<SysUser> page(SysUser param, PageDomain pageDomain) {
@@ -83,8 +79,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 根据 ID 查询用户
-     * Param: id
-     * Return: 返回用户信息
      */
     @Override
     public SysUser getById(String id) {
@@ -93,8 +87,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 根据 id 删除用户数据
-     * Param: id
-     * Return: Boolean
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -106,8 +98,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 根据 id 批量删除用户数据
-     * Param: ids
-     * Return: Boolean
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -119,8 +109,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 保存用户数据
-     * Param: SysUser
-     * Return: 操作结果
      */
     @Override
     public boolean save(SysUser sysUser) {
@@ -135,8 +123,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 修改用户数据
-     * Param: SysUser
-     * Return: 操作结果
      */
     @Override
     public boolean update(SysUser sysUser) {
@@ -146,8 +132,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 保存用户角色数据
-     * Param: SysUser
-     * Return: 操作结果
      */
     @Override
     public boolean saveUserRole(String userId, List<String> roleIds) {
@@ -166,8 +150,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 获取
-     * Param: SysUser
-     * Return: 操作结果
      */
     @Override
     public List<SysRole> getUserRole(String userId) {
@@ -185,8 +167,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 获取用户菜单
-     * Param: username
-     * Return: Result
      */
     @Override
     public List<SysMenu> getUserMenu(String username) {
@@ -196,8 +176,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
     /**
      * Describe: 递归获取菜单tree
-     * Param: sysMenus
-     * Return: 操作结果
      */
     @Override
     public List<SysMenu> toUserMenu(List<SysMenu> sysMenus, String parentId) {

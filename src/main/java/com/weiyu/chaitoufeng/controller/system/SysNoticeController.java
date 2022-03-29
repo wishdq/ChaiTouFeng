@@ -2,17 +2,16 @@ package com.weiyu.chaitoufeng.controller.system;
 
 import cn.hutool.core.convert.Convert;
 import com.github.pagehelper.PageInfo;
-import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.domain.system.SysNotice;
-import com.weiyu.chaitoufeng.service.system.ISysNoticeService;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
-import com.weiyu.chaitoufeng.domain.response.ResultTable;
+import com.weiyu.chaitoufeng.controller.base.BaseController;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.ResultTable;
+import com.weiyu.chaitoufeng.domain.system.SysNotice;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
+import com.weiyu.chaitoufeng.service.system.ISysNoticeService;
 import com.weiyu.chaitoufeng.service.system.ISysUserService;
-import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -32,7 +31,6 @@ import java.util.Map;
  * Author: wish_dq
  */
 @RestController
-@Api(tags = {"消息公告"})
 @RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController {
     private String prefix = "system/notice";

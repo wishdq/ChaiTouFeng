@@ -18,12 +18,6 @@
             <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--<sql id="Base_Column_List">-->
-    <!--    poem_id,title,dynasty,-->
-    <!--    author,content,type,-->
-    <!--    tags,zhujie,shangxi,-->
-    <!--    yiwen-->
-    <!--</sql>-->
 
     <select id="selectList" resultMap="PoemMap">
         select * from poem

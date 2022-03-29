@@ -3,7 +3,7 @@ package com.weiyu.chaitoufeng.service.poetry.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.poetry.PoemCiPai;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.mapper.poetry.PoemCiPaiMapper;
 import com.weiyu.chaitoufeng.service.poetry.PoemsCiPaiService;
 import org.springframework.stereotype.Service;

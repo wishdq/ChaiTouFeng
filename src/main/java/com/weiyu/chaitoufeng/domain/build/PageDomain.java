@@ -1,4 +1,4 @@
-package com.weiyu.chaitoufeng.domain.request;
+package com.weiyu.chaitoufeng.domain.build;
 
 import lombok.Data;
 

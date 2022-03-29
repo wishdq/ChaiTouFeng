@@ -2,11 +2,8 @@ package com.weiyu.chaitoufeng.service.poetry;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
-import com.weiyu.chaitoufeng.domain.poetry.PoemCiPai;
 import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
-
-import java.util.List;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 
 /**
 * @author wish_dq

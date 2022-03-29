@@ -31,22 +31,16 @@ import java.util.List;
 @Service("SysFileServiceImpl")
 public class SysFileServiceImpl implements ISysFileService {
 
-    /**
-     * 引 入 服 务
-     */
+    //引 入 服 务
     @Resource
     private SysFileMapper fileMapper;
 
-    /**
-     * 上 传 可 读 配 置
-     */
+    //上 传 可 读 配 置
     @Resource
     private SysFileTemplateProperty uploadProperty;
 
     /**
      * Describe: 文 件 夹 列 表
-     * Param: File
-     * Return: id
      */
     @Override
     public List<String> fileDirs() {
@@ -66,8 +60,6 @@ public class SysFileServiceImpl implements ISysFileService {
 
     /**
      * Describe: 文件上传
-     * Param: File
-     * Return: id
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -110,8 +102,6 @@ public class SysFileServiceImpl implements ISysFileService {
 
     /**
      * Describe: 根据 Id 下载文件
-     * Param: id
-     * Return: IO
      */
     @Override
     public void download(String id) {
@@ -132,8 +122,6 @@ public class SysFileServiceImpl implements ISysFileService {
 
     /**
      * Describe: 查 询 文 件 列 表
-     * Param: id
-     * Return: File
      */
     @Override
     public List<SysFile> data(SysFile sysFile) {
@@ -143,8 +131,6 @@ public class SysFileServiceImpl implements ISysFileService {
 
     /**
      * Describe: 根据 Id 删除文件信息
-     * Param: id
-     * Return: int
      */
     @Override
     public boolean remove(String id) {

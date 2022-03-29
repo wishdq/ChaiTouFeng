@@ -1,8 +1,8 @@
 package com.weiyu.chaitoufeng.controller.base;
 
 import com.weiyu.chaitoufeng.common.result.Result;
-import com.weiyu.chaitoufeng.domain.response.ResultTable;
-import com.weiyu.chaitoufeng.domain.response.ResultTree;
+import com.weiyu.chaitoufeng.domain.build.ResultTable;
+import com.weiyu.chaitoufeng.domain.build.ResultTree;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
@@ -135,11 +135,4 @@ public class ResultController {
         modelAndView.addAllObjects(params);
         return modelAndView;
     }
-    ////
-    //public ModelAndView addData(Map<String,?> paras){
-    //    ModelAndView modelAndView = new ModelAndView();
-    //    modelAndView.addAllObjects(paras);
-    //    return modelAndView;
-    //}
-
 }

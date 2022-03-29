@@ -33,14 +33,6 @@
     <!-- 根据 ID 查询 -->
     <select id="selectById" resultMap="SysFileMap">
         select *
---                id          as id,
---                file_name   as fileName,
---                file_desc   as fileDesc,
---                file_path   as filePath,
---                file_type   as fileType,
---                file_size   as fileSize,
---                create_by   as createBy,
---                create_time as createTime
         from sys_file
         where id = #{id}
     </select>

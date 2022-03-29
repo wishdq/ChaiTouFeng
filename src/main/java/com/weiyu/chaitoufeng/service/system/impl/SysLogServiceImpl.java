@@ -42,11 +42,6 @@ public class SysLogServiceImpl implements ISysLogService {
     }
 
 
-    //@Override
-    //public Boolean aopSaveLog(SysLog sysLog) {
-    //    return save(sysLog);
-    //}
-
     @Override
     public List<SysLog> data(LoggingType loggingType, LocalDateTime startTime, LocalDateTime endTime) {
         return sysLogMapper.selectList(loggingType, startTime, endTime);

@@ -3,9 +3,9 @@
 <mapper namespace="com.weiyu.chaitoufeng.mapper.system.SysRolePowerMapper">
 
     <resultMap id="SysRolePowerMap" type="SysRolePower">
-        <id column="id" property="id"></id>
-        <result column="role_id" property="roleId"></result>
-        <result column="power_id" property="powerId"></result>
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="power_id" property="powerId"/>
     </resultMap>
 
     <select id="selectByRoleId" parameterType="string" resultMap="SysRolePowerMap">

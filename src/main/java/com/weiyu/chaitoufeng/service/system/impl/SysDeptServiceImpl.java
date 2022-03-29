@@ -3,7 +3,7 @@ package com.weiyu.chaitoufeng.service.system.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.system.SysDept;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.mapper.system.SysDeptMapper;
 import com.weiyu.chaitoufeng.mapper.system.SysUserMapper;
 import com.weiyu.chaitoufeng.service.system.ISysDeptService;
@@ -29,8 +29,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     /**
      * Describe: 查询部门数据
-     * Param: QueryRoleParam
-     * Return: 操作结果
      */
     @Override
     public List<SysDept> list(SysDept param) {
@@ -39,8 +37,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     /**
      * Describe: 查询部门数据 分页
-     * Param: QueryRoleParam
-     * Return: 操作结果
      */
     @Override
     public PageInfo<SysDept> page(SysDept param, PageDomain pageDomain) {
@@ -51,8 +47,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     /**
      * Describe: 保存部门数据
-     * Param: SysDept
-     * Return: 操作结果
      */
     @Override
     public boolean save(SysDept sysDept) {
@@ -65,8 +59,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     /**
      * Describe: 根据 ID 查询部门
-     * Param: id
-     * Return: 返回部门信息
      */
     @Override
     public SysDept getById(String id) {
@@ -75,8 +67,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     /**
      * Describe: 修改用户数据
-     * Param: SysUser
-     * Return: 操作结果
      */
     @Override
     public boolean update(SysDept sysDept) {
@@ -86,8 +76,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     /**
      * Describe: 根据 id 删除部门数据
-     * Param: id
-     * Return: Boolean
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -99,8 +87,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     /**
      * Describe: 根据 id 批量删除部门数据
-     * Param: ids
-     * Return: Boolean
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -112,8 +98,6 @@ public class SysDeptServiceImpl implements ISysDeptService {
 
     /**
      * Describe: 根据 parentId 查询部门数据
-     * Param: parentId
-     * Return: 操作结果
      */
     @Override
     public List<SysDept> selectByParentId(String tenantId) {

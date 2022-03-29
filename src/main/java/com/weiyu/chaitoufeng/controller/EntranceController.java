@@ -41,42 +41,32 @@ public class EntranceController extends BaseController {
         return "login";
     }
 
-    /**
-     * Describe: 获取admin视图
-     */
+    //获取admin视图
     @GetMapping("admin")
     @Logging(title = "主页", describe = "返回 Admin 主页视图", type = BusinessType.ADD)
     public ModelAndView admin() {
         return jumpPage("admin");
     }
 
-    /**
-     * Describe: 获取控制台主页视图 console
-     */
+    //获取控制台主页视图 console
     @GetMapping("console")
     public ModelAndView home() {
         return jumpPage("console/console");
     }
 
-    /**
-     * Describe:无权限页面 返回403页面
-     */
+    //无权限页面 返回403页面
     @GetMapping("error/403")
     public ModelAndView noPermission() {
         return jumpPage("error/403");
     }
 
-    /**
-     * Describe:找不带页面 返回404页面
-     */
+    //找不带页面 返回404页面
     @GetMapping("error/404")
     public ModelAndView notFound() {
         return jumpPage("error/404");
     }
 
-    /**
-     * Describe:异常处理页 返回500界面
-     */
+    //异常处理页 返回500界面
     @GetMapping("error/500")
     public ModelAndView onException() {
         return jumpPage("error/500");

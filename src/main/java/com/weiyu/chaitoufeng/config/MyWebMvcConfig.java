@@ -1,12 +1,5 @@
 package com.weiyu.chaitoufeng.config;
 
-import com.weiyu.chaitoufeng.config.property.SecurityProperty;
-import com.weiyu.chaitoufeng.domain.interceptor.RepeatSubmitInterceptor;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.annotation.Resource;
-
 /**
  * Description:  拦截配置：
  *  *              1.编写一个拦截器实现HandlerInterceptor接口
@@ -16,20 +9,20 @@ import javax.annotation.Resource;
  * Author: wish_dq
  */
 //@Configuration
-public class MyWebMvcConfig implements WebMvcConfigurer {
-
-    @Resource
-    RepeatSubmitInterceptor repeatSubmit;
-
-    @Resource
-    SecurityProperty securityProperty;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(repeatSubmit)
-                //拦截路径
-                .addPathPatterns("/**")
-                // 放行路径
-                .excludePathPatterns(securityProperty.getOpenApi());
-    }
-}
+//public class MyWebMvcConfig implements WebMvcConfigurer {
+//
+//    @Resource
+//    RepeatSubmitInterceptor repeatSubmit;
+//
+//    @Resource
+//    SecurityProperty securityProperty;
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(repeatSubmit)
+//                //拦截路径
+//                .addPathPatterns("/**")
+//                // 放行路径
+//                .excludePathPatterns(securityProperty.getOpenApi());
+//    }
+//}

@@ -5,10 +5,9 @@ import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.session.HttpSessionContext;
 import com.weiyu.chaitoufeng.common.session.HttpSessionContextHolder;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.domain.response.ResultTable;
-import com.weiyu.chaitoufeng.domain.system.SysUser;
+import com.weiyu.chaitoufeng.domain.build.ResultTable;
 import com.weiyu.chaitoufeng.domain.system.SysOnlineUser;
-import io.swagger.annotations.Api;
+import com.weiyu.chaitoufeng.domain.system.SysUser;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
@@ -28,7 +27,6 @@ import java.util.List;
  * Author: wish_dq
  */
 @RestController
-@Api(tags = {"在线用户"})
 @RequestMapping(ControllerConstant.API_SYSTEM_PREFIX + "online")
 public class SysOnlineController extends BaseController {
 
@@ -77,7 +75,6 @@ public class SysOnlineController extends BaseController {
      * Return: ModelAndView
      */
     @DeleteMapping("/remove/{onlineId}")
-    @ResponseBody
     @PreAuthorize("hasPermission('/system/online/remove','sys:online:remove')")
     public Result remove(@PathVariable String onlineId) {
         // 从sessionRegistry中获取所有的用户信息

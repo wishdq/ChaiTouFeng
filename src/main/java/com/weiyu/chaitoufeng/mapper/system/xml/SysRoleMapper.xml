@@ -3,16 +3,16 @@
 <mapper namespace="com.weiyu.chaitoufeng.mapper.system.SysRoleMapper">
 
     <resultMap id="SysRoleMap" type="SysRole">
-        <id column="role_id" property="roleId"></id>
-        <result column="role_name" property="roleName"></result>
-        <result column="role_code" property="roleCode"></result>
-        <result column="enable" property="enable"></result>
-        <result column="sort" property="sort"></result>
-        <result column="create_by" property="createBy"></result>
-        <result column="create_time" property="createTime"></result>
-        <result column="update_by" property="updateBy"></result>
-        <result column="update_time" property="updateTime"></result>
-        <result column="remark" property="remark"></result>
+        <id column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_code" property="roleCode"/>
+        <result column="enable" property="enable"/>
+        <result column="sort" property="sort"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
     </resultMap>
 
     <select id="selectList" resultMap="SysRoleMap">

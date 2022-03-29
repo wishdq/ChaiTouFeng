@@ -3,7 +3,7 @@ package com.weiyu.chaitoufeng.service.system.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.system.SysPower;
 import com.weiyu.chaitoufeng.domain.system.SysRole;
 import com.weiyu.chaitoufeng.domain.system.SysRolePower;
@@ -54,8 +54,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     /**
      * Describe: 查询角色数据
-     * Param: QueryRoleParam
-     * Return: 操作结果
      */
     @Override
     public List<SysRole> list(SysRole param) {
@@ -64,8 +62,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     /**
      * Describe: 查询角色数据 分页
-     * Param: QueryRoleParam
-     * Return: 操作结果
      */
     @Override
     public PageInfo<SysRole> page(SysRole param, PageDomain pageDomain) {
@@ -76,8 +72,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     /**
      * Describe: 保存角色数据
-     * Param: SysRole
-     * Return: 操作结果
      */
     @Override
     public boolean save(SysRole sysRole) {
@@ -86,9 +80,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     /**
-     * Describe: 根据 ID 查询角色
-     * Param: id
-     * Return: 返回角色信息
+     * Describe: 根据 ID 查询角色息
      */
     @Override
     public SysRole getById(String id) {
@@ -97,8 +89,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     /**
      * Describe: 修改用户数据
-     * Param: SysUser
-     * Return: 操作结果
      */
     @Override
     public boolean update(SysRole sysRole) {
@@ -108,8 +98,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     /**
      * Describe: 查询角色权限信息
-     * Param: id
-     * Return: 返回角色信息
      */
     @Override
     public List<SysPower> getRolePower(String roleId) {
@@ -125,8 +113,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     /**
      * Describe: 保存角色权限数据
-     * Param: roleId powerIds
-     * Return: 执行结果
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -146,8 +132,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     /**
      * Describe: 根据 id 删除角色数据
-     * Param: id
-     * Return: Boolean
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -160,8 +144,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     /**
      * Describe: 根据 id 批量删除角色数据
-     * Param: ids
-     * Return: Boolean
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

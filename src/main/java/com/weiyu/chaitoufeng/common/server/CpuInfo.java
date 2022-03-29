@@ -18,14 +18,10 @@ import java.util.List;
 @Data
 public class CpuInfo {
 
-    /**
-     * 磁盘相关信息
-     */
+    //磁盘相关信息
     private List<SysFileInfo> sysFiles = new LinkedList<>();
 
-    /**
-     * 內存相关信息
-     */
+    //內存相关信息
     private MemInfo memInfo;
 
     /**

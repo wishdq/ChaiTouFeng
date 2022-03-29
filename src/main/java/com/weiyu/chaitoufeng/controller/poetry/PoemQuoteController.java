@@ -1,23 +1,14 @@
 package com.weiyu.chaitoufeng.controller.poetry;
 
-import cn.hutool.core.date.DateTime;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.common.constant.ControllerConstant;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.domain.poetry.PoemCiPai;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.ResultTable;
 import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
-import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
-import com.weiyu.chaitoufeng.domain.response.ResultTable;
 import com.weiyu.chaitoufeng.service.poetry.PoemQuoteService;
-import com.weiyu.chaitoufeng.service.poetry.PoemQuoteService;
-import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Description:
@@ -98,7 +88,6 @@ public class PoemQuoteController extends BaseController {
     }
 
     @DeleteMapping("batchRemove/{ids}")
-    @ApiOperation(value = "批量删除系统配置数据")
     @PreAuthorize("hasPermission('/poetry/quote/remove','poetry:quote:remove')")
     public Result batchRemove(@PathVariable String ids) {
         boolean result = quoteService.removeBatchByIds(Arrays.asList(ids.split(",")));

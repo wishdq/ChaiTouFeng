@@ -3,7 +3,7 @@ package com.weiyu.chaitoufeng.service.system.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.system.SysNotice;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.mapper.system.SysNoticeMapper;
 import com.weiyu.chaitoufeng.service.system.ISysNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;

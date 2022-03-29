@@ -3,7 +3,6 @@ package com.weiyu.chaitoufeng.controller.enhance;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.wf.captcha.utils.CaptchaUtil;
-import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
  * Author: wish_dq
  */
 @RestController
-@Api(tags = {"验证生成"})
 @RequestMapping("system/captcha")
 public class CaptchaController extends BaseController {
 

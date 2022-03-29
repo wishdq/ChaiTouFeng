@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
-import com.weiyu.chaitoufeng.domain.request.PageDomain;
+import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.mapper.poetry.PoemQuoteMapper;
 import com.weiyu.chaitoufeng.service.poetry.PoemQuoteService;
 import org.springframework.stereotype.Service;
