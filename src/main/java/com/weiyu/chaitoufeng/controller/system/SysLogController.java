@@ -36,7 +36,7 @@ public class SysLogController extends BaseController {
     @GetMapping("main")
     @PreAuthorize("hasPermission('/system/log/main','sys:log:main')")
     public ModelAndView main() {
-        return jumpPage("system/log/main");
+        return jumpPage("admin/system/log/main");
     }
 
     /**

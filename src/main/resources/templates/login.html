@@ -2,39 +2,97 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="common :: header('登录')"/>
-    <link rel="stylesheet" th:href="@{/admin/css/other/login.css}"/>
+    <link rel="stylesheet" th:href="@{/static/admin/css/other/login.css}"/>
 </head>
 <!-- 代 码 结 构 -->
-<body background="admin/images/login.svg">
+<body background="admin/images/login.svg" style="margin-top: -120px">
 <form action="javascript:void(0);" class="layui-form">
     <div class="layui-form-item">
-        <img class="logo" src="admin/images/logo.png"/>
+        <img class="logo" src="../static/admin/images/logo.png"/>
         <div class="title">钗头凤</div>
         <div class="desc">
             明 湖 区 最 具 影 响 力 的 设 计 规 范 之 一
         </div>
     </div>
-    <div class="layui-form-item">
-        <input class="layui-input" hover name="username" placeholder="账 户 : admin " type="text" value="admin"/>
+<div class="layui-card ">
+    <div class="layui-card-body">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">登录</li>
+                <li></li>
+                <li>注册</li>
+            </ul>
+            <div class="layui-tab-content" style="margin-top: -4px">
+                <div class="layui-tab-item layui-show" id="login">
+                    <div class="layui-form-item">
+                        <input class="layui-input" hover name="username" placeholder="账 户 : admin " type="text"/>
+                    </div>
+                    <div class="layui-form-item">
+                        <input class="layui-input" hover name="password" placeholder="密 码 : admin " type="password"/>
+                    </div>
+                </div>
+
+                <div class="layui-tab-item"></div>
+
+                <div class="layui-tab-item " id="register">
+                    <div class="layui-form-item">
+                        <input class="layui-input" hover name="username" placeholder="账 户 名 " type="text"/>
+                    </div>
+                    <div class="layui-form-item">
+                        <input class="layui-input" hover name="password" placeholder="密 码" type="password"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <input class="code layui-input layui-input-inline" style="width: 160px" hover name="captcha" placeholder="验证码 : "/>
+                    <img class="codeImage" id="captchaImage" th:src="@{/system/captcha/generate}" src="/admin/images/captcha.gif"/>
+                </div>
+                <div class="layui-form-item">
+                    <input lay-skin="primary" name="remember-me" title="记住密码" type="checkbox">
+                </div>
+                <div class="layui-form-item">
+                    <button class="pear-btn pear-btn-success login" lay-filter="login" lay-submit>
+                        登 录
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="layui-form-item">
-        <input class="layui-input" hover name="password" placeholder="密 码 : admin " type="password" value="admin"/>
-    </div>
-    <div class="layui-form-item">
-        <input class="code layui-input layui-input-inline" hover name="captcha" placeholder="验证码 : "/>
-        <img class="codeImage" id="captchaImage" th:src="@{/system/captcha/generate}" src="/admin/images/captcha.gif"/>
-    <!--    /system/captcha/generate-->
-    <!--    /admin/images/captcha.gif-->
-    </div>
-    <div class="layui-form-item">
-        <input lay-skin="primary" name="remember-me" title="记住密码" type="checkbox">
-    </div>
-    <div class="layui-form-item">
-        <button class="pear-btn pear-btn-success login" lay-filter="login" lay-submit>
-            登 入
-        </button>
-    </div>
-</form>
+</div>
+    </form>
+<!--<form action="javascript:void(0);" class="layui-form">-->
+<!--    <div class="layui-form-item">-->
+<!--        <img class="logo" src="../static/admin/images/logo.png"/>-->
+<!--        <div class="title">钗头凤</div>-->
+<!--        <div class="desc">-->
+<!--            明 湖 区 最 具 影 响 力 的 设 计 规 范 之 一-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <a href="javascript:void(0);" class="layui-this" style="float: left">登 录</a>-->
+<!--        <a href="javascript:void(0);" style="float: right">注 册</a>-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <input class="layui-input" hover name="username" placeholder="账 户 : admin " type="text" value="admin"/>-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <input class="layui-input" hover name="password" placeholder="密 码 : admin " type="password" value="admin"/>-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <input class="code layui-input layui-input-inline" hover name="captcha" placeholder="验证码 : "/>-->
+<!--        <img class="codeImage" id="captchaImage" th:src="@{/system/captcha/generate}" src="/admin/images/captcha.gif"/>-->
+<!--    &lt;!&ndash;    /system/captcha/generate&ndash;&gt;-->
+<!--    &lt;!&ndash;    /admin/images/captcha.gif&ndash;&gt;-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <input lay-skin="primary" name="remember-me" title="记住密码" type="checkbox">-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <button class="pear-btn pear-btn-success login" lay-filter="login" lay-submit>-->
+<!--            登 录-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</form>-->
 <th:block th:include="common :: footer"/>
 <script>
     layui.use(['form', 'jquery', 'layer', 'button', 'popup'], function () {
@@ -45,11 +103,56 @@
         let popup = layui.popup;
         let captchaPath = "/system/captcha/generate";
 
+
+        $('ul li:first').click(
+            function (){
+                $('button').text('登 录').attr('lay-filter','login');
+                $('[name="remember-me"]').parent().removeClass('layui-hide')
+            }
+        )
+
+        $('ul li:last').click(
+            function (){
+                $('button').text('注 册').attr('lay-filter','register');
+                $('[name="remember-me"]').parent().addClass('layui-hide')
+            }
+        )
+
         form.on('submit(login)', function (data) {
             let loader = layer.load();
             let btn = button.load({elem: '.login'});
+            data.field.username = $('#login div input:first').val();
+            data.field.password = $('#login div input:last').val();
             $.ajax({
                 url: '/login',
+                data: data.field,
+                type: "post",
+                dataType: 'json',
+                success: function (result) {
+                    layer.close(loader);
+                    btn.stop(function () {
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                location.href = "/admin";
+                            })
+                        } else {
+                            popup.failure(result.msg, function () {
+                                document.getElementById("captchaImage").src = captchaPath + "?" + Math.random();
+                            });
+                        }
+                    })
+                }
+            });
+            return false;
+        });
+
+
+        form.on('submit(register)', function (data) {
+            let loader = layer.load();
+            let btn = button.load({elem: '.login'});
+            console.log(data.field)
+            $.ajax({
+                url: '/register',
                 data: data.field,
                 type: "post",
                 dataType: 'json',

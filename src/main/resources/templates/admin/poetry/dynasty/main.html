@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('朝代列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="dynasty-table" lay-filter="dynasty-table"></table>
+    </div>
+</div>
+</body>
+
+<script id="dynasty-toolbar" type="text/html">
+    <button sec:authorize="hasPermission('/poetry/dynasty/add','poetry:dynasty:add')"
+            class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<script id="dynasty-bar" type="text/html">
+    <button sec:authorize="hasPermission('/poetry/dynasty/edit','poetry:dynasty:edit')"
+            class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>
+    </button>
+    <button sec:authorize="hasPermission('/poetry/dynasty/remove','poetry:dynasty:remove')"
+            class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+</script>
+
+
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery', 'popup', 'common'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+        let common = layui.common;
+
+        let MODULE_PATH = "/poetry/dynasty/";
+
+        let cols = [
+            [
+                {title: '序号', field: 'sort', align: 'center',edit:'text',width: 60},
+                {title: '统称', field: 'parentName', align: 'center',edit:'text'},
+                {title: '朝代', field: 'name', align: 'center',edit:'text'},
+                {title: '起止', field: 'startEnd', align: 'center',edit:'text'},
+                {title: '首都', field: 'capital', align: 'center',edit:'text'},
+                {title: '当今位置', field: 'nowLocation', align: 'center',edit:'text'},
+                {title: '民族', field: 'nation', align: 'center',edit:'text'},
+                {title: '创立者', field: 'stateFounder', align: 'center',edit:'text'},
+                {title: '操作', toolbar: '#dynasty-bar', align: 'center',width: 100, unresize: true}
+            ]
+        ]
+
+        table.render({
+            elem: '#dynasty-table',
+            url: MODULE_PATH + 'data',
+            page: false,
+            cols: cols,
+            skin: 'line',
+            toolbar: '#dynasty-toolbar',
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+
+        //监听单元格编辑
+        table.on('edit(dynasty-table)', function(obj){
+            let data = obj.data //得到所在修改过的行所有键值
+            $.ajax({
+                url: MODULE_PATH + 'update',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            // parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            // parent.layui.table.reload("config-group-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+        });
+
+
+        table.on('tool(dynasty-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        table.on('toolbar(dynasty-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            }
+        });
+
+
+        window.add = function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: ['500px', '400px'],
+                content: MODULE_PATH + 'add'
+            });
+        }
+
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '修改',
+                shade: 0.1,
+                area: ['500px', '400px'],
+                content: MODULE_PATH + 'edit?dynastyId=' + obj.data['dynastyId']
+            });
+        }
+
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该朝代', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove/" + obj.data['dynastyId'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        window.refresh = function () {
+            table.reload('dynasty-table');
+        }
+    })
+</script>
+</html>

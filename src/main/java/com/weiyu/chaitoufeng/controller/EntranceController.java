@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -41,6 +42,25 @@ public class EntranceController extends BaseController {
         return "login";
     }
 
+    /**
+     * Describe: 获取注册视图
+     */
+    @PostMapping("register")
+    public String register(HttpServletRequest request) {
+        if (SecurityUtil.isAuthentication()) {
+            SecureSessionService.expiredSession(request, sessionRegistry);
+            // 用户已登录重定向指定界面
+            return "redirect:/admin";
+        }
+        return "login";
+    }
+
+    //获取index视图
+    @GetMapping(value = {"index","/"})
+    public ModelAndView index() {
+        return jumpPage("index");
+    }
+
     //获取admin视图
     @GetMapping("admin")
     @Logging(title = "主页", describe = "返回 Admin 主页视图", type = BusinessType.ADD)
@@ -51,7 +71,7 @@ public class EntranceController extends BaseController {
     //获取控制台主页视图 console
     @GetMapping("console")
     public ModelAndView home() {
-        return jumpPage("console/console");
+        return jumpPage("admin/console/console");
     }
 
     //无权限页面 返回403页面

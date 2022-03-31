@@ -14,8 +14,6 @@ layui.config({
     card: "card",
     convert: "convert",
     tinymce: "tinymce/tinymce",
-    echarts: "echarts",
-    echartsTheme: "echartsTheme",
     hash: "hash",
     document: "document",
     select: "select",

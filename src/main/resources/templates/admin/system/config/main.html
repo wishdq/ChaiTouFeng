@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('系统设置')"/>
+    <link rel="stylesheet" th:href="@{/static/admin/css/other/user.css}"/>
+    <style>
+        .main-container .layui-form-item {
+            margin-top: 5px !important;
+            margin-bottom: 5px !important;
+        }
+    </style>
+</head>
+<body class="pear-container">
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form action="" class="layui-form" lay-filter="config-query-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">配 置 名 称:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="configName" placeholder="请输入配置名称" type="text">
+                </div>
+                <label class="layui-form-label">配 置 标 识:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="configCode" placeholder="请输入配置标识" type="text">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="config-query" lay-submit>
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button class="pear-btn pear-btn-md" type="reset">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="user-left user-collapsed">
+    <div class="layui-card">
+        <div class="layui-card-body" style="height: 406px">
+            <div class="button button-primary user-group" user-group=""> 全 部 设 置</div>
+            <div class="button button-default user-group" user-group="-1"> 默 认 分 组</div>
+            <div class="user-tree-scroll" style="height: 280px;overflow: auto">
+                <ul class="config-tree" data-id="0" id="config-tree"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="user-main user-collapsed">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <table id="config-table" lay-filter="config-table"></table>
+        </div>
+    </div>
+</div>
+</body>
+
+<script id="config-toolbar" type="text/html">
+    <button sec:authorize="hasPermission('/system/config/add','sys:config:add')"
+            class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+    <button sec:authorize="hasPermission('/system/config/remove','sys:config:remove')"
+            class="pear-btn pear-btn-danger pear-btn-md"
+            lay-event="batchRemove">
+        <i class="pear-icon pear-icon-ashbin"></i>
+        删除
+    </button>
+    <button class="pear-btn pear-btn-md" lay-event="collapsed">
+        <i class="pear-icon pear-icon-modular"></i>
+        高级
+    </button>
+    <button sec:authorize="hasPermission('/system/config/group','sys:config:group')"
+            class="pear-btn pear-btn-md layui-hide" id="group" lay-event="group">
+        <i class="layui-icon layui-icon-snowflake"></i>
+        组管理
+    </button>
+</script>
+
+<script id="config-bar" type="text/html">
+    <button sec:authorize="hasPermission('/system/config/edit','sys:config:edit')"
+            class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>
+    </button>
+    <button sec:authorize="hasPermission('/system/config/remove','sys:config:remove')"
+            class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+</script>
+
+<script id="config-enable" type="text/html">
+    <input type="checkbox" name="enable" value="{{d.configId}}" lay-skin="switch" lay-text="启用|禁用"
+           lay-filter="config-enable" {{ d.enable== true ? 'checked' : '' }} />
+</script>
+
+<script id="config-createTime" type="text/html">
+    {{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}
+</script>
+
+<script id="tpl-configType" type="text/html">
+    {{#if (d.configType == 'system') { }}
+    <span class="layui-badge layui-bg-green">{{d.configType}}</span>
+    {{# }else if(d.configType == 'custom'){ }}
+    <span class="layui-badge-rim">{{d.configType}}</span>
+    {{# }else if(d.configType == 'else'){ }}
+    <span class="layui-badge layui-bg-orange">{{d.configType}}</span>
+    {{# } }}
+</script>
+
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['table', 'dtree', 'form', 'jquery', 'popup', 'common'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let dtree = layui.dtree;
+        let popup = layui.popup;
+        let common = layui.common;
+
+
+        let MODULE_PATH = "/system/config/";
+
+        let cols = [
+            [
+                {type: 'checkbox'},
+                {title: '类型', field: 'configType', hide:true, align: 'center',templet: '#tpl-configType'},
+                {title: '配置名称', field: 'configName', align: 'center', width: 120},
+                {title: '配置标识', field: 'configCode', align: 'center',minWidth:85},
+                {title: '配置值', field: 'configValue', align: 'center',minWidth:75},
+                {title: '具体描述', field: 'remark', align: 'center',minWidth:85},
+                {title: '状态', field: 'enable', align: 'center', templet: '#config-enable',unresize: true, width: 95},
+                {title: '创建时间', field: 'createTime',hide:true, align: 'center', templet: '#config-createTime'},
+                {title: '操作', toolbar: '#config-bar', width: 100, align: 'center',unresize: true}
+            ]
+        ]
+
+        table.render({
+            elem: '#config-table',
+            url: MODULE_PATH + 'data',
+            page: true,
+            cols: cols,
+            skin: 'line',
+            toolbar: '#config-toolbar',
+            initSort: {
+                field: 'createTime' //排序字段，对应 cols 设定的各字段名
+                ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            },
+            text: {none: '暂无人员信息'},
+            height: 'full-100',
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        table.on('tool(config-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        table.on('toolbar(config-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            } else if (obj.event === 'collapsed') {
+                $('.user-left').toggleClass("user-collapsed");
+                $('.user-main').toggleClass("user-collapsed");
+                $('#group').toggleClass('layui-hide')
+                table.resize();
+            } else if (obj.event === 'group'){
+                window.group();
+            }
+        });
+
+        form.on('submit(config-query)', function (data) {
+            window.refresh(data.field);
+            return false;
+        });
+
+        form.on('switch(config-enable)', function (obj) {
+            let operate;
+            if (obj.elem.checked) {
+                operate = "enable";
+            } else {
+                operate = "disable";
+            }
+            let loading = layer.load();
+            $.ajax({
+                url: '/system/config/status/' + operate,
+                data: JSON.stringify({configId: this.value}),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    layer.close(loading);
+                    if (result.success) {
+                        popup.success(result.msg);
+                    } else {
+                        popup.failure(result.msg);
+                    }
+                }
+            })
+        });
+
+        dtree.render({
+            elem: "#config-tree",
+            method: "get",
+            url: "/system/config/tree",
+            dataFormat: "list",
+            line: true,
+            skin: "laySimple",
+            icon: "-1",    // 二级图标设置为隐藏
+            initLevel: "2",  // 指定初始展开节点级别
+            width: "180",
+            height: "full-200",
+            response: {treeId: "configGroupId", parentId: "groupParentId", title: "name"},
+        });
+
+        dtree.on("node('config-tree')", function (obj) {
+            let field = form.val("config-query-form");
+            field.configGroupId = obj.param.nodeId;
+            window.refresh(field);
+        });
+
+        $(".user-group").click(function () {
+            let group = $(this).attr("user-group");
+            let field = form.val("config-query-form");
+            if (group === "-1") {
+                field.configGroupId = group;
+                $(this).removeClass("button-default");
+                $(this).prev().removeClass("button-primary");
+                $(this).prev().addClass("button-default");
+                $(this).addClass("button-primary");
+            } else {
+                field.configGroupId = group;
+                $(this).removeClass("button-default");
+                $(this).next().removeClass("button-primary");
+                $(this).next().addClass("button-default");
+                $(this).addClass("button-primary");
+            }
+            window.refresh(field);
+        })
+
+        window.add = function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: ['700px', '380px'],
+                content: MODULE_PATH + 'add'
+            });
+        }
+
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '修改',
+                shade: 0.1,
+                area: ['700px', '380px'],
+                content: MODULE_PATH + 'edit?configId=' + obj.data['configId']
+            });
+        }
+
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该配置', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove/" + obj.data['configId'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                table.reload('config-table');
+                            });
+                        } else {
+                            popup.failure(result.msg);
+                        }
+                    }
+                })
+            });
+        }
+
+        window.batchRemove = function (obj) {
+            let ids = common.checkField(obj, 'configId');
+            if (common.isEmpty(ids)) {
+                popup.warning("未选中数据");
+                return false;
+            }
+            layer.confirm('确定要删除选中配置', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "batchRemove/" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                table.reload('config-table');
+                            });
+                        } else {
+                            popup.failure(result.msg);
+                        }
+                    }
+                });
+            });
+        }
+
+        window.group = function (){
+            layer.open({
+                type: 2,
+                title: '配置组管理',
+                maxmin: true,
+                shade: 0.1,
+                area: ['1000px', '500px'],
+                content: MODULE_PATH + 'group'
+            });
+        }
+
+        window.refresh = function (param) {
+            table.reload('config-table', {where: param});
+        }
+    })
+</script>
+</html>

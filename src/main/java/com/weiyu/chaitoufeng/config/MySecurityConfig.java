@@ -4,10 +4,7 @@ import com.weiyu.chaitoufeng.config.property.SecurityProperty;
 import com.weiyu.chaitoufeng.secure.MySecureCaptcha;
 import com.weiyu.chaitoufeng.secure.handler.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -106,26 +103,29 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     private SecureSessionExpiredHandler securityExpiredSessionHandler;
 
     // 身份认证实现
-    @Bean
-    public AuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(securityUserDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
-        return daoAuthenticationProvider;
-    }
+    //@Bean
+    //public AuthenticationProvider daoAuthenticationProvider() {
+    //    DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+    //    daoAuthenticationProvider.setUserDetailsService(securityUserDetailsService);
+    //    daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+    //    daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
+    //    return daoAuthenticationProvider;
+    //}
 
     /**
-     * 身份认证接口
+     * 可配置user-detail（用户详细信息）服务。
+     *     AuthenticationManagerBuilder  用户认证
+     *
+     *     UserDetailsService类  用户授权
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(daoAuthenticationProvider());
-        //auth.userDetailsService(securityUserDetailsService).passwordEncoder(passwordEncoder);
+        //auth.authenticationProvider(daoAuthenticationProvider());
+        auth.userDetailsService(securityUserDetailsService).passwordEncoder(passwordEncoder);
     }
 
     /**
-     *  配置 Security 控制逻辑
+     *  配置 Security 控制逻辑 可配置如何通过拦截器保护请求。
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -137,6 +137,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 先添加验证码验证类
                 .addFilterBefore(mySecureCaptcha, UsernamePasswordAuthenticationFilter.class)
+                //.addFilter(new MyUsernamePasswordFilter(super.authenticationManager()))
                 .httpBasic()
                 .authenticationEntryPoint(securityAuthenticationEntryPoint)
                 .and()
@@ -157,8 +158,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(securityAccessDeniedHandler) // 配置没有权限自定义处理类
                 .and()
                 //开启记住我功能，有效期两周
-                .rememberMe()
-                .rememberMeParameter("remember-me")
+                .rememberMe().rememberMeParameter("remember-me")
                 .rememberMeCookieName("rememberme-token")
                 .authenticationSuccessHandler(rememberMeAuthenticationSuccessHandler)
                 .tokenRepository(securityUserTokenService)

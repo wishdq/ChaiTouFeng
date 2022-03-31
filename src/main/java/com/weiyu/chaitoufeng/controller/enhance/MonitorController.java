@@ -25,6 +25,6 @@ public class MonitorController extends BaseController {
     public ModelAndView main(Model model) {
         CpuInfo cpu = SystemUtil.getCpu();
         model.addAttribute("cpu", cpu);
-        return jumpPage("system/monitor/main");
+        return jumpPage("admin/system/monitor/main");
     }
 }

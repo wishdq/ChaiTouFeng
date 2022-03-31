@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * Description:  Security 用户服务
  *              安全用户处理 ：根据 用户名 定位
+ *              赋予用户权限
  * Since: 2022-03-13 19:01
  * Author: wish_dq
  */
@@ -33,8 +34,10 @@ public class SecureUserDetailsServiceImpl implements UserDetailsService {
         if (sysUser == null) {
             throw new UsernameNotFoundException("Account Not Found");
         }
+        //添加权限
         List<SysPower> powerList = sysPowerMapper.selectByUsername(username);
         sysUser.setPowerList(powerList);
         return sysUser;
     }
+
 }

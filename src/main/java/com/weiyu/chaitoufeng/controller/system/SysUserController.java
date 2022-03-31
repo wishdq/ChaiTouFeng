@@ -12,6 +12,7 @@ import com.weiyu.chaitoufeng.domain.build.EditPassword;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.build.ResultTable;
 import com.weiyu.chaitoufeng.domain.system.SysMenu;
+import com.weiyu.chaitoufeng.domain.system.SysRole;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import com.weiyu.chaitoufeng.service.system.ISysLogService;
 import com.weiyu.chaitoufeng.service.system.ISysRoleService;
@@ -38,7 +39,7 @@ import java.util.List;
 public class SysUserController extends BaseController {
 
     //基础路径
-    private static String MODULE_PATH = "system/user/";
+    private static final String MODULE_PATH = "admin/system/user/";
 
     //用户模块服务
     @Resource
@@ -77,7 +78,9 @@ public class SysUserController extends BaseController {
      */
     @GetMapping("add")
     @PreAuthorize("hasPermission('/system/user/add','sys:user:add')")
-    public ModelAndView add() {
+    public ModelAndView add(Model model) {
+        List<SysRole> sysRoles = sysRoleService.list(null);
+        model.addAttribute("sysRoles",sysRoles);
         return jumpPage(MODULE_PATH + "add");
     }
 

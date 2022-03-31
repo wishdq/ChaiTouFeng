@@ -30,7 +30,7 @@ import java.util.List;
 public class SysPowerController extends BaseController {
 
     //基础路径
-    private static String MODULE_PATH = "system/power/";
+    private static final String MODULE_PATH = "admin/system/power/";
 
     //权限模块服务
     @Resource

@@ -27,7 +27,7 @@ import java.util.List;
 @RequestMapping(ControllerConstant.API_POETRY_PREFIX + "dynasty")
 public class PoemDynastyController extends BaseController {
 
-    private final String MODULE_PATH = "poetry/dynasty/";
+    private final String MODULE_PATH = "admin/poetry/dynasty/";
 
     @Resource
     PoemDynastyService dynastyService;

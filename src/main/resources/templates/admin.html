@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="common :: header('钗头凤 Admin 管理平台')"/>
-    <link th:href="@{admin/css/loader.css}" rel="stylesheet"/>
-    <link th:href="@{admin/css/admin.css}" rel="stylesheet"/>
+    <link th:href="@{/static/admin/css/loader.css}" rel="stylesheet"/>
+    <link th:href="@{/static/admin/css/admin.css}" rel="stylesheet"/>
 </head>
 <!-- 结 构 代 码 -->
 <body class="layui-layout-body pear-admin">
@@ -136,7 +136,7 @@
         // 你可以通过 admin.setConfigPath 方法修改配置文件位置
         // 你可以通过 admin.setConfigType 方法修改配置文件类型
         admin.setConfigType("yml");
-        admin.setConfigPath("pear.config.yml");
+        admin.setConfigPath("/static/pear.config.yml");
         admin.render();
 
         // 注销实现

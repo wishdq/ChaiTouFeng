@@ -5,8 +5,9 @@ spring:
   web:
     resources:
       static-locations: [ classpath:/static/ ]
+  mvc:
+    static-path-pattern: /static/**
   servlet:
-    # 配置文件上传大小
     multipart:
       # 单个文件的最大值
       max-file-size: 10MB
@@ -74,20 +75,21 @@ chaitoufeng:
     remember-key: PEAR_REMEMBER
     # 不 需 要 权 限 拦 截 的 接 口 配 置
     open-api:
+      - /
+      - /index
       - /login/**  # 开放登录接口
       - /system/captcha/** # 开放验证码接口
       - /error/** # 开放错误接口
       - /test
-      - /assets/** # 开放静态资源
-      - /admin/** # 开放静态资源
-      - /component/** # 开放静态资源
-      - /favicon.ico # 开放FAVICON
+      - /static/**  #开放静态资源
+#      - /assets/** # 开放静态资源
+#      - /admin/** # 开放静态资源
+#      - /component/** # 开放静态资源
+#      - /favicon.ico # 开放FAVICON
 
   # 上传配置
   upload:
-    # windows 上传路径
     windows-path: C:\Users\wish_dq\Desktop\毕业\ChaiTouFeng\home\uploads\
-    # linux 上传路径
     linux-path: /home/uploads/
 
 

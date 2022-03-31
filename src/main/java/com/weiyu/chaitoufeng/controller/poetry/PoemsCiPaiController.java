@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 @RequestMapping(ControllerConstant.API_POETRY_PREFIX + "ciPai")
 public class PoemsCiPaiController extends BaseController {
 
-    private final String MODULE_PATH = "poetry/ciPai/";
+    private final String MODULE_PATH = "admin/poetry/ciPai/";
 
     @Resource
     PoemsCiPaiService ciPaiService;

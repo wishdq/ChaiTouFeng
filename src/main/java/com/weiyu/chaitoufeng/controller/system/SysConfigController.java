@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping(ControllerConstant.API_SYSTEM_PREFIX + "config")
 public class SysConfigController extends BaseController {
 
-    private final String MODULE_PATH = "system/config/";
+    private final String MODULE_PATH = "admin/system/config/";
 
     @Resource
     private ISysConfigService sysConfigService;

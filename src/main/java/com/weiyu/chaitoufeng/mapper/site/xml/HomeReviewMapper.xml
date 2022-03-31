@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiyu.chaitoufeng.mapper.site.HomeReviewMapper">
+
+    <resultMap id="HomeReviewMap" type="HomeReview">
+            <id property="reviewId" column="review_id" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="enable" column="enable" />
+            <result property="reviewUserName" column="username" />
+            <result property="reviewUserProfileName" column="profile_name" />
+            <result property="reviewLocationId" column="review_location_id" jdbcType="VARCHAR"/>
+            <!--<result property="reviewUserId" column="review_user_id" jdbcType="VARCHAR"/>-->
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        review_id,content,review_location_id,
+        review_user_id,create_time
+    </sql>
+
+
+    <select id="selectPageList" resultMap="HomeReviewMap">
+        select hr.review_id,hr.content,hr.enable,hr.create_time,hr.review_location_id,
+               hu.username,hu.profile_name
+               from home_review as hr left join home_user as hu
+        on hr.review_user_id = hu.user_id
+        <where>
+            <if test="reviewId!=null and reviewId!=''">
+                and review_id like "%"#{reviewId}"%"
+            </if>
+            <if test="content!=null and content!=''">
+                and content like "%"#{content}"%"
+            </if>
+            <if test="reviewUserName!=null and reviewUserName!=''">
+                and hu.username like "%"#{reviewUserName}"%"
+            </if>
+            <if test="reviewUserProfileName!=null and reviewUserProfileName!=''">
+                and hu.profile_name like "%"#{reviewUserProfileName}"%"
+            </if>
+            <if test="enable!=null and enable!=''">
+                and enable like "%"#{enable}"%"
+            </if>
+            <if test="reviewLocationId!=null and reviewLocationId!=''">
+                and review_location_id like "%"#{reviewLocationId}"%"
+            </if>
+            <if test="reviewUserId!=null and reviewUserId!=''">
+                and review_user_id like "%"#{reviewUserId}"%"
+            </if>
+        </where>
+        order by hr.create_time desc
+    </select>
+
+
+    <select id="searchPageList" resultMap="HomeReviewMap">
+        select * from home_review
+        <where>
+            <if test="reviewId!=null and reviewId!=''">
+                and review_id like "%"#{reviewId}"%"
+            </if>
+            <if test="content!=null and content!=''">
+                and content like "%"#{content}"%"
+            </if>
+            <if test="enable!=null and enable!=''">
+                and enable like "%"#{enable}"%"
+            </if>
+            <if test="reviewLocationId!=null and reviewLocationId!=''">
+                and review_location_id like "%"#{reviewLocationId}"%"
+            </if>
+            <if test="reviewUserId!=null and reviewUserId!=''">
+                and review_user_id like "%"#{reviewUserId}"%"
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+</mapper>

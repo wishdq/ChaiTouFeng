@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('前台用户列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form action="" class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用 户 名:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="username" placeholder="请输入用户名" type="text">
+                </div>
+                <label class="layui-form-label">网 名:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="profileName" placeholder="请输入网名" type="text">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="user-query" lay-submit>
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button class="pear-btn pear-btn-md" type="reset">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="user-table" lay-filter="user-table"></table>
+    </div>
+</div>
+</body>
+
+<script id="user-toolbar" type="text/html">
+    <button sec:authorize="hasPermission('/site/user/add','site:user:add')"
+            class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+    <button sec:authorize="hasPermission('/site/user/remove','site:user:remove')"
+            class="pear-btn pear-btn-danger pear-btn-md"
+            lay-event="batchRemove">
+        <i class="pear-icon pear-icon-ashbin"></i>
+        删除
+    </button>
+</script>
+
+<script id="user-bar" type="text/html">
+    <button sec:authorize="hasPermission('/site/user/edit','site:user:edit')"
+            class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>
+    </button>
+    <button sec:authorize="hasPermission('/site/user/remove','site:user:remove')"
+            class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+</script>
+
+<script id="user-enable" type="text/html">
+    <input type="checkbox" name="enable" value="{{d.userId}}" lay-skin="switch" lay-text="启用|禁用"
+           lay-filter="user-enable" {{ d.enable== true ? 'checked' : '' }} />
+</script>
+
+<script id="user-sex" type="text/html">
+    {{#if (d.sex == 1) { }}
+    <span>男</span>
+    {{# }else if(d.sex == 0){ }}
+    <span>女</span>
+    {{# } }}
+</script>
+
+<script id="user-createTime" type="text/html">
+    {{layui.util.toDateString(d.createTime,  "yyyy-MM-dd HH:mm:ss")}}
+</script>
+
+
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery', 'popup', 'common'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+        let common = layui.common;
+
+        let MODULE_PATH = "/site/user/";
+
+        let cols = [
+            [
+                {type: 'checkbox'},
+                {title: '用户名', field: 'username', edit:'text',width: 100},
+                {title: '密码', field: 'password',edit:'text', width: 90},
+                {title: '网名', field: 'profileName',edit:'text'},
+                {title: '性别', field: 'sex',templet: '#user-sex',align: 'center'},
+                {title: '描述', field: 'remark',edit:'text'},
+                {title: '状态', field: 'enable',templet: '#user-enable',align: 'center'},
+                {title: '注册时间', field: 'createTime',align: 'center',templet: '#user-createTime', width:165, sort: true},
+                {title: '操作', toolbar: '#user-bar', align: 'center',width: 100, unresize: true}
+            ]
+        ]
+
+        table.render({
+            elem: '#user-table',
+            url: MODULE_PATH + 'data',
+            page: true,
+            cols: cols,
+            skin: 'line',
+            toolbar: '#user-toolbar',
+            initSort: {
+                field: 'createTime' //排序字段，对应 cols 设定的各字段名
+                ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            },
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+
+        //监听单元格编辑
+        table.on('edit(user-table)', function(obj){
+            let data = obj.data //得到所在修改过的行所有键值
+            $.ajax({
+                url: MODULE_PATH + 'update',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000});
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+        });
+
+        table.on('tool(user-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        table.on('toolbar(user-table)', function (obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        form.on('submit(user-query)', function (data) {
+            table.reload('user-table', {where: data.field})
+            return false;
+        });
+
+        form.on('switch(user-enable)', function (obj) {
+            let operate;
+            if (obj.elem.checked) {
+                operate = "enable";
+            } else {
+                operate = "disable";
+            }
+            let loading = layer.load();
+            $.ajax({
+                url: '/site/user/isEnable/' + operate,
+                data: JSON.stringify({userId: this.value}),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    layer.close(loading);
+                    if (result.success) {
+                        popup.success(result.msg);
+                    } else {
+                        popup.failure(result.msg);
+                    }
+                }
+            })
+        });
+
+        window.add = function () {
+            layer.open({
+                type: 2,
+                title: '新增',
+                shade: 0.1,
+                area: ['500px', '400px'],
+                content: MODULE_PATH + 'add'
+            });
+        }
+
+        window.edit = function (obj) {
+            layer.open({
+                type: 2,
+                title: '修改',
+                shade: 0.1,
+                area: ['500px', '400px'],
+                content: MODULE_PATH + 'edit?userId=' + obj.data['userId']
+            });
+        }
+
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该用户', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove/" + obj.data['userId'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        window.batchRemove = function (obj) {
+            let ids = common.checkField(obj, 'userId');
+            if (common.isEmpty(ids)) {
+                popup.warning("未选中数据");
+                return false;
+            }
+            layer.confirm('确定要删除选中用户', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "batchRemove/" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                table.reload('user-table');
+                            });
+                        } else {
+                            popup.failure(result.msg);
+                        }
+                    }
+                })
+            });
+        }
+
+        window.refresh = function () {
+            table.reload('user-table');
+        }
+    })
+</script>
+</html>

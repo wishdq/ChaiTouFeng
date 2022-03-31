@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('前台评论列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form action="" class="layui-form">
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">用 户 名:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="reviewUserName" placeholder="请输入用户名" type="text">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">网 名:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="reviewUserProfileName" placeholder="请输入网名" type="text">
+                </div>
+            </div>
+            <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="review-query" lay-submit>
+                <i class="layui-icon layui-icon-search"></i>
+                查询
+            </button>
+            <br>
+
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">评 论 内 容:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="content" placeholder="请输入评论内容" type="text">
+                </div>
+            </div>
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">评 论 位 置:</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" name="reviewLocationId" placeholder="请输入评论位置" type="text">
+                </div>
+            </div>
+            <button class="pear-btn pear-btn-md" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="review-table" lay-filter="review-table"></table>
+    </div>
+</div>
+</body>
+
+<script id="review-toolbar" type="text/html">
+    <button sec:authorize="hasPermission('/site/review/remove','site:review:remove')"
+            class="pear-btn pear-btn-danger pear-btn-md"
+            lay-event="batchRemove">
+        <i class="pear-icon pear-icon-ashbin"></i>
+        删除
+    </button>
+</script>
+
+<script id="review-bar" type="text/html">
+    <button sec:authorize="hasPermission('/site/review/remove','site:review:remove')"
+            class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+</script>
+
+<script id="review-enable" type="text/html">
+    <input type="checkbox" name="enable" value="{{d.reviewId}}" lay-skin="switch" lay-text="启用|禁用"
+           lay-filter="review-enable" {{ d.enable== true ? 'checked' : '' }} />
+</script>
+
+
+<script id="review-createTime" type="text/html">
+    {{layui.util.toDateString(d.createTime,  "yyyy-MM-dd HH:mm:ss")}}
+</script>
+
+
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery', 'popup', 'common'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+        let common = layui.common;
+
+        let MODULE_PATH = "/site/review/";
+
+        let cols = [
+            [
+                {type: 'checkbox'},
+                {title: '用户名', field: 'reviewUserName',width: 100},
+                {title: '网名', field: 'reviewUserProfileName'},
+                {title: '评论位置', field: 'reviewLocationId'},
+                {title: '评论内容', field: 'content'},
+                {title: '状态', field: 'enable',templet: '#review-enable',align: 'center'},
+                {title: '评论时间', field: 'createTime',align: 'center',templet: '#review-createTime', width:165, sort: true},
+                {title: '操作', toolbar: '#review-bar', align: 'center',width: 70}
+            ]
+        ]
+
+        table.render({
+            elem: '#review-table',
+            url: MODULE_PATH + 'data',
+            page: true,
+            cols: cols,
+            skin: 'line',
+            toolbar: '#review-toolbar',
+            initSort: {
+                field: 'createTime' //排序字段，对应 cols 设定的各字段名
+                ,type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            },
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+
+        table.on('tool(review-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            }
+        });
+
+        table.on('toolbar(review-table)', function (obj) {
+            if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        form.on('submit(review-query)', function (data) {
+            table.reload('review-table', {where: data.field})
+            return false;
+        });
+
+        form.on('switch(review-enable)', function (obj) {
+            let operate;
+            if (obj.elem.checked) {
+                operate = "enable";
+            } else {
+                operate = "disable";
+            }
+            let loading = layer.load();
+            $.ajax({
+                url: '/site/review/isEnable/' + operate,
+                data: JSON.stringify({reviewId: this.value}),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    layer.close(loading);
+                    if (result.success) {
+                        popup.success(result.msg);
+                    } else {
+                        popup.failure(result.msg);
+                    }
+                }
+            })
+        });
+
+
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该评论', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove/" + obj.data['reviewId'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        window.batchRemove = function (obj) {
+            let ids = common.checkField(obj, 'reviewId');
+            if (common.isEmpty(ids)) {
+                popup.warning("未选中数据");
+                return false;
+            }
+            layer.confirm('确定要删除选中评论', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "batchRemove/" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                table.reload('review-table');
+                            });
+                        } else {
+                            popup.failure(result.msg);
+                        }
+                    }
+                })
+            });
+        }
+
+        window.refresh = function () {
+            table.reload('review-table');
+        }
+    })
+</script>
+</html>

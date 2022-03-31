@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('监控')"/>
+    <link href="/static/admin/css/other/console2.css" rel="stylesheet"/>
+</head>
+<body class="pear-container">
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-md8">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        CPU 信息
+                    </div>
+                    <div class="layui-card-body"  style="height: 201px">
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                                <div class="pear-card2">
+                                    <div class="title">核心数</div>
+                                    <div class="count pear-text" th:text="${cpu.cpuNum}">21</div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                                <div class="pear-card2">
+                                    <div class="title">空闲率</div>
+                                    <div class="count pear-text" th:text="${cpu.free + ' %'}">32</div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                                <div class="pear-card2">
+                                    <div class="title">等待率</div>
+                                    <div class="count pear-text" th:text="${cpu.wait + ' %'}"></div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                                <div class="pear-card2">
+                                    <div class="title">使用率</div>
+                                    <div class="count pear-text" th:text="${cpu.totalUsed + ' %'}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        RAM 监控
+                    </div>
+                    <div class="layui-card-body" style="height: 201px">
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                                <div class="pear-card2">
+                                    <div class="title">空闲内存</div>
+                                    <div class="count pear-text" th:text="${cpu.memInfo.free + ' G'}"></div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                                <div class="pear-card2">
+                                    <div class="title">最大内存</div>
+                                    <div class="count pear-text" th:text="${cpu.memInfo.total + ' G'}"></div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                                <div class="pear-card2">
+                                    <div class="title">已用内存</div>
+                                    <div class="count pear-text" th:text="${cpu.memInfo.used + ' G'}"></div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6 layui-col-sm6 layui-col-xs6">
+                                <div class="pear-card2">
+                                    <div class="title">内存使用</div>
+                                    <div class="count pear-text"
+                                         th:text="${#numbers.formatDecimal(cpu.memInfo.used / cpu.memInfo.total * 100, 2, 2)+ '%'}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md4">
+        <div class="layui-card">
+            <div class="layui-card-header">主机信息</div>
+            <div class="layui-card-body">
+                <table class="layui-table" lay-skin="line">
+                    <tbody>
+                    <tr>
+                        <td>名称</td>
+                        <td th:text="${cpu.sysInfoComputerName}"></td>
+                    </tr>
+                    <tr>
+                        <td>地址</td>
+                        <td th:text="${cpu.sysInfoComputerIp}"></td>
+                    </tr>
+                    <tr>
+                        <td>系统</td>
+                        <td th:text="${cpu.sysInfoOsName}"></td>
+                    </tr>
+                    <tr>
+                        <td>模型</td>
+                        <td th:text="${cpu.sysInfoOsArch}"></td>
+                    </tr>
+                    <tr>
+                        <td>JDK</td>
+                        <td th:text="${'JDK' + cpu.jvmInfoVersion}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header">磁盘信息</div>
+            <div class="layui-card-body">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="200">
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>磁盘</th>
+                            <th>容量</th>
+                            <th>已用</th>
+                            <th>空闲</th>
+                            <th>使用率</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="sysFile:${cpu.sysFiles}">
+                            <td th:text="${sysFile.typeName}"></td>
+                            <td th:text="${sysFile.total}"></td>
+                            <td th:text="${sysFile.used}"></td>
+                            <td th:text="${sysFile.free}"></td>
+                            <td th:text="${sysFile.usage}+ ' %'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="common :: footer"/>
+</body>
+</html>

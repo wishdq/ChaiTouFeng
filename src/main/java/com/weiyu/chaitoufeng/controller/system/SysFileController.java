@@ -30,7 +30,7 @@ import javax.annotation.Resource;
 public class SysFileController extends BaseController {
 
     // 系 统 文 件
-    private final String MODULE_PATH = "system/file/";
+    private final String MODULE_PATH = "admin/system/file/";
 
 
     @Resource

@@ -25,7 +25,7 @@ import java.util.List;
 public class SysDeptController extends BaseController {
 
     //基础路径
-    private static String MODULE_PATH = "system/dept/";
+    private static final String MODULE_PATH = "admin/system/dept/";
 
     //部门模块服务
     @Resource

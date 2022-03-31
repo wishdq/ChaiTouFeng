@@ -27,7 +27,7 @@ import java.util.Arrays;
 @RequestMapping(ControllerConstant.API_POETRY_PREFIX + "poem")
 public class PoemController extends BaseController {
 
-    private final String MODULE_PATH = "poetry/poem/";
+    private final String MODULE_PATH = "admin/poetry/poem/";
 
     @Resource
     PoemService poemService;

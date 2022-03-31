@@ -33,7 +33,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController {
-    private String prefix = "system/notice";
+    private final String prefix = "admin/system/notice";
 
     @Resource
     private ISysNoticeService sysNoticeService;

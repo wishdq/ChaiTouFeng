@@ -13,8 +13,8 @@ public class ControllerConstant {
     // poetry基础路径
     public final static String API_POETRY_PREFIX = "/poetry/";
 
-    // poetry基础路径
-    //public final static String API_QUOTE_PREFIX = "/quote/";
+    // 前台基础路径
+    public final static String API_HOME_PREFIX = "/site/";
 
     // 工作流程基础路径
     public final static String API_PROCESS_PREFIX = "/process/";

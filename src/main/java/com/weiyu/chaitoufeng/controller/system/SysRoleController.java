@@ -28,7 +28,7 @@ import java.util.Arrays;
 public class SysRoleController extends BaseController {
 
     //基础路径
-    private static String MODULE_PATH = "system/role/";
+    private static final String MODULE_PATH = "admin/system/role/";
 
     //角色模块服务
     @Resource
