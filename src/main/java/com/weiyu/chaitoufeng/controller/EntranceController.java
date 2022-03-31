@@ -1,21 +1,28 @@
 package com.weiyu.chaitoufeng.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.weiyu.chaitoufeng.common.logging.BusinessType;
+import com.weiyu.chaitoufeng.common.result.Result;
+import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
+import com.weiyu.chaitoufeng.domain.home.HomeUser;
 import com.weiyu.chaitoufeng.secure.session.SecureSessionService;
 import com.weiyu.chaitoufeng.common.logging.Logging;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 
+import com.weiyu.chaitoufeng.service.site.SiteUserService;
+import com.wf.captcha.utils.CaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 /**
  * Description: 入口逻辑
@@ -25,6 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 public class EntranceController extends BaseController {
+
+    @Resource
+    SiteUserService userService;
 
     @Resource
     private SessionRegistry sessionRegistry;
@@ -37,22 +47,41 @@ public class EntranceController extends BaseController {
         if (SecurityUtil.isAuthentication()) {
             SecureSessionService.expiredSession(request, sessionRegistry);
             // 用户已登录重定向指定界面
-            return "redirect:/admin";
+            return "admin";
         }
         return "login";
     }
 
-    /**
-     * Describe: 获取注册视图
-     */
+
     @PostMapping("register")
-    public String register(HttpServletRequest request) {
-        if (SecurityUtil.isAuthentication()) {
-            SecureSessionService.expiredSession(request, sessionRegistry);
-            // 用户已登录重定向指定界面
-            return "redirect:/admin";
+    @ResponseBody
+    public Result register(@RequestParam("username") String username,
+                           @RequestParam("password") String password,
+                           @RequestParam("captcha") String captcha,
+                           HttpServletRequest request) {
+        if (!CaptchaUtil.ver(captcha,request)) {
+            return Result.failure("验证码错误");
         }
-        return "login";
+
+        QueryWrapper<HomeUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",username);
+        if (userService.list(queryWrapper).size() == 1){
+            return Result.failure("用户名已存在");
+        }
+
+        HomeUser homeUser = new HomeUser();
+        homeUser.setUserId(SequenceUtil.makeStringId());
+        homeUser.setUsername(username);
+        homeUser.setPassword(password);
+        homeUser.setCreateTime(LocalDateTime.now());
+        userService.save(homeUser);
+
+        return Result.success("注册成功");
+    }
+
+    @GetMapping("register")
+    public String registerToIndex(HttpServletRequest request) {
+        return "test";
     }
 
     //获取index视图

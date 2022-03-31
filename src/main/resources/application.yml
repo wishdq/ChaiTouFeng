@@ -78,6 +78,7 @@ chaitoufeng:
       - /
       - /index
       - /login/**  # 开放登录接口
+      - /register  #开放注册接口
       - /system/captcha/** # 开放验证码接口
       - /error/** # 开放错误接口
       - /test
