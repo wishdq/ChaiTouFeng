@@ -22,7 +22,7 @@ import java.util.Arrays;
  */
 
 @RestController
-@RequestMapping(ControllerConstant.API_HOME_PREFIX + "review")
+@RequestMapping(ControllerConstant.API_SITE_PREFIX + "review")
 public class HomeReviewController extends BaseController {
 
     private final String MODULE_PATH = "admin/site/review/";

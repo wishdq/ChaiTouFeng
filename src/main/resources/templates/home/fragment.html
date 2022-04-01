@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header(title)">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/component/bootstrap/css/bootstrap.min.css" >
+    <link rel="stylesheet"href="../../static/home/css/main.css">
+    <link rel="stylesheet" href="../../static/home/css/iconfont.css">
+    <link rel="stylesheet" href="../../static/component/layui/css/layui.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+<div th:fragment="nav">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <strong>钗头凤</strong>
+            </a>
+            <button class="navbar-toggler collapsed" type="button"
+                    data-toggle="collapse" data-target="#navbarsExample07"
+                    aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse collapse" id="navbarsExample07" >
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">推荐</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">诗文</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">名句</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">作者</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">朝代</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">关于</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-md-0">
+                    <input class="form-control form-control-sm" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">
+                </form>
+                <ul class="navbar-nav" style="margin-left: 10px">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">登 录</a>
+                    </li>
+                    <!--<li class="nav-item">-->
+                    <!--    <a class="nav-link" href="#"></a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<div th:fragment="footer">
+    <script src="../../static/admin/js/jquery.min.js" ></script>
+    <script src="../../static/component/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/component/layui/layui.js"></script>
+</div>
+</body>
+</html>

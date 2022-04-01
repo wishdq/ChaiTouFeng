@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -40,9 +45,16 @@ public class PoemController extends BaseController {
 
     @GetMapping("data")
     @PreAuthorize("hasPermission('/poetry/poem/data','poetry:poem:data')")
-    public ResultTable data(PageDomain pageDomain, Poem param) {
-        PageInfo<Poem> pageInfo = poemService.page(param, pageDomain);
-        return pageTable(pageInfo.getList(), pageInfo.getTotal());
+    public ResultTable data(PageDomain pageDomain, Poem param,
+                            HttpServletRequest request,
+                            ServletResponse response) throws ServletException, IOException {
+        if (pageDomain.getPage() != null && pageDomain.getLimit() != null){
+            System.out.println(pageDomain);
+            PageInfo<Poem> pageInfo = poemService.page(param, pageDomain);
+            return pageTable(pageInfo.getList(), pageInfo.getTotal());
+        }
+        request.getRequestDispatcher("/error/403").forward(request,response);
+        return null;
     }
 
 

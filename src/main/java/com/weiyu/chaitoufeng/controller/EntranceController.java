@@ -73,6 +73,7 @@ public class EntranceController extends BaseController {
         homeUser.setUserId(SequenceUtil.makeStringId());
         homeUser.setUsername(username);
         homeUser.setPassword(password);
+        homeUser.setEnable("1");
         homeUser.setCreateTime(LocalDateTime.now());
         userService.save(homeUser);
 
@@ -84,11 +85,6 @@ public class EntranceController extends BaseController {
         return "test";
     }
 
-    //获取index视图
-    @GetMapping(value = {"index","/"})
-    public ModelAndView index() {
-        return jumpPage("index");
-    }
 
     //获取admin视图
     @GetMapping("admin")

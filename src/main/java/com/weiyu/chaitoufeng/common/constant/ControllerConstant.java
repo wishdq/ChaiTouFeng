@@ -14,8 +14,8 @@ public class ControllerConstant {
     public final static String API_POETRY_PREFIX = "/poetry/";
 
     // 前台基础路径
-    public final static String API_HOME_PREFIX = "/site/";
+    public final static String API_SITE_PREFIX = "/site/";
 
-    // 工作流程基础路径
-    public final static String API_PROCESS_PREFIX = "/process/";
+    // 网站基础路径
+    public final static String API_HOME_PREFIX = "/home/";
 }

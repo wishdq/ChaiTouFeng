@@ -24,7 +24,7 @@ import java.util.Arrays;
  * Author: wish_dq
  */
 @RestController
-@RequestMapping(ControllerConstant.API_HOME_PREFIX + "user")
+@RequestMapping(ControllerConstant.API_SITE_PREFIX + "user")
 public class SiteUserController extends BaseController {
 
     private final String MODULE_PATH = "admin/site/user/";

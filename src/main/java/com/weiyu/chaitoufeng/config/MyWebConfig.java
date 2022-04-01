@@ -1,33 +1,27 @@
-//package com.weiyu.chaitoufeng.config;
-//
-//import com.baomidou.mybatisplus.annotation.DbType;
-//import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-//import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-//import org.springframework.boot.web.servlet.MultipartConfigFactory;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.util.unit.DataSize;
-//
-//import javax.servlet.MultipartConfigElement;
-//
-///**
-// * Description: 网站配置类
-// * Since: 2022-03-25 10:28
-// * Author: wish_dq
-// */
-//@Configuration
-//public class MyWebConfig {
-//
-//    /**
-//     * Mybatis-plus 分页
-//     * @return
-//     */
-//    //@Bean
-//    //public MybatisPlusInterceptor mybatisPlusInterceptor() {
-//    //    MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-//    //    interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-//    //    return interceptor;
-//    //}
+package com.weiyu.chaitoufeng.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
+
+
+/**
+ * Description: 网站配置类
+ * Since: 2022-03-25 10:28
+ * Author: wish_dq
+ */
+@Configuration
+public class MyWebConfig {
+
+
+    @Bean
+    public StrictHttpFirewall allowUrlEncodedSlashHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        //此处可添加别的规则,目前只设置 允许双 //
+        firewall.setAllowUrlEncodedDoubleSlash(true);
+        return firewall;
+    }
+
 //
 //    /**
 //     * 文件上传配置
@@ -42,4 +36,4 @@
 //    //    return factory.createMultipartConfig();
 //    //}
 //
-//}
+}
