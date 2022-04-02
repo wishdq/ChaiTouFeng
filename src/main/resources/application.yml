@@ -78,6 +78,12 @@ chaitoufeng:
       - /
       - /index
       - /home/**
+      - /poem
+      - /author
+      - /sentence
+      - /dynasty
+      - /about
+#      - /home/dynasty/**
       - /login/**  # 开放登录接口
       - /register  #开放注册接口
       - /system/captcha/** # 开放验证码接口

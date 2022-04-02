@@ -70,6 +70,21 @@ public class Poem implements Serializable {
      */
     private String yiwen;
 
+    /**
+     * 收藏数
+     */
+    private Integer shouCuang;
+
+    /**
+     * 喜欢数
+     */
+    private Integer xiHuan;
+
+    /**
+     * 点赞数
+     */
+    private Integer dianZan;
+
     private LocalDateTime updateTime;
 
     @TableField(exist = false)

@@ -16,7 +16,6 @@ import com.wf.captcha.utils.CaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,7 +33,7 @@ import java.time.LocalDateTime;
 public class EntranceController extends BaseController {
 
     @Resource
-    SiteUserService userService;
+    SiteUserService siteUserService;
 
     @Resource
     private SessionRegistry sessionRegistry;
@@ -65,7 +64,7 @@ public class EntranceController extends BaseController {
 
         QueryWrapper<HomeUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",username);
-        if (userService.list(queryWrapper).size() == 1){
+        if (siteUserService.list(queryWrapper).size() == 1){
             return Result.failure("用户名已存在");
         }
 
@@ -75,7 +74,7 @@ public class EntranceController extends BaseController {
         homeUser.setPassword(password);
         homeUser.setEnable("1");
         homeUser.setCreateTime(LocalDateTime.now());
-        userService.save(homeUser);
+        siteUserService.save(homeUser);
 
         return Result.success("注册成功");
     }

@@ -87,6 +87,7 @@ public class PoemController extends BaseController {
     @PreAuthorize("hasPermission('/poetry/poem/edit','poetry:poem:edit')")
     public Result update(@RequestBody Poem poem) {
         boolean result = poemService.updateById(poem);
+        poem.setUpdateTime(LocalDateTime.now());
         return decide(result);
     }
 

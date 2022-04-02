@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -96,6 +97,7 @@ public class SysUserController extends BaseController {
         sysUser.setStatus("1");
         sysUser.setUserId(SequenceUtil.makeStringId());
         sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
+        sysUser.setCreateTime(LocalDateTime.now());
         sysUserService.saveUserRole(sysUser.getUserId(), Arrays.asList(sysUser.getRoleIds().split(",")));
         Boolean result = sysUserService.save(sysUser);
         return decide(result);
@@ -150,6 +152,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("hasPermission('/system/user/edit','sys:user:edit')")
     @Logging(title = "修改用户", describe = "修改用户", type = BusinessType.EDIT)
     public Result update(@RequestBody SysUser sysUser) {
+        sysUser.setUpdateTime(LocalDateTime.now());
         sysUserService.saveUserRole(sysUser.getUserId(), Arrays.asList(sysUser.getRoleIds().split(",")));
         boolean result = sysUserService.update(sysUser);
         return decide(result);

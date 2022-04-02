@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-biaoqian:before {
+  content: "\e63d";
+}
+
 .icon-xihuan:before {
   content: "\e761";
 }
@@ -29,3 +33,6 @@
   content: "\e90a";
 }
 
+.icon-31pinglun:before {
+  content: "\e600";
+}

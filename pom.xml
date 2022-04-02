@@ -174,10 +174,10 @@
             </resource>
             <!--加载字体图标-->
             <resource>
-                <directory>${project.basedir}</directory>
+                <directory>src/main/java</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>static/home/fonts/**</include>
+                    <include>static/home/font/**</include>
                 </includes>
             </resource>
         </resources>

@@ -78,6 +78,7 @@ public class PoemDynastyController extends BaseController {
     @PutMapping("update")
     @PreAuthorize("hasPermission('/poetry/dynasty/edit','poetry:dynasty:edit')")
     public Result update(@RequestBody PoemDynasty dynasty) {
+        dynasty.setUpdatedTime(LocalDateTime.now());
         boolean result = dynastyService.updateById(dynasty);
         return decide(result);
     }

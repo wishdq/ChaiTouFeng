@@ -73,6 +73,7 @@ public class PoemsCiPaiController extends BaseController {
     @PutMapping("update")
     @PreAuthorize("hasPermission('/poetry/ciPai/edit','poetry:ciPai:edit')")
     public Result update(@RequestBody PoemCiPai ciPai) {
+        ciPai.setUpdateTime(LocalDateTime.now());
         boolean result = ciPaiService.updateById(ciPai);
         return decide(result);
     }

@@ -15,6 +15,9 @@
             <result property="zhujie" column="zhujie" jdbcType="VARCHAR"/>
             <result property="shangxi" column="shangxi" jdbcType="VARCHAR"/>
             <result property="yiwen" column="yiwen" jdbcType="VARCHAR"/>
+            <result property="shouCuang" column="shou_cuang" jdbcType="INTEGER"/>
+            <result property="xiHuan" column="xi_huan" jdbcType="INTEGER"/>
+            <result property="dianZan" column="dian_zan" jdbcType="INTEGER"/>
             <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -37,8 +40,6 @@
             <if test="content!=null and content!=''">
                 and content like "%"#{content}"%"
             </if>
-
-
             <if test="type!=null and type!=''">
                 and type like "%"#{type}"%"
             </if>

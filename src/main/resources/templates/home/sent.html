@@ -9,68 +9,60 @@
     <link rel="stylesheet" href="../../static/home/css/iconfont.css">
     <link rel="stylesheet" href="../../static/component/layui/css/layui.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--<th:block th:include="fragment :: scorlling('body')"/>-->
     <style>
         .layui-card{
             border-radius: 7px;
-        }
-        .layui-card-header{
-            color: #1e7e34;
-            font-size: 14.5px;
-        }
-        p{
-            margin: 0 0 10px;
         }
     </style>
 </head>
 <body>
 <header >
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <strong>钗头凤</strong>
-        </a>
-        <button class="navbar-toggler collapsed" type="button"
-                data-toggle="collapse" data-target="#navbarsExample07"
-                aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <strong>钗头凤</strong>
+            </a>
+            <button class="navbar-toggler collapsed" type="button"
+                    data-toggle="collapse" data-target="#navbarsExample07"
+                    aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="navbar-collapse collapse" id="navbarsExample07" >
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/recommend">推荐</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/poem">诗文</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/sentence">名句</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/author">作者</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/dynasty">朝代</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">关于</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-md-0">
-                <input class="form-control form-control-sm" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">
-            </form>
-            <ul class="navbar-nav" style="margin-left: 10px">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">登 录</a>
-                </li>
-                <!--<li class="nav-item">-->
-                <!--    <a class="nav-link" href="#"></a>-->
-                <!--</li>-->
-            </ul>
+            <div class="navbar-collapse collapse" id="navbarsExample07" >
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/recommend.html">推荐</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/poem.html">诗文</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sentence.html">名句</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/author.html">作者</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dynasty.html">朝代</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about.html">关于</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-md-0">
+                    <input class="form-control form-control-sm" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">
+                </form>
+                <ul class="navbar-nav" style="margin-left: 10px">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">登 录</a>
+                    </li>
+                    <!--<li class="nav-item">-->
+                    <!--    <a class="nav-link" href="#"></a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 </header>
 
 
@@ -86,7 +78,7 @@
         <div class="carousel-item active" >
             <img src="../../static/home/img/02.png" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="padding-bottom: 100px"><span id="subtitle" >念 念 不 忘，必 有 回 响</span></h4>
+                <h4 ><span id="subtitle" >念 念 不 忘，必 有 回 响</span></h4>
             </div>
         </div>
         <div class="carousel-item">
@@ -117,118 +109,95 @@
 
 <div class="container-fluid poetry_main no-padding">
     <div class="row col-lg-12">
-        <div class="left_card col-lg-7" >
-            <div class="poem-card">
-                <div id="poem-c-4789">
-                    <div class="card-title">
-                        <h2 class="poem-title">
-                            <a class="title-link" href="https://xuegushi.cn/poem/48789" target="_blank">西江月·重九</a>
-                        </h2>
+        <div class="col-lg-9 sentence-part" >
+            <div class="sentence-content-list">
+                <div class="sentenceItem">
+                    <div class="sentence">
+                        <a class="sentence-left">
+                            山有木兮木有枝，心悦君兮君不知。
+                        </a>
+                        <a href="#" class="sentence-right">
+                            佚名《越人歌》
+                        </a>
                     </div>
-                    <div class="poem-author">
-                        <p><a class="author_dynasty" href="https://xuegushi.cn/poem?dynasty=宋代" target="_blank">
-                            宋代</a> : <a class="author_name" target="_blank">苏轼</a>
-                        </p>
+                    <div class="sentenceContent">
+                        今夕何夕兮，搴舟中流。今日何日兮，得与王子同舟。
+                        蒙羞被好兮，不訾诟耻。心几烦而不绝兮，得知王子。
+                        山有木兮木有枝，心悦君兮君不知。
                     </div>
-                    <div class="poem-content">
-                        <p class="p-content">点点楼头细雨，重重江外平湖。当年戏马会东徐，今日凄凉南浦。</p>
-                        <p class="p-content">莫恨黄花未吐，且教红粉相扶。酒阑不必看茱萸，俯仰人间今古。</p>
+                    <div class="sentenceTool layui-hide">
+                        <div class="layui-inline sentence-shouChang">
+                            <i class="iconfont icon-shoucang"></i>收藏
+                        </div>
+                        <div class="layui-inline tags">
+                            <i class="iconfont icon-biaoqian"></i>宋词三百首 , 宋词精选 , 婉约 , 长江 , 思念 , 爱情
+                        </div>
+                        <div class="layui-inline dianZan">
+                            <i class="iconfont icon-dianzan"></i>
+                            122
+                        </div>
                     </div>
                 </div>
-                <div class="poem-tool">
-                    <div class="layui-inline" >
-                        <i class="iconfont icon-shoucang" ></i>
+                <div class="sentenceItem">
+                    <div class="sentence">
+                        <a class="sentence-left">
+                            山有木兮木有枝，心悦君兮君不知。
+                        </a>
+                        <a href="#" class="sentence-right">
+                            佚名《越人歌》
+                        </a>
                     </div>
-                    <div class="layui-inline" >
-                        <i class="iconfont icon-xihuan" ></i>
+                    <div class="sentenceContent">
+                        今夕何夕兮，搴舟中流。今日何日兮，得与王子同舟。
+                        蒙羞被好兮，不訾诟耻。心几烦而不绝兮，得知王子。
+                        山有木兮木有枝，心悦君兮君不知。
                     </div>
-                    <div class="layui-inline">
-                        <i class="iconfont icon-fuzhi" aria-hidden="true"></i>
+                    <div class="sentenceTool layui-hide">
+                        <div class="layui-inline sentence-shouChang">
+                            <i class="iconfont icon-shoucang"></i>收藏
+                        </div>
+                        <div class="layui-inline tags">
+                            <i class="iconfont icon-biaoqian"></i>宋词三百首 , 宋词精选 , 婉约 , 长江 , 思念 , 爱情
+                        </div>
+                        <div class="layui-inline dianZan">
+                            <i class="iconfont icon-dianzan"></i>
+                            122
+                        </div>
                     </div>
-                    <div class="layui-inline dianZhan">
-                        <i class="iconfont icon-dianzan"></i>
-                        <span >68</span>
+                </div>
+                <div class="sentenceItem">
+                    <div class="sentence">
+                        <a class="sentence-left">
+                            山有木兮木有枝，心悦君兮君不知。
+                        </a>
+                        <a href="#" class="sentence-right">
+                            佚名《越人歌》
+                        </a>
+                    </div>
+                    <div class="sentenceContent">
+                        今夕何夕兮，搴舟中流。今日何日兮，得与王子同舟。
+                        蒙羞被好兮，不訾诟耻。心几烦而不绝兮，得知王子。
+                        山有木兮木有枝，心悦君兮君不知。
+                    </div>
+                    <div class="sentenceTool layui-hide">
+                        <div class="layui-inline sentence-shouChang">
+                            <i class="iconfont icon-shoucang"></i>收藏
+                        </div>
+                        <div class="layui-inline tags">
+                            <i class="iconfont icon-biaoqian"></i>宋词三百首 , 宋词精选 , 婉约 , 长江 , 思念 , 爱情
+                        </div>
+                        <div class="layui-inline dianZan">
+                            <i class="iconfont icon-dianzan"></i>
+                            122
+                        </div>
                     </div>
                 </div>
 
-                <div class="poem-tag">
-                    <a href="https://xuegushi.cn/poem?tag=感伤" class="tag">感伤 ,</a>
-                    <a href="" class="tag">时光</a>                                                                                                            </p>
-                </div>
-            </div>
-            <div class="poem-card">
-                <div id="poem-c-489">
-                    <div class="card-title">
-                        <h2 class="poem-title">
-                            <a class="title-link" href="https://xuegushi.cn/poem/48789" target="_blank">西江月·重九</a>
-                        </h2>
-                    </div>
-                    <div class="poem-author">
-                        <p><a class="author_dynasty" href="https://xuegushi.cn/poem?dynasty=宋代" target="_blank">
-                            宋代</a> : <a class="author_name" target="_blank">苏轼</a>
-                        </p>
-                    </div>
-                    <div class="poem-content">
-                        <p class="p-content">点点楼头细雨，重重江外平湖。当年戏马会东徐，今日凄凉南浦。</p>
-                        <p class="p-content">莫恨黄花未吐，且教红粉相扶。酒阑不必看茱萸，俯仰人间今古。</p>
-                    </div>
-                </div>
-                <div class="poem-tool">
-                    <div class="layui-inline" >
-                        <i class="iconfont icon-shoucang" ></i>
-                    </div>
-                    <div class="layui-inline" >
-                        <i class="iconfont icon-xihuan" ></i>
-                    </div>
-                    <div class="layui-inline">
-                        <i class="iconfont icon-fuzhi" aria-hidden="true"></i>
-                    </div>
-                    <div class="layui-inline dianZhan">
-                        <i class="iconfont icon-dianzan"></i>
-                        <span >68</span>
-                    </div>
-                </div>
-
-                <div class="poem-tag">
-                    <a href="https://xuegushi.cn/poem?tag=感伤" class="tag">感伤 ,</a>
-                    <a href="" class="tag">时光</a>                                                                                                            </p>
-                </div>
             </div>
 
             <!--分页-->
             <div id="page_bottom" class="layui-table-page" style=""></div>
-        </div>
-        <div class="right_card col-lg-3" >
-            <div class="layui-card">
-                <div class="layui-card-header">个人中心</div>
-                <div class="layui-card-body layui-row layui-col-space10">
-                    <ul class="side-list">
-                        <li class="sideBar-list-item">
-                            <i class="iconfont icon-shoucang"></i>
-                            <span>我的收藏</span>
-                            <span class="SideBar-navNumber">20</span>
-                        </li>
-                        <li class="sideBar-list-item">
-                            <i class="iconfont icon-xihuan"></i>
-                            <span>我的喜欢</span>
-                            <span class="SideBar-navNumber">220</span>
-                        </li>
-                        <li class="sideBar-list-item">
-                            <i class="iconfont icon-31pinglun"></i>
-                            <span>我的评论</span>
-                            <span class="SideBar-navNumber">230</span>
-                        </li>
 
-                    </ul>
-                </div>
-            </div>
-
-            <div class="layui-card">
-                <div class="layui-card-header">一言</div>
-                <div class="layui-card-body layui-row layui-col-space10">
-                    <span id="jinrishici-sentence">正在加载今日诗词....</span>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -240,18 +209,24 @@
 <script src="../../static/component/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../../static/component/layui/layui.js"></script>
 <script src="../../static/component/pear/pear.js"></script>
-<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 <script>
     layui.use(['laypage', 'jquery','popup'], function(){
         let laypage = layui.laypage;
         let $ = layui.jquery;
         let popup = layui.popup;
 
+
+        $('.sentenceItem').click(function () {
+            $('.sentenceItem').removeClass('selected');
+            $('.sentenceItem .sentenceTool').addClass('layui-hide');
+            $(this).children('.sentenceTool').removeClass('layui-hide');
+            $(this).addClass('selected')
+        })
+
         //完整功能
         laypage.render({
             elem: 'page_bottom'
-            ,count: 340
-                // [[${poemNum}]]
+            ,count: 354
             ,limit: 8
             ,limits: [8, 16, 24]
             ,groups: 1
@@ -330,8 +305,7 @@
                                 '                    </div>\n' +
                                 '                </div>\n' +
                                 '\n' +
-                                '                <div class="poem-tag">'+
-                                '<i class="iconfont icon-biaoqian"></i>'
+                                '                <div class="poem-tag">'
 
                             let poem_tag = '';
                             let tags = data[i].tags.replace(/#/g,"  #  ")

@@ -1,0 +1,63 @@
+<!DOCTYPE html >
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home/fragment::header(~{::title})">
+    <title>钗头凤 · 朝代</title>
+</head>
+<body>
+<!--<th:block th:insert="home/fragment::nav"/>-->
+
+<th:block th:insert="home/fragment::carousel"/>
+
+
+<div class="container-fluid poetry_main no-padding">
+    <div class="row col-lg-12">
+        <div class="col-lg-9 dynasty_part" >
+            <div class="dynasty_content">
+                <div class="table-title">
+                    中 国 朝 代 一 览 表
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <table id="dynasty-table" lay-filter="dynasty-table"></table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:insert="home/fragment::footer"/>
+<script>
+    layui.use(['laypage', 'jquery','popup','table'], function(){
+        let laypage = layui.laypage;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+        let table = layui.table;
+
+        let cols = [
+            [
+                {title: '序号', field: 'sort',width: 60},
+                {title: '统称', field: 'parentName'},
+                {title: '朝代', field: 'name'},
+                {title: '起止', field: 'startEnd'},
+                {title: '首都', field: 'capital'},
+                {title: '当今位置', field: 'nowLocation'},
+                {title: '民族', field: 'nation'},
+                {title: '创立者', field: 'stateFounder'},
+            ]
+        ]
+
+        table.render({
+            elem: '#dynasty-table',
+            url: '/home/dynasty/data',
+            page: false,
+            cols: cols,
+            skin: 'line',
+        });
+
+
+    })
+</script>
+</body>
+</html>
