@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<!--<th:block th:insert="home/fragment::nav"/>-->
+<th:block th:insert="home/fragment::nav"/>
 
 <th:block th:insert="home/fragment::carousel"/>
 
@@ -14,7 +14,7 @@
         <div class="col-lg-9 about_part" >
             <div class="about_content">
                 <div class="about-me">
-                    <img src="../../static/home/img/me.jpg" class="me-img" alt="">
+                    <img th:src="@{/static/home/img/me.jpg}" src="../../static/home/img/me.jpg" class="me-img" alt="">
                     <span style="display: block">我不在江湖，江湖却有我的故事</span>
                 </div>
 
@@ -75,22 +75,12 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
 
-<th:block th:insert="home/fragment::footer"/>
-
-<script>
-    layui.use(['laypage', 'jquery','popup','table'], function(){
-        let laypage = layui.laypage;
-        let $ = layui.jquery;
-        let popup = layui.popup;
-        let table = layui.table;
-    })
-</script>
 </body>
+
+<th:block th:insert="home/fragment::footer"/>
 </html>

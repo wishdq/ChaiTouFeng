@@ -1,4 +1,4 @@
-//package com.weiyu.chaitoufeng.controller;
+package com.weiyu.chaitoufeng.controller;//package com.weiyu.chaitoufeng.controller;
 //
 //import com.weiyu.chaitoufeng.common.repeatsubmit.NoRepeatSubmit;
 //import org.springframework.stereotype.Controller;
@@ -20,3 +20,12 @@
 //    }
 //
 //}
+
+public class TestController{
+    public static void main(String[] args) {
+        int max=223287,min=1;
+        //System.out.println(max);
+        int ran2 = (int) (Math.random()*(max-min)+min);
+        System.out.println(ran2);
+    }
+}

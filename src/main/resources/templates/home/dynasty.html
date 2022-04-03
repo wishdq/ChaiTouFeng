@@ -4,7 +4,7 @@
     <title>钗头凤 · 朝代</title>
 </head>
 <body>
-<!--<th:block th:insert="home/fragment::nav"/>-->
+<th:block th:insert="home/fragment::nav"/>
 
 <th:block th:insert="home/fragment::carousel"/>
 
@@ -22,18 +22,18 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
+
+</body>
+
 <th:block th:insert="home/fragment::footer"/>
 <script>
-    layui.use(['laypage', 'jquery','popup','table'], function(){
-        let laypage = layui.laypage;
-        let $ = layui.jquery;
-        let popup = layui.popup;
+    layui.use(['table','jquery'], function(){
         let table = layui.table;
+        let $ = layui.jquery;
 
         let cols = [
             [
@@ -56,8 +56,10 @@
             skin: 'line',
         });
 
-
+        // $('.navbar-nav .nav-item').click(function () {
+        //     $(this).siblings().removeClass("nav-active")
+        //     $(this).addClass('nav-active')
+        // })
     })
 </script>
-</body>
 </html>

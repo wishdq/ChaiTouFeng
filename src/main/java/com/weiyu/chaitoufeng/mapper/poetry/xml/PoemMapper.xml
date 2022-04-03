@@ -61,4 +61,8 @@
         </where>
     </select>
 
+    <select id="random" resultMap="PoemMap">
+        select * from poem limit #{loc},6
+    </select>
+
 </mapper>

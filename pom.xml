@@ -173,13 +173,13 @@
                 </includes>
             </resource>
             <!--加载字体图标-->
-            <resource>
-                <directory>src/main/java</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>static/home/font/**</include>
-                </includes>
-            </resource>
+            <!--<resource>-->
+            <!--    <directory>src/main/java</directory>-->
+            <!--    <filtering>false</filtering>-->
+            <!--    <includes>-->
+            <!--        <include>static/home/font/**</include>-->
+            <!--    </includes>-->
+            <!--</resource>-->
         </resources>
     </build>
 

@@ -4,6 +4,7 @@ import com.weiyu.chaitoufeng.domain.poetry.Poem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.weiyu.chaitoufeng.domain.poetry.PoemCiPai;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ import java.util.List;
 public interface PoemMapper extends BaseMapper<Poem> {
 
     List<Poem> selectList(Poem poem);
+
+
+    List<Poem> random(Integer objects);
 }
 
 

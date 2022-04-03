@@ -1,9 +1,10 @@
 <!DOCTYPE html >
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="home/fragment::header(~{::title})">
-    <title>钗头凤 · 作者</title>
+    <title>钗头凤 · 古诗</title>
 </head>
 <body>
+
 <th:block th:insert="home/fragment::nav"/>
 
 <th:block th:insert="home/fragment::carousel"/>
@@ -11,46 +12,43 @@
 
 <div class="container-fluid poetry_main no-padding">
     <div class="row col-lg-12">
-        <div class="col-lg-9 author_part" >
-            <div class="author_content">
-                <div class="dynasty_kind">
-                    <span>朝代：</span>
-                    <ul style="display: inline-block">
-                        <li class="layui-inline">不限</li>
-                        <li class="layui-inline">先秦</li>
-                        <li class="layui-inline">两汉</li>
-                        <li class="layui-inline">魏晋</li>
-                        <li class="layui-inline">南北朝</li>
-                        <li class="layui-inline">隋代</li>
-                        <li class="layui-inline">唐代</li>
-                        <li class="layui-inline">五代</li>
-                        <li class="layui-inline">宋代</li>
-                        <li class="layui-inline">金朝</li>
-                        <li class="layui-inline">元代</li>
-                        <li class="layui-inline">明代</li>
-                        <li class="layui-inline">清代</li>
-                        <li class="layui-inline">近代</li>
+        <div class="left_card col-lg-7" >
+
+
+            <!--分页-->
+            <div id="page_bottom" class="layui-table-page" ></div>
+        </div>
+        <div class="right_card col-lg-3" >
+            <div class="layui-card">
+                <div class="layui-card-header">个人中心</div>
+                <div class="layui-card-body layui-row layui-col-space10">
+                    <ul class="side-list">
+                        <li class="sideBar-list-item">
+                            <i class="iconfont icon-shoucang"></i>
+                            <span>我的收藏</span>
+                            <span class="SideBar-navNumber">20</span>
+                        </li>
+                        <li class="sideBar-list-item">
+                            <i class="iconfont icon-xihuan"></i>
+                            <span>我的喜欢</span>
+                            <span class="SideBar-navNumber">220</span>
+                        </li>
+                        <li class="sideBar-list-item">
+                            <i class="iconfont icon-31pinglun"></i>
+                            <span>我的评论</span>
+                            <span class="SideBar-navNumber">230</span>
+                        </li>
+
                     </ul>
-                </div>
-                <div class="authors_lists">
-                    <div class="author_item">
-                        <span>魏晋</span>
-                        <div class="">
-                            独坐幽篁里，弹琴复长啸。深林人不知，明月来相照。
-                        </div>
-                    </div>
-                    <div class="author_item">
-                        <span>魏晋</span>
-                        <div class="">
-                            独坐幽篁里，弹琴复长啸。深林人不知，明月来相照。
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <!--分页-->
-            <div id="page_bottom" class="layui-table-page" style=""></div>
-
+            <div class="layui-card">
+                <div class="layui-card-header">一言</div>
+                <div class="layui-card-body layui-row layui-col-space10">
+                    <span id="jinrishici-sentence">正在加载今日诗词....</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -58,23 +56,17 @@
 
 
 <th:block th:insert="home/fragment::footer"/>
+<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 <script>
     layui.use(['laypage', 'jquery','popup'], function(){
         let laypage = layui.laypage;
         let $ = layui.jquery;
         let popup = layui.popup;
 
-        //
-        // $('.dynasty_kind ul li').click(function () {
-        //     $(this).siblings().css('color','rgba(0, 0, 0, 0.47)')
-        //     $(this).css('color','#1e7e34')
-        // })
-
-
         //完整功能
         laypage.render({
             elem: 'page_bottom'
-            ,count: 354
+            ,count: [[${poemNum}]]
             ,limit: 8
             ,limits: [8, 16, 24]
             ,groups: 1
@@ -99,7 +91,6 @@
                             popup.failure(result.msg);
                             return
                         }
-                        this.count = result.count;
                         let left_card = $('.left_card')
                         let data = result.data;
 
@@ -110,7 +101,7 @@
 
                         for (let i = 0; i < data.length; i++) {
                             let poem_card = '<div class="poem-card">'+
-                                '<div id='+data[i].poemId +'>'+
+                                '<div id='+data[i].poemId +' '+'class="poem'+data[i].poemId+'">'+
                                 '<div class="card-title">\n' +
                                 '                        <h2 class="poem-title">'+
                                 '<a class="title-link" href="" target="_blank">'+data[i].title+'</a>'+
@@ -144,7 +135,7 @@
                                 '                        <i class="iconfont icon-xihuan" ></i>\n' +
                                 '                        <span >'+data[i].xiHuan+'</span>\n' +
                                 '                    </div>\n' +
-                                '                    <div class="layui-inline" id="copy">\n' +
+                                '                    <div class="layui-inline" id="copy" data-clipboard-action="copy" data-clipboard-target=".poem'+data[i].poemId+'">\n' +
                                 '                        <i class="iconfont icon-fuzhi" aria-hidden="true"></i>\n' +
                                 '                    </div>\n' +
                                 '                    <div class="layui-inline dianZan" id="dianZan">\n' +
@@ -153,13 +144,11 @@
                                 '                    </div>\n' +
                                 '                </div>\n' +
                                 '\n' +
-                                '                <div class="poem-tag">'
+                                '                <div class="poem-tag">'+
+                                '<i class="iconfont icon-biaoqian"></i>'
 
-                            let poem_tag = '';
                             let tags = data[i].tags.replace(/#/g,"  #  ")
-                            // for (let j = 0; j < tags.length; j++) {
-                            //     poem_tag += '<a href="" class="tag">'+tags[j]+' # </a>'
-                            // }
+
                             poem_card += tags+'    </div>\n' +
                                 '            </div>'
 
@@ -170,7 +159,15 @@
             }
         });
 
+        // $('.navbar-nav .nav-item').click(function () {
+        //     $(this).siblings().removeClass("nav-active")
+        //     $(this).addClass('nav-active')
+        // })
 
+        // $('body').on('click','.navbar-nav .nav-item',function () {
+        //     $(this).siblings().removeClass("nav-active")
+        //     $(this).addClass('nav-active')
+        // });
 
         $('body').on('click','.poem-tool div.layui-inline',function () {
             let poem = {};
@@ -185,10 +182,9 @@
                     poem.xiHuan = parseInt(cur.text())+1;break;
                 case 'dianZan':
                     poem.dianZan = parseInt(cur.text())+1;break;
-                case 'copy':
-                    console.log(id_value);break;
+                default:return;
             }
-            console.log(JSON.stringify(poem));
+
             $.ajax({
                 url: '/home/poem/update',
                 data: JSON.stringify(poem),
@@ -202,13 +198,8 @@
                     }
                 }
             })
-            // let cur = $(this).children('span');
-            // cur.text(parseInt(cur.text())+1)
         })
     })
-
-
-
 </script>
 </body>
 </html>

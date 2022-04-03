@@ -9,9 +9,7 @@ body{
   color: #333333;
   margin: 0;
 }
-p{
-  margin: 0 0 7px;
-}
+
 a{
   color: #009688 !important;
 }
@@ -29,6 +27,20 @@ i{
   }
 }
 
+.nav-active{
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.72)
+}
+
+
+.nav-item .nav-link:hover{
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.72)
+}
+
+.carousel-caption h4 .subtitle{
+  font-size: 22px;
+}
 
 div.col-lg-12{
   margin: 0;
@@ -113,13 +125,13 @@ div.col-lg-12{
 }
 
 
-.sentence-part{
+.sentence-part,.poem-detail{
   padding-bottom: 20px;
   padding-top: 20px;
   margin: auto;
 }
 
-.sentence-content-list{
+.sentence-content-list,.poem-detail-part{
   padding: 30px 100px 20px;
   margin-bottom: 15px;
   background-color: #ffffff;
@@ -154,13 +166,13 @@ div.col-lg-12{
   color: #333;
   font-size: 17px;
   line-height: 1.78em;
-  padding-bottom: 8px;
+  /*padding-bottom: 8px;*/
   padding-top: 20px;
-  margin-bottom: 0;
+  margin-bottom: -10px;
 }
 
 .sentence-right{
-  font-size: 14px;
+  font-size: 13px;
   float: right;
   color: #999;
 }
@@ -171,9 +183,6 @@ div.col-lg-12{
   margin-bottom: 40px;
   color: #999;
 }
-/*.sentenceTool>div{*/
-/*  float: left;*/
-/*}*/
 
 
 .side-list{
@@ -206,13 +215,10 @@ div.col-lg-12{
 .author_part,.dynasty_part{
   padding-bottom: 20px;
   padding-top: 20px;
-  /*margin-top: 20px;*/
   margin: auto;
-  /*background: #FFFFFF;*/
 }
 
 .author_content,.dynasty_content{
-  /*margin-top: 20px;*/
   padding: 30px 60px 20px;
   margin-bottom: 15px;
   background-color: #ffffff;
@@ -273,13 +279,10 @@ div.col-lg-12{
 .about_part{
   padding-bottom: 20px;
   padding-top: 20px;
-  /*margin-top: 20px;*/
   margin: auto;
-  /*background: #FFFFFF;*/
 }
 
 .about_content{
-  /*margin-top: 20px;*/
   padding: 30px 60px 20px;
   margin-bottom: 15px;
   background-color: #ffffff;
@@ -304,9 +307,93 @@ div.col-lg-12{
   margin-bottom: 20px;
 }
 .about-me-item .about-me-item-subtitle{
-  /*margin: 0 0 5px;*/
   border-bottom: 1px solid #f3f3f3;
   padding-bottom: 4px;
   margin-bottom: 10px;
   text-indent: 2em;
+}
+
+.index-flush:hover{
+  cursor: pointer;
+}
+
+.index-flush .index-flush-span{
+  font-size: 14px;
+  color: #1e7e34;
+}
+.sentence-title-author{
+  display: inline-block;
+  width: 100%;
+  margin-top: -10px;
+}
+
+.poem-detail-title{
+  text-align: center;
+  /*font-size: 20px;*/
+  margin: 10px 0 6px;
+  color: #1e7e34;
+  font-size: 25px;
+  font-family: KaiTi;
+  font-weight: 700;
+}
+.poem-detail-author-dyansty{
+  color: rgba(0,0,0,0.56);
+  text-align: center;
+  font-family: KaiTi;
+  font-size: 15px;
+}
+.poem-detail-body{
+  margin: 10px 0 20px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-family: KaiTi, serif;
+  text-indent: 2em;
+}
+
+.poem-detail-reviews{
+  border-radius: 7px;
+  background: #FFFFFF;
+  padding: 40px 80px 40px;
+  line-height: 36px;
+}
+
+
+.review-item{
+  margin: 0 10px 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.24);
+}
+.review-dianZan{
+  float: right;
+  font-family: KaiTi;
+}
+.review-time{
+  font-family: KaiTi;
+}
+.review-desc{
+  margin-bottom: 8px;
+  border-left: 4px solid rgba(0, 0, 0, 0.36);
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  margin-left: 40px;
+  padding-left: 20px;
+}
+.review-author{
+  color: #1e7e34;
+  font-family: KaiTi;
+  font-size: 17px;
+}
+
+
+
+
+
+
+
+
+.add-review{
+  border-radius: 7px;
+  background: #FFFFFF;
+  padding: 40px 80px 40px;
+  margin-top: 20px;
+  line-height: 36px;
 }

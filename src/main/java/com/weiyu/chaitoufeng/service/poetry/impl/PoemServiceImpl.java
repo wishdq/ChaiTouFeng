@@ -10,6 +10,7 @@ import com.weiyu.chaitoufeng.mapper.poetry.PoemMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +25,11 @@ public class PoemServiceImpl extends ServiceImpl<PoemMapper, Poem>
 
     @Resource
     PoemMapper poemMapper;
+
+    @Override
+    public List<Poem> randoms(Integer objects){
+        return poemMapper.random(objects);
+    }
 
     @Override
     public PageInfo<Poem> page(Poem poem, PageDomain pageDomain) {

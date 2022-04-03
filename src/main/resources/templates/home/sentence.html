@@ -4,7 +4,7 @@
     <title>钗头凤 · 名句</title>
 </head>
 <body>
-<!--<th:block th:insert="home/fragment::nav"/>-->
+<th:block th:insert="home/fragment::nav"/>
 
 <th:block th:insert="home/fragment::carousel"/>
 
@@ -111,19 +111,10 @@
         let $ = layui.jquery;
         let popup = layui.popup;
 
-
-        $('.sentenceItem').click(function () {
-            $('.sentenceItem').removeClass('selected');
-            $('.sentenceItem .sentenceTool').addClass('layui-hide');
-            $(this).children('.sentenceTool').removeClass('layui-hide');
-            $(this).addClass('selected')
-        })
-
-
         //完整功能
         laypage.render({
             elem: 'page_bottom'
-            ,count: 354
+            ,count: [[${sentenceNum}]]
             ,limit: 8
             ,limits: [8, 16, 24]
             ,groups: 1
@@ -138,7 +129,7 @@
                 page.limit = obj.limit;
 
                 $.ajax({
-                    url: '/home/data',
+                    url: '/home/sentence',
                     data: page,
                     dataType: 'json',
                     contentType: 'application/json',
@@ -148,77 +139,61 @@
                             popup.failure(result.msg);
                             return
                         }
-                        this.count = result.count;
-                        let left_card = $('.left_card')
                         let data = result.data;
 
-                        let poem_card = $('.poem-card')
-                        for (let i = 0; i < poem_card.length; i++) {
-                            poem_card[i].remove()
+                        let sentence_content_list = $('.sentence-content-list')
+                        let sentenceItem = $('.sentenceItem')
+
+                        for (let i = 0; i < sentenceItem.length; i++) {
+                            sentenceItem[i].remove()
                         }
 
                         for (let i = 0; i < data.length; i++) {
-                            let poem_card = '<div class="poem-card">'+
-                                '<div id='+data[i].poemId +'>'+
-                                '<div class="card-title">\n' +
-                                '                        <h2 class="poem-title">'+
-                                '<a class="title-link" href="" target="_blank">'+data[i].title+'</a>'+
-                                '    </h2>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="poem-author">'+
-                                '<p><a class="author_dynasty" href="" target="_blank">'+data[i].dynasty+
-                                '</a> : <a class="author_name" target="_blank">'+data[i].author+'</a>'+
-                                '   </p>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="poem-content">'
 
-                            let contents = data[i].content.split('。');
+                            let item = '<div class="sentenceItem">\n' +
+                                '    <div class="sentence">\n' +
+                                '     <div>   <a class="sentence-left">'+data[i].sentence+
+                                '</a></div>\n' +
+                                '    <div class="sentence-title-author">    <a href="#" class="sentence-right">'+data[i].author+' 《'+data[i].title+'》'+
+                                '    </a></div>\n' +
+                                '    </div>\n' +
+                                '    <div class="sentenceContent">'+'今夕何夕兮，搴舟中流。今日何日兮，得与王子同舟。\n' +
+                                '        蒙羞被好兮，不訾诟耻。心几烦而不绝兮，得知王子。\n' +
+                                '        山有木兮木有枝，心悦君兮君不知。'+
+                                '</div>\n' +
+                                '    <div class="sentenceTool layui-hide">\n' +
+                                '        <div class="layui-inline sentence-shouChang">\n' +
+                                '            <i class="iconfont icon-shoucang"></i>收藏\n' +
+                                '        </div>\n' +
+                                '        <div class="layui-inline tags">\n' +
+                                '            <i class="iconfont icon-biaoqian"></i>宋词三百首 , 宋词精选 , 婉约 , 长江 , 思念 , 爱情\n' +
+                                '        </div>\n' +
+                                '        <div class="layui-inline dianZan">\n' +
+                                '            <i class="iconfont icon-dianzan"></i>\n' +
+                                '            122\n' +
+                                '        </div>\n' +
+                                '    </div>\n' +
+                                '</div>'
 
-                            let poem_content = '';
-                            for (let j = 0; j < contents.length; j++) {
-                                if (contents[j].length !== 0){
-                                    poem_content += '<p class="p-content">'+contents[j]+'。</p>'
-                                }
-                            }
 
-                            poem_card += poem_content +
-                                '                    </div>\n' +
-                                '                </div>\n' +
-                                '                <div class="poem-tool">\n' +
-                                '                    <div class="layui-inline" id="shouCuang">\n' +
-                                '                        <i class="iconfont icon-shoucang" ></i>\n' +
-                                '                        <span >'+data[i].shouCuang+'</span>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="layui-inline" id="xiHuan">\n' +
-                                '                        <i class="iconfont icon-xihuan" ></i>\n' +
-                                '                        <span >'+data[i].xiHuan+'</span>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="layui-inline" id="copy">\n' +
-                                '                        <i class="iconfont icon-fuzhi" aria-hidden="true"></i>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="layui-inline dianZan" id="dianZan">\n' +
-                                '                        <i class="iconfont icon-dianzan"></i>\n' +
-                                '                        <span >'+data[i].dianZan+'</span>\n' +
-                                '                    </div>\n' +
-                                '                </div>\n' +
-                                '\n' +
-                                '                <div class="poem-tag">'
 
-                            let poem_tag = '';
-                            let tags = data[i].tags.replace(/#/g,"  #  ")
-                            // for (let j = 0; j < tags.length; j++) {
-                            //     poem_tag += '<a href="" class="tag">'+tags[j]+' # </a>'
-                            // }
-                            poem_card += tags+'    </div>\n' +
-                                '            </div>'
 
-                            left_card.prepend(poem_card);
+                            // let tags = data[i].tags.replace(/#/g,"  #  ")
+
+                            sentence_content_list.prepend(item);
                         }
                     }
                 })
             }
         });
 
+
+        $('body').on('click','.sentenceItem',function () {
+            $('.sentenceItem').removeClass('selected');
+            $('.sentenceItem .sentenceTool').addClass('layui-hide');
+            $(this).children('.sentenceTool').removeClass('layui-hide');
+            $(this).addClass('selected')
+        })
 
 
         $('body').on('click','.poem-tool div.layui-inline',function () {
@@ -251,13 +226,8 @@
                     }
                 }
             })
-            // let cur = $(this).children('span');
-            // cur.text(parseInt(cur.text())+1)
         })
     })
-
-
-
 </script>
 </body>
 </html>

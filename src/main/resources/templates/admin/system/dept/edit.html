@@ -109,6 +109,7 @@
 
         form.on('submit(dept-update)', function (data) {
             data.field.deptId = $('[name="deptId"]').val();
+            data.field.deptName = $('[name="deptName"]').val();
             $.ajax({
                 url: '/system/dept/update',
                 data: JSON.stringify(data.field),
