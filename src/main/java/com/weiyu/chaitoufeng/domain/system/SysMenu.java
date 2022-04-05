@@ -1,6 +1,7 @@
 package com.weiyu.chaitoufeng.domain.system;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * Author: wish_dq
  */
 @Data
+@Alias("SysMenu")
 public class SysMenu {
 
     //菜单编号

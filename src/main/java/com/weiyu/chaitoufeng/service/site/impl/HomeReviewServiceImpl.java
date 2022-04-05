@@ -32,10 +32,23 @@ public class HomeReviewServiceImpl extends ServiceImpl<HomeReviewMapper, HomeRev
         return super.save(entity);
     }
 
+    /**
+     * 管理评论页
+     */
     @Override
     public PageInfo<HomeReview> getPage(PageDomain pageDomain, HomeReview homeReview) {
         PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
         List<HomeReview> homeReviews = homeReviewMapper.selectPageList(homeReview);
+        return new PageInfo<>(homeReviews);
+    }
+
+    /**
+     * 前台评论页
+     */
+    @Override
+    public PageInfo<HomeReview> getHomePage(PageDomain pageDomain, HomeReview homeReview) {
+        PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
+        List<HomeReview> homeReviews = homeReviewMapper.selectHomePageList(homeReview);
         return new PageInfo<>(homeReviews);
     }
 

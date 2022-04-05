@@ -52,4 +52,10 @@
         </where>
         order by create_time desc
     </select>
+
+    <select id="selectByUsername" parameterType="string" resultMap="HomeUserMap">
+        select *
+        from home_user
+        where username = #{username}
+    </select>
 </mapper>

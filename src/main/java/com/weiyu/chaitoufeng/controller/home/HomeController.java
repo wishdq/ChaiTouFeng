@@ -3,25 +3,24 @@ package com.weiyu.chaitoufeng.controller.home;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.common.result.Result;
+import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.build.ResultTable;
+import com.weiyu.chaitoufeng.domain.home.HomeReview;
 import com.weiyu.chaitoufeng.domain.poetry.Poem;
 import com.weiyu.chaitoufeng.domain.poetry.PoemDynasty;
 import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
 import com.weiyu.chaitoufeng.service.poetry.PoemDynastyService;
 import com.weiyu.chaitoufeng.service.poetry.PoemQuoteService;
 import com.weiyu.chaitoufeng.service.poetry.PoemService;
+import com.weiyu.chaitoufeng.service.site.HomeReviewService;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -46,17 +45,12 @@ public class HomeController extends BaseController {
     @Resource
     PoemQuoteService quoteService;
 
+    @Resource
+    HomeReviewService reviewService;
+
     /**
      * 视图部分
      */
-    @GetMapping(value = {"index","/"})
-    public ModelAndView index(Model model) {
-        QueryWrapper<Poem> queryWrapper = new QueryWrapper<>();
-        queryWrapper.isNotNull("poem_id");
-        Long poemNum = poemService.count(queryWrapper);
-        model.addAttribute("poemNum",poemNum);
-        return jumpPage(MODULE_PATH+"index");
-    }
 
     @GetMapping("poem")
     public ModelAndView poem(Model model){
@@ -65,7 +59,22 @@ public class HomeController extends BaseController {
         Long poemNum = poemService.count(queryWrapper);
 
         model.addAttribute("poemNum",poemNum);
+        model.addAttribute("active","poem");
         return jumpPage(MODULE_PATH+"poem");
+    }
+
+    @GetMapping("poem/{poemId}")
+    public ModelAndView poemItem(@PathVariable String poemId,Model model) {
+        Poem poem = poemService.getById(poemId);
+        QueryWrapper<HomeReview> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("review_location_id",poemId);
+
+        int reviewNum = (int) reviewService.count(queryWrapper);
+        model.addAttribute("poemItem",poem);
+        model.addAttribute("reviewNum",reviewNum);
+        model.addAttribute("active","poem");
+
+        return jumpPage(MODULE_PATH+"poemItem");
     }
 
     @GetMapping("sentence")
@@ -75,21 +84,25 @@ public class HomeController extends BaseController {
         Long sentenceNum = quoteService.count(queryWrapper);
 
         model.addAttribute("sentenceNum",sentenceNum);
+        model.addAttribute("active","sentence");
         return jumpPage(MODULE_PATH+"sentence");
     }
 
     @GetMapping("author")
-    public ModelAndView author(){
+    public ModelAndView author(Model model){
+        model.addAttribute("active","author");
         return jumpPage(MODULE_PATH+"author");
     }
 
     @GetMapping("dynasty")
-    public ModelAndView dynasty(){
+    public ModelAndView dynasty(Model model){
+        model.addAttribute("active","dynasty");
         return jumpPage(MODULE_PATH+"dynasty");
     }
 
     @GetMapping("about")
-    public ModelAndView aboutMe(){
+    public ModelAndView aboutMe(Model model){
+        model.addAttribute("active","about");
         return jumpPage(MODULE_PATH+"about");
     }
 
@@ -103,7 +116,7 @@ public class HomeController extends BaseController {
         return ResultTable.dataTable(poems);
     }
 
-    @GetMapping(MODULE_PATH+"data")
+    @GetMapping(MODULE_PATH+"poem")
     public ResultTable homeData(PageDomain pageDomain) {
         PageInfo<Poem> pageInfo = poemService.page(null, pageDomain);
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
@@ -115,6 +128,38 @@ public class HomeController extends BaseController {
         return Result.decide(result);
     }
 
+    /**
+     * 获取评论列表
+     */
+    @GetMapping(MODULE_PATH+"poem/review/{poemId}")
+    public ResultTable poemReview(PageDomain pageDomain, @PathVariable String poemId){
+        HomeReview homeReview = new HomeReview();
+        homeReview.setReviewLocationId(poemId);
+        PageInfo<HomeReview> pageInfo = reviewService.getHomePage(pageDomain,homeReview);
+        return pageTable(pageInfo.getList(), pageInfo.getTotal());
+    }
+
+    /**
+     * 添加评论
+     */
+    @PutMapping(MODULE_PATH+"poem/review/add")
+    public Result addPoemReview(@RequestBody HomeReview review){
+        review.setReviewId(SequenceUtil.makeStringId());
+        review.setEnable("1");
+        review.setCreateTime(LocalDateTime.now());
+        boolean result = reviewService.save(review);
+        return Result.decide(result);
+    }
+    /**
+     * 更新评论
+     */
+    @PutMapping(MODULE_PATH+"poem/review/update")
+    public Result updatePoemReview(@RequestBody HomeReview review){
+        System.out.println("=================");
+        System.out.println(review);
+        boolean result = reviewService.updateById(review);
+        return Result.decide(result);
+    }
 
     @GetMapping(MODULE_PATH+"sentence")
     public ResultTable sentenceData(PageDomain pageDomain) {

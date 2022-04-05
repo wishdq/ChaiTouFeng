@@ -47,8 +47,11 @@
                     <input class="code layui-input layui-input-inline" style="width: 160px" hover name="captcha" placeholder="验证码 : "/>
                     <img class="codeImage" id="captchaImage" th:src="@{/system/captcha/generate}" src="/admin/images/captcha.gif"/>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item layui-inline">
                     <input lay-skin="primary" name="remember-me" title="记住密码" type="checkbox">
+                </div>
+                <div class="layui-form-item layui-inline" style="float: right">
+                    <input lay-skin="primary" name="isAdmin" title="管理员登录" type="checkbox" >
                 </div>
                 <div class="layui-form-item">
                     <button class="pear-btn pear-btn-success login" lay-filter="login" lay-submit>
@@ -101,7 +104,7 @@
                     btn.stop(function () {
                         if (result.success) {
                             popup.success(result.msg, function () {
-                                location.href = "/admin";
+                                location.href = "/index";
                             })
                         } else {
                             popup.failure(result.msg, function () {

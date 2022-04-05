@@ -13,13 +13,39 @@ spring:
       max-file-size: 10MB
       # 上传文件总的最大值
       max-request-size: 50MB
-
   datasource:
     # 解决中文乱码输入问题,其中UTC是统一标准世界时间。
     url: jdbc:mysql://localhost:3306/chai?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    druid:
+#      filters: stat,wall
+#      # 初始化，最小，最大连接数
+#      initial-size: 3
+#      min-idle: 3
+#      max-active: 18
+#      stat-view-servlet: # 配置监控页功能
+#        enabled: true
+#        login-username: admin
+#        login-password: 123456
+#
+#      web-stat-filter: # 监控web
+#        enabled: true
+#        urlPattern: /*
+#        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+#
+#      filter:
+#        stat: # 对上面filters里面的stat的详细配置
+#          slow-sql-millis: 1000
+#          logSlowSql: true
+#          enabled: true
+#        wall:
+#          enabled: true
+#          config:
+#            drop-table-allow: false
+
   redis:
     host: 127.0.0.1
     port: 6379
@@ -75,20 +101,19 @@ chaitoufeng:
     remember-key: PEAR_REMEMBER
     # 不 需 要 权 限 拦 截 的 接 口 配 置
     open-api:
-      - /
+      - /     # 开放前端视图
       - /index
-      - /home/**
       - /poem
-      - /author
       - /sentence
+      - /author
       - /dynasty
       - /about
-#      - /home/dynasty/**
+      - /poem/**  # 前端数据接口
+      - /home/**
       - /login/**  # 开放登录接口
       - /register  #开放注册接口
       - /system/captcha/** # 开放验证码接口
       - /error/** # 开放错误接口
-      - /test
       - /static/**  #开放静态资源
 #      - /assets/** # 开放静态资源
 #      - /admin/** # 开放静态资源

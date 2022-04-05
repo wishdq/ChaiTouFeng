@@ -54,6 +54,10 @@
         </where>
     </select>
 
+    <select id="selectRegisterByUsername" resultMap="SysUserMap">
+        select * from sys_user where username = #{username}
+    </select>
+
     <!--根据 Username 加载 SysUser -->
     <select id="count" resultType="java.lang.Integer">
         select count(*) from sys_user

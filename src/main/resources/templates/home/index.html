@@ -92,16 +92,13 @@
 </div>
 
 
-
-
 <th:block th:insert="home/fragment::footer"/>
 <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
 <script>
-    layui.use(['laypage', 'jquery','popup'], function(){
-        let laypage = layui.laypage;
+
+    layui.use(['jquery','popup'], function(){
         let $ = layui.jquery;
         let popup = layui.popup;
-
 
         let getFlush = function () {
             let loading = layer.load(1);
@@ -128,12 +125,12 @@
                             '<div id='+data[i].poemId +' '+'class="poem'+data[i].poemId+'">'+
                             '<div class="card-title">\n' +
                             '                        <h2 class="poem-title">'+
-                            '<a class="title-link" href="" target="_blank">'+data[i].title+'</a>'+
+                            '<a class="title-link" href="'+'poem/'+data[i].poemId+'" target="_blank">'+data[i].title+'</a>'+
                             '    </h2>\n' +
                             '                    </div>\n' +
                             '                    <div class="poem-author">'+
                             '<p><a class="author_dynasty" href="" target="_blank">'+data[i].dynasty+
-                            '</a> : <a class="author_name" target="_blank">'+data[i].author+'</a>'+
+                            '</a> · <a class="author_name" target="_blank">'+data[i].author+'</a>'+
                             '   </p>\n' +
                             '                    </div>\n' +
                             '                    <div class="poem-content">'
@@ -182,7 +179,10 @@
             })
         }
 
-        getFlush();
+        $('document').ready(function () {
+            getFlush();
+        })
+
 
         $('.index-flush').click(function () {
             getFlush();

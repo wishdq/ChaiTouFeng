@@ -61,6 +61,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     /**
+     * Describe: 查询角色数据ID
+     */
+    @Override
+    public String getRoleIdByRoleCode(String roleCode){
+        return sysRoleMapper.selectByRoleCode(roleCode).getRoleId();
+    }
+
+    /**
      * Describe: 查询角色数据 分页
      */
     @Override

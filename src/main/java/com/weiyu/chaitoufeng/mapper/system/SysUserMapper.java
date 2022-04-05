@@ -29,6 +29,8 @@ public interface SysUserMapper {
      */
     List<SysUser> selectList(SysUser param);
 
+    List<SysUser> selectRegisterByUsername(@Param("username") String username);
+
     /**
      * Describe: 根据 SysUser 条件查询用户数量
      */

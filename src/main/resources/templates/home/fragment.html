@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header(title)">
     <meta charset="UTF-8">
     <title th:replace="${title}"></title>
@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/static/home/css/main.css}">
     <link rel="stylesheet" th:href="@{/static/home/css/iconfont.css}">
     <link rel="stylesheet" th:href="@{/static/component/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/component/pear/css/pear.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
         .layui-card{
@@ -19,9 +20,15 @@
         }
         p{
             margin: 0 0 10px;
+            letter-spacing: 3px;
         }
         a{
             color: #009688
+        }
+        .dropdown-menu .dropdown-item{
+            font-size: 13px;
+            font-family: KaiTi;
+            font-weight: bold;
         }
         body::-webkit-scrollbar{
             height: 8px;
@@ -53,22 +60,22 @@
 
         <div class="navbar-collapse collapse" id="navbarsExample07" >
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li th:class="'nav-item ' +${active eq 'index'?'nav-active':''} ">
                     <a class="nav-link" th:href="@{/index}">推荐</a>
                 </li>
-                <li class="nav-item">
+                <li th:class="'nav-item ' +${active eq 'poem'?'nav-active':''} ">
                     <a class="nav-link" th:href="@{/poem}">诗文</a>
                 </li>
-                <li class="nav-item">
+                <li th:class="'nav-item ' +${active eq 'sentence'?'nav-active':''} ">
                     <a class="nav-link" th:href="@{/sentence}">名句</a>
                 </li>
-                <li class="nav-item">
+                <li th:class="'nav-item ' +${active eq 'author'?'nav-active':''} ">
                     <a class="nav-link" th:href="@{/author}">作者</a>
                 </li>
-                <li class="nav-item">
+                <li th:class="'nav-item ' +${active eq 'dynasty'?'nav-active':''} ">
                     <a class="nav-link" th:href="@{/dynasty}">朝代</a>
                 </li>
-                <li class="nav-item">
+                <li th:class="'nav-item ' +${active eq 'about'?'nav-active':''} ">
                     <a class="nav-link" th:href="@{/about}">关于</a>
                 </li>
             </ul>
@@ -76,12 +83,18 @@
                 <input class="form-control form-control-sm" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">
             </form>
             <ul class="navbar-nav" style="margin-left: 10px">
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="${!isAuthenticated()}">
                     <a class="nav-link" href="/login">登 录</a>
                 </li>
-                <!--<li class="nav-item">-->
-                <!--    <a class="nav-link" href="#"></a>-->
-                <!--</li>-->
+
+                <li class="nav-item dropdown" th:class="login-user" th:id="${#authentication.principal.userId}" sec:authorize="${isAuthenticated()}">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-expanded="false">
+                        [[${#authentication.principal.realName}]]</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown03">
+                        <a class="dropdown-item" th:id="profile" href="javascript:void(0)">个 人</a>
+                        <a class="dropdown-item" th:id="logout" href="javascript:void(0)">退 出</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -153,36 +166,30 @@
         clipboard.on('error', function (e) {
             layer.msg('对不起，您的浏览器暂不支持一键复制功能！');
         });
+
+        layui.use(['jquery','popup'], function(){
+            let $ = layui.jquery;
+            let popup = layui.popup;
+
+            $('#logout').click(function () {
+                let loading = layer.load();
+                $.ajax({
+                    url: '/logout',
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                location.href = "/index";
+                            });
+                            return true;
+                        }
+                    }
+                })
+            })
+        })
     </script>
 </div>
 </body>
 </html>
-
-
-<div class="sentenceItem">
-    <div class="sentence">
-        <a class="sentence-left">
-            山有木兮木有枝，心悦君兮君不知。
-        </a>
-        <a href="#" class="sentence-right">
-            佚名《越人歌》
-        </a>
-    </div>
-    <div class="sentenceContent">
-        今夕何夕兮，搴舟中流。今日何日兮，得与王子同舟。
-        蒙羞被好兮，不訾诟耻。心几烦而不绝兮，得知王子。
-        山有木兮木有枝，心悦君兮君不知。
-    </div>
-    <div class="sentenceTool layui-hide">
-        <div class="layui-inline sentence-shouChang">
-            <i class="iconfont icon-shoucang"></i>收藏
-        </div>
-        <div class="layui-inline tags">
-            <i class="iconfont icon-biaoqian"></i>宋词三百首 , 宋词精选 , 婉约 , 长江 , 思念 , 爱情
-        </div>
-        <div class="layui-inline dianZan">
-            <i class="iconfont icon-dianzan"></i>
-            122
-        </div>
-    </div>
-</div>

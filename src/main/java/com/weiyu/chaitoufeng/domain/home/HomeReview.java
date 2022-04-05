@@ -31,8 +31,9 @@ public class HomeReview implements Serializable {
 
     private String reviewUserName;
 
-    private String reviewUserProfileName;
+    private String reviewUserRealName;
 
+    private int dianZan;
 
     private String enable;
 

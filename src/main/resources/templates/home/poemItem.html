@@ -1,0 +1,265 @@
+<!DOCTYPE html >
+<head th:replace="home/fragment::header(~{::title})">
+    <title>钗头凤 · 古诗 · [[${poemItem.title}]]</title>
+</head>
+<body>
+
+<th:block th:insert="home/fragment::nav"/>
+
+<th:block th:insert="home/fragment::carousel"/>
+
+
+<div class="container-fluid poetry_main no-padding">
+    <div class="row col-lg-12">
+        <div class="col-lg-9 poem-detail" >
+            <div class="poem-detail-part">
+                <div class="poem-detail-text">
+                    <div  th:id="${poemItem.poemId}" th:class="'poem-detail-this'+' poem'+${poemItem.poemId}">
+                        <div th:text="${poemItem.title}" class="poem-detail-title">
+                            九日有感
+                        </div>
+                        <div class="poem-detail-author-dyansty">
+                            <span th:text="${poemItem.dynasty}+'·'" class="poem-detail-dynasty">宋代</span>
+                            <span th:text="${poemItem.author}" class="poem-detail-author">赵蕃</span>
+                        </div>
+                        <div th:text="${poemItem.content}" class="poem-detail-body">
+                            寥落渊明后，凄凉九日期。
+                            寻花漫青蕊，对酒只空卮。
+                            林密栖鸦早，江寒泊雁迟。
+                            楼高无那倚，弦绝有谁知。
+                        </div>
+                    </div>
+                    <div class="poem-tool">
+                        <div class="layui-inline"  id="shouCuang">
+                            <i class="iconfont icon-shoucang"></i>
+                            <span th:text="${poemItem.shouCuang}"></span>
+                        </div>
+                        <div class="layui-inline" id="xiHuan">
+                            <i class="iconfont icon-xihuan" ></i>
+                            <span th:text="${poemItem.xiHuan}"></span>
+                        </div>
+                        <div class="layui-inline">
+                            <i class="iconfont icon-fuzhi" id="copy" data-clipboard-action="copy" th:data-clipboard-target="'.poem'+${poemItem.poemId}" aria-hidden="true"></i>
+                        </div>
+                        <div class="layui-inline dianZhan" id="dianZan" style="float: right;">
+                            <i class="iconfont icon-dianzan"></i>
+                            <span th:text="${poemItem.dianZan}"></span>
+                        </div>
+                    </div>
+                    <div class="poem-tag">
+                        <i class="iconfont icon-biaoqian"></i>
+                        [[${#strings.replace(poemItem.tags,'#',' # ')}]]
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="poem-detail-reviews" >
+                <div class="review-item">
+                    <div class="review-detail">
+                        <span class="review-author">评论人</span>
+                        <span class="review-time" >
+                            <span>评论时间:</span>
+                            null
+                        </span>
+                        <span class="review-dianZan">
+                            <i class="iconfont icon-dianzan"></i>
+                            <span>null</span>
+                        </span>
+                    </div>
+                    <div class="review-desc">
+                        暂无评论
+                    </div>
+                </div>
+            </div>
+
+            <!--分页-->
+            <div class="">
+                <div id="page_bottom" class="layui-table-page" style="margin-top: 12px;padding-bottom: 36px;"></div>
+            </div>
+            <div class="add-review">
+                <form action="" class="layui-form">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">评 论:</label>
+                        <div class="layui-input-block">
+                        <textarea class="layui-textarea" name="content" placeholder="请输入评论信息"
+                                  maxlength="200" show-word-limit></textarea>
+                        </div>
+                    </div>
+                    <div class="btn-review-container" style="text-align: center">
+                        <button class="pear-btn pear-btn-success pear-btn-sm" lay-filter="review-save" lay-submit="" type="submit">
+                            <i class="layui-icon layui-icon-ok"></i>
+                            提交
+                        </button>
+                        <button class="pear-btn pear-btn-sm" type="reset">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            重置
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<th:block th:insert="home/fragment::footer"/>
+<script>
+    layui.use(['laypage', 'jquery','popup','form'], function(){
+        let laypage = layui.laypage;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+        let form = layui.form;
+
+
+        //完整功能
+        laypage.render({
+            elem: 'page_bottom'
+            ,count: [[${reviewNum}]]
+            ,limit: 8
+            ,limits: [8, 16, 24]
+            ,groups: 1
+            ,curr: location.hash.replace('#!pages=', '') //获取起始页
+            ,hash: 'pages' //自定义hash值
+            ,layout: ['prev', 'page', 'next', 'skip','count', 'limit']
+            ,prev: '<i class="layui-icon"></i>'
+            ,next: '<i class="layui-icon"></i>'
+            ,jump: function(obj){
+                let page={};
+                page.page = obj.curr;
+                page.limit = obj.limit;
+
+                $.ajax({
+                    url: '/home/poem/review/'+[[${poemItem.poemId}]],
+                    data: page,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'get',
+                    success: function (result) {
+                        if (result.code !== 0 || result.count === 0){
+                            return;
+                        }
+                        let data = result.data;
+
+                        let poem_detail_reviews = $('.poem-detail-reviews')
+                        let review_item = $('.review-item')
+
+                        for (let i = 0; i < review_item.length; i++) {
+                            review_item[i].remove()
+                        }
+
+                        for (let i = 0; i < data.length; i++) {
+
+                            let item = '<div class="review-item" id="'+data[i].reviewId+'">\n' +
+                                '    <div class="review-detail">\n' +
+                                '        <span class="review-author">'+data[i].reviewUserRealName+
+                                '</span>\n' +
+                                '        <span class="review-time" >\n' +
+                                '                            <span>评论时间:</span>'+data[i].createTime+
+                                '                </span>\n' +
+                                '        <span class="review-dianZan">\n' +
+                                '                            <i class="iconfont icon-dianzan"></i>\n' +
+                                '                            <span>'+data[i].dianZan+
+                                '</span>\n' +
+                                '                        </span>\n' +
+                                '    </div>\n' +
+                                '    <div class="review-desc">'+data[i].content+
+                                '    </div>\n' +
+                                '</div>'
+
+
+                            // let tags = data[i].tags.replace(/#/g,"  #  ")
+
+                            poem_detail_reviews.prepend(item);
+                        }
+                    }
+                })
+            }
+        });
+
+
+        //添加评论
+        form.on('submit(review-save)',function (data) {
+            let userId = $('.login-user').attr('id');
+            if(userId  !== undefined){
+                data.field.reviewUserId = userId;
+                data.field.reviewLocationId = $('.poem-detail-this').attr('id');
+                console.log(data.field)
+                $.ajax({
+                    url: '/home/poem/review/add',
+                    data: JSON.stringify(data.field),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'put',
+                    success:function (result) {
+                        if (result.success){
+                            layer.msg('评论成功');
+                        }else {
+                            layer.msg('请重新登录')
+                        }
+                    }
+                })
+            }else {
+                layer.msg('请先登录！')
+            }
+            return false;
+        })
+
+        //poem-tool
+        $('body').on('click','.poem-tool div.layui-inline',function () {
+            let poem = {};
+            let id_value = $(this).attr('id');
+            let cur = $(this).children('span');
+            poem.poemId = $(this).parent().prev().attr('id');
+
+            switch (id_value) {
+                case 'shouCuang':
+                    poem.shouCuang = parseInt(cur.text())+1;break;
+                case 'xiHuan':
+                    poem.xiHuan = parseInt(cur.text())+1;break;
+                case 'dianZan':
+                    poem.dianZan = parseInt(cur.text())+1;break;
+                default :return;
+            }
+            $.ajax({
+                url: '/home/poem/update',
+                data: JSON.stringify(poem),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success:function (result) {
+                    if (result.success){
+                        cur.text(parseInt(cur.text())+1);
+                        layer.msg('成功');
+                    }
+                }
+            })
+        })
+
+        //review-dianZan
+        $('body').on('click','.review-dianZan i',function () {
+            let review = {};
+            let cur = $(this).next();
+            review.reviewId = $(this).parents('.review-item').attr('id');
+            review.dianZan = parseInt(cur.text())+1;
+            $.ajax({
+                url: '/home/poem/review/update',
+                data: JSON.stringify(review),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success:function (result) {
+                    if (result.success){
+                        cur.text(review.dianZan);
+                        layer.msg('成功');
+                    }
+                }
+            })
+
+        })
+    })
+</script>
+</body>
+</html>

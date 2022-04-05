@@ -2,7 +2,9 @@ package com.weiyu.chaitoufeng.mapper.site;
 
 import com.weiyu.chaitoufeng.domain.home.HomeUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.weiyu.chaitoufeng.domain.system.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,6 +18,8 @@ import java.util.List;
 public interface HomeUserMapper extends BaseMapper<HomeUser> {
 
     List<HomeUser> selectPageList(HomeUser homeUser);
+
+    HomeUser selectByUsername(@Param("username") String username);
 
 }
 

@@ -16,8 +16,15 @@ import java.util.List;
 @Mapper
 public interface HomeReviewMapper extends BaseMapper<HomeReview> {
 
+    /**
+     * 管理评论页
+     */
     List<HomeReview> selectPageList(HomeReview homeReview);
 
+    /**
+     * 前台评论页
+     */
+    List<HomeReview> selectHomePageList(HomeReview homeReview);
 }
 
 

@@ -148,7 +148,7 @@ public class SysRoleController extends BaseController {
      */
     @PutMapping("enable")
     public Result enable(@RequestBody SysRole sysRole) {
-        sysRole.setEnable("0");
+        sysRole.setEnable("1");
         boolean result = sysRoleService.update(sysRole);
         return decide(result);
     }
@@ -158,7 +158,7 @@ public class SysRoleController extends BaseController {
      */
     @PutMapping("disable")
     public Result disable(@RequestBody SysRole sysRole) {
-        sysRole.setEnable("1");
+        sysRole.setEnable("0");
         boolean result = sysRoleService.update(sysRole);
         return decide(result);
     }

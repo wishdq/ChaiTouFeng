@@ -20,6 +20,11 @@ public interface ISysRoleService {
     List<SysRole> list(SysRole queryRoleParam);
 
     /**
+     * Describe: 查询角色数据ID
+     */
+    String getRoleIdByRoleCode(String roleCode);
+
+    /**
      * Describe: 分页查询角色数据
      */
     PageInfo<SysRole> page(SysRole param, PageDomain pageDomain);

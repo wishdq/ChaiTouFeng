@@ -1,22 +1,26 @@
 package com.weiyu.chaitoufeng.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.weiyu.chaitoufeng.common.logging.BusinessType;
+import com.weiyu.chaitoufeng.common.logging.Logging;
 import com.weiyu.chaitoufeng.common.result.Result;
+import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
-import com.weiyu.chaitoufeng.domain.home.HomeUser;
+import com.weiyu.chaitoufeng.domain.system.SysUser;
 import com.weiyu.chaitoufeng.secure.session.SecureSessionService;
-import com.weiyu.chaitoufeng.common.logging.Logging;
-import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
-
-import com.weiyu.chaitoufeng.service.site.SiteUserService;
+import com.weiyu.chaitoufeng.service.system.ISysRoleService;
+import com.weiyu.chaitoufeng.service.system.ISysUserService;
 import com.wf.captcha.utils.CaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -33,11 +37,31 @@ import java.time.LocalDateTime;
 public class EntranceController extends BaseController {
 
     @Resource
-    SiteUserService siteUserService;
+    ISysUserService userService;
+
+    @Resource
+    ISysRoleService roleService;
 
     @Resource
     private SessionRegistry sessionRegistry;
 
+    @Resource
+    PasswordEncoder passwordEncoder;
+
+
+    @GetMapping("/")
+    public String toIndex(){
+        return "redirect:/index";
+    }
+    @GetMapping("index")
+    public String index(Model model) {
+        SysUser sysUser = (SysUser) SecurityUtil.currentUser();
+        if (sysUser != null && sysUser.getIsAdmin()){
+            return "redirect:admin";
+        }
+        model.addAttribute("active","index");
+        return "home/index";
+    }
     /**
      * Describe: 获取登录视图
      */
@@ -45,12 +69,27 @@ public class EntranceController extends BaseController {
     public String login(HttpServletRequest request) {
         if (SecurityUtil.isAuthentication()) {
             SecureSessionService.expiredSession(request, sessionRegistry);
+
             // 用户已登录重定向指定界面
-            return "admin";
+            SysUser sysUser = (SysUser) SecurityUtil.currentUser();
+            if (sysUser != null && sysUser.getIsAdmin()){
+                return "redirect:admin";
+            }
+            return "redirect:index";
         }
         return "login";
     }
 
+    //获取admin视图
+    @GetMapping("admin")
+    @Logging(title = "主页", describe = "返回 Admin 主页视图", type = BusinessType.ADD)
+    public String admin() {
+        SysUser sysUser = (SysUser) SecurityUtil.currentUser();
+        if (sysUser != null && sysUser.getIsAdmin()){
+            return "admin";
+        }
+        return "redirect:index";
+    }
 
     @PostMapping("register")
     @ResponseBody
@@ -62,35 +101,27 @@ public class EntranceController extends BaseController {
             return Result.failure("验证码错误");
         }
 
-        QueryWrapper<HomeUser> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username",username);
-        if (siteUserService.list(queryWrapper).size() == 1){
+        if (userService.isRegister(username)){
             return Result.failure("用户名已存在");
         }
 
-        HomeUser homeUser = new HomeUser();
-        homeUser.setUserId(SequenceUtil.makeStringId());
-        homeUser.setUsername(username);
-        homeUser.setPassword(password);
-        homeUser.setEnable("1");
-        homeUser.setCreateTime(LocalDateTime.now());
-        siteUserService.save(homeUser);
+        //保存用户
+        SysUser user = new SysUser(
+                SequenceUtil.makeStringId(),
+                username,
+                username,
+                passwordEncoder.encode(password),
+                "1", "1");
+        user.setCreateTime(LocalDateTime.now());
+        boolean userSave = userService.save(user);
 
-        return Result.success("注册成功");
+        //保存注册用户的，用户角色
+        boolean userRoleSave = userService.saveRegisterUserRole(user.getUserId(),
+                roleService.getRoleIdByRoleCode("home"));
+
+        return Result.decide(userSave&&userRoleSave,"注册成功","注册失败");
     }
 
-    @GetMapping("register")
-    public String registerToIndex(HttpServletRequest request) {
-        return "test";
-    }
-
-
-    //获取admin视图
-    @GetMapping("admin")
-    @Logging(title = "主页", describe = "返回 Admin 主页视图", type = BusinessType.ADD)
-    public ModelAndView admin() {
-        return jumpPage("admin");
-    }
 
     //获取控制台主页视图 console
     @GetMapping("console")

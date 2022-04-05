@@ -1,15 +1,19 @@
 package com.weiyu.chaitoufeng.domain.secure;
 
 import com.weiyu.chaitoufeng.domain.system.SysPower;
+import com.weiyu.chaitoufeng.domain.system.SysRole;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import com.weiyu.chaitoufeng.mapper.system.SysPowerMapper;
+import com.weiyu.chaitoufeng.mapper.system.SysRoleMapper;
 import com.weiyu.chaitoufeng.mapper.system.SysUserMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,11 +26,18 @@ import java.util.List;
 @Component
 public class SecureUserDetailsServiceImpl implements UserDetailsService {
 
+    //private static String roles ="";
+    //
+    //private static List<String> roleList = new ArrayList<>();
+
     @Resource
     private SysUserMapper sysUserMapper;
 
     @Resource
     private SysPowerMapper sysPowerMapper;
+
+    @Resource
+    SysRoleMapper sysRoleMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -37,6 +48,14 @@ public class SecureUserDetailsServiceImpl implements UserDetailsService {
         //添加权限
         List<SysPower> powerList = sysPowerMapper.selectByUsername(username);
         sysUser.setPowerList(powerList);
+
+        List<String> roleList = new ArrayList<>();
+        List<SysUser> userRoles = sysRoleMapper.selectByUsername(username);
+        userRoles.forEach(role -> {
+            roleList.add(role.getRoleIds());
+        });
+
+        sysUser.setRoleIds(StringUtils.join(roleList,","));
         return sysUser;
     }
 

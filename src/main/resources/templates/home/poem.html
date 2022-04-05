@@ -81,7 +81,7 @@
                 page.limit = obj.limit;
 
                 $.ajax({
-                    url: '/home/data',
+                    url: '/home/poem',
                     data: page,
                     dataType: 'json',
                     contentType: 'application/json',
@@ -104,12 +104,12 @@
                                 '<div id='+data[i].poemId +' '+'class="poem'+data[i].poemId+'">'+
                                 '<div class="card-title">\n' +
                                 '                        <h2 class="poem-title">'+
-                                '<a class="title-link" href="" target="_blank">'+data[i].title+'</a>'+
+                                '<a class="title-link" href="'+'poem/'+data[i].poemId+'" target="_blank">'+data[i].title+'</a>'+
                                 '    </h2>\n' +
                                 '                    </div>\n' +
                                 '                    <div class="poem-author">'+
                                 '<p><a class="author_dynasty" href="" target="_blank">'+data[i].dynasty+
-                                '</a> : <a class="author_name" target="_blank">'+data[i].author+'</a>'+
+                                '</a> · <a class="author_name" target="_blank">'+data[i].author+'</a>'+
                                 '   </p>\n' +
                                 '                    </div>\n' +
                                 '                    <div class="poem-content">'
@@ -158,16 +158,6 @@
                 })
             }
         });
-
-        // $('.navbar-nav .nav-item').click(function () {
-        //     $(this).siblings().removeClass("nav-active")
-        //     $(this).addClass('nav-active')
-        // })
-
-        // $('body').on('click','.navbar-nav .nav-item',function () {
-        //     $(this).siblings().removeClass("nav-active")
-        //     $(this).addClass('nav-active')
-        // });
 
         $('body').on('click','.poem-tool div.layui-inline',function () {
             let poem = {};

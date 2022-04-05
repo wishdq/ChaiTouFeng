@@ -18,6 +18,7 @@ a:hover{
 }
 
 i{
+  cursor: pointer;
   margin: 0 5px;
 }
 
@@ -95,7 +96,6 @@ div.col-lg-12{
   border-radius: 7px;
   background: #FFFFFF;
   text-align: center;
-  line-height: 36px;
   vertical-align: center;
   height: 50px;
 }
@@ -131,7 +131,7 @@ div.col-lg-12{
   margin: auto;
 }
 
-.sentence-content-list,.poem-detail-part{
+.sentence-content-list{
   padding: 30px 100px 20px;
   margin-bottom: 15px;
   background-color: #ffffff;
@@ -320,6 +320,8 @@ div.col-lg-12{
 .index-flush .index-flush-span{
   font-size: 14px;
   color: #1e7e34;
+  line-height: 26px;
+  display: block;
 }
 .sentence-title-author{
   display: inline-block;
@@ -353,7 +355,7 @@ div.col-lg-12{
 .poem-detail-reviews{
   border-radius: 7px;
   background: #FFFFFF;
-  padding: 40px 80px 40px;
+  padding: 40px 8% 40px;
   line-height: 36px;
 }
 
@@ -374,7 +376,7 @@ div.col-lg-12{
   border-left: 4px solid rgba(0, 0, 0, 0.36);
   border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
-  margin-left: 40px;
+  margin-left: 4%;
   padding-left: 20px;
 }
 .review-author{
@@ -393,7 +395,19 @@ div.col-lg-12{
 .add-review{
   border-radius: 7px;
   background: #FFFFFF;
-  padding: 40px 80px 40px;
-  margin-top: 20px;
+  padding: 6% 6% 2%;
+  margin-top: 16px;
   line-height: 36px;
+}
+
+
+.poem-detail-text{
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+.poem-detail-part{
+  padding: 30px 9% 20px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  border-radius: 7px;
 }

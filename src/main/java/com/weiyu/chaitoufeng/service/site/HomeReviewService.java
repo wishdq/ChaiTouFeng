@@ -13,5 +13,13 @@ import com.weiyu.chaitoufeng.domain.home.HomeUser;
 */
 public interface HomeReviewService extends IService<HomeReview> {
 
+    /**
+     * 管理评论页
+     */
     PageInfo<HomeReview> getPage(PageDomain pageDomain, HomeReview homeReview);
+
+    /**
+     * 前台评论页
+     */
+    PageInfo<HomeReview> getHomePage(PageDomain pageDomain, HomeReview homeReview);
 }

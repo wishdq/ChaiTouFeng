@@ -14,7 +14,7 @@
         <result column="sort" property="sort"/>
     </resultMap>
 
-    <resultMap id="ResuMenuMap" type="com.weiyu.chaitoufeng.domain.system.SysMenu">
+    <resultMap id="ResuMenuMap" type="SysMenu">
         <id column="power_id" property="id"/>
         <result column="parent_id" property="parentId"/>
         <result column="power_name" property="title"/>

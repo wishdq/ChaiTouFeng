@@ -1,6 +1,7 @@
 package com.weiyu.chaitoufeng.mapper.system;
 
 import com.weiyu.chaitoufeng.domain.system.SysRole;
+import com.weiyu.chaitoufeng.domain.system.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,7 +17,7 @@ public interface SysRoleMapper {
     /**
      * Describe: 根据 username 查询用户权限
      */
-    List<SysRole> selectByUsername(String username);
+    List<SysUser> selectByUsername(@Param("username") String username);
 
     /**
      * Describe: 查询角色列表
@@ -32,6 +33,11 @@ public interface SysRoleMapper {
      * Describe: 根据 Id 查询角色
      */
     SysRole selectById(@Param("id") String id);
+
+    /**
+     * Describe: 根据 roleName 查询角色
+     */
+    SysRole selectByRoleCode(@Param("roleCode") String roleCode);
 
     /**
      * Describe: 根据 Id 修改角色

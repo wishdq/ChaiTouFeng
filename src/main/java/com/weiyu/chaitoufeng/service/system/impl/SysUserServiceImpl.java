@@ -68,6 +68,13 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     /**
+     * 查看用户名是否注册
+     */
+    public boolean isRegister(String username){
+        return sysUserMapper.selectRegisterByUsername(username).size()>=1;
+    }
+
+    /**
      * Describe: 根据条件查询用户列表数据  分页
      */
     @Override
@@ -146,6 +153,18 @@ public class SysUserServiceImpl implements ISysUserService {
         });
         int i = sysUserRoleMapper.batchInsert(sysUserRoles);
         return i > 0;
+    }
+
+    /**
+     * Describe: 保存注册用户的 ，用户角色数据
+     */
+    @Override
+    public boolean saveRegisterUserRole(String userId,String roleId){
+        SysUserRole sysUserRole = new SysUserRole();
+        sysUserRole.setId(SequenceUtil.makeStringId());
+        sysUserRole.setRoleId(roleId);
+        sysUserRole.setUserId(userId);
+        return sysUserRoleMapper.insert(sysUserRole)>0;
     }
 
     /**

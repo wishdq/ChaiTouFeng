@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Description: 用户领域模型
- *              ：UserDetails接口实现类
+ * ：UserDetails接口实现类
  * Since: 2022-03-13 17:18
  * Author: wish_dq
  */
@@ -24,6 +24,10 @@ import java.util.List;
 public class SysUser extends BaseDomain implements UserDetails, CredentialsContainer {
 
     private static final long serialVersionUID = 1L;
+
+    //前端登录类型判定
+    private Boolean isAdmin = false;
+
     // 编号
     private String userId;
     // 账户名称
@@ -60,6 +64,17 @@ public class SysUser extends BaseDomain implements UserDetails, CredentialsConta
      */
     private List<SysPower> powerList;
 
+    public SysUser(){}
+
+    public SysUser(String userId, String username, String realName,String password,String enable,String status) {
+        this.userId = userId;
+        this.username = username;
+        this.realName = realName;
+        this.password = password;
+        this.enable = enable;
+        this.status = status;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -72,7 +87,7 @@ public class SysUser extends BaseDomain implements UserDetails, CredentialsConta
 
     @Override
     public boolean isAccountNonLocked() {
-        return "1".equals(this.getStatus()) ? true : false;
+        return "1".equals(this.getStatus());
     }
 
     @Override
@@ -82,7 +97,7 @@ public class SysUser extends BaseDomain implements UserDetails, CredentialsConta
 
     @Override
     public boolean isEnabled() {
-        return "1".equals(this.getEnable()) ? true : false;
+        return "1".equals(this.getEnable());
     }
 
     @Override
@@ -91,7 +106,8 @@ public class SysUser extends BaseDomain implements UserDetails, CredentialsConta
     }
 }
 
-/** 笔记
+/**
+ * 笔记
  * UserDetails接口中有一个getAuthorities方法，这个方法返回的是权限，
  * 但是我们返回的权限必须带有“ROLE_”开头才可以，spring会自己截取ROLE_后边的字符串，也就是说，
  * 比如：我的权限叫ADMIN，那么，我返回告诉spring security的时候，必须告诉他权限是ROLE_ADMIN，

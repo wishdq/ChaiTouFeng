@@ -20,6 +20,8 @@ public interface ISysUserService {
      */
     List<SysUser> list(SysUser param);
 
+    boolean isRegister(String username);
+
     /**
      * Describe: 根据条件查询用户列表数据  分页
      */
@@ -54,6 +56,11 @@ public interface ISysUserService {
      * Describe: 保存用户角色数据
      */
     boolean saveUserRole(String userId, List<String> roleIds);
+
+    /**
+     * 保存注册用户的 ，用户角色数据
+     */
+    boolean saveRegisterUserRole(String userId,String roleId);
 
     /**
      * Describe: 获取用户角色数据

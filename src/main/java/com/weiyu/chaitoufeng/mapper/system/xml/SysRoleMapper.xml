@@ -15,6 +15,11 @@
         <result column="remark" property="remark"/>
     </resultMap>
 
+    <resultMap id="UserRoleMap" type="SysUser">
+        <result column="user_id" property="userId"/>
+        <result column="role_code" property="roleIds"/>
+    </resultMap>
+
     <select id="selectList" resultMap="SysRoleMap">
         select * from sys_role
         <where>
@@ -33,18 +38,26 @@
         from sys_role
         where role_id = #{id}
     </select>
+
+    <!-- 根据 Id 查询角色-->
+    <select id="selectByRoleCode" parameterType="string" resultMap="SysRoleMap">
+        select *
+        from sys_role
+        where role_code = #{roleCode}
+    </select>
+
     <!-- 根据 用户名-->
-    <select id="selectByUsername" resultMap="SysRoleMap">
-        SELECT *
-        FROM sys_role sr ON sr.role_id = srp.role_id
-        LEFT JOIN sys_user_role sur
-        ON sur.role_id = sr.role_id
-            LEFT JOIN sys_user su ON su.user_id = sur.user_id
-        WHERE
+    <select id="selectByUsername" parameterType="string" resultMap="UserRoleMap">
+        SELECT su.user_id,sr.role_code FROM sys_user as su
+        left join sys_user_role as sur on su.user_id = sur.user_id
+        left join sys_role as sr on sur.role_id = sr.role_id
+        where
             su.username = #{username}
-          and sr.enable = 1
+                and sr.enable = 1
+                and su.enable = 1
         ORDER BY
             sr.sort ASC
+
     </select>
 
     <!-- 新增 SysRole 数据 -->
