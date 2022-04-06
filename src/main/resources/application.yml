@@ -107,6 +107,7 @@ chaitoufeng:
       - /sentence
       - /author
       - /dynasty
+      - /profile
       - /about
       - /poem/**  # 前端数据接口
       - /home/**

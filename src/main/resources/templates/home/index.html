@@ -56,38 +56,9 @@
                 <span class="index-flush-span">刷 新 一 下</span>
             </div>
         </div>
-        <div class="right_card col-lg-3" >
-            <div class="layui-card">
-                <div class="layui-card-header">个人中心</div>
-                <div class="layui-card-body layui-row layui-col-space10">
-                    <ul class="side-list">
-                        <li class="sideBar-list-item">
-                            <i class="iconfont icon-shoucang"></i>
-                            <span>我的收藏</span>
-                            <span class="SideBar-navNumber">20</span>
-                        </li>
-                        <li class="sideBar-list-item">
-                            <i class="iconfont icon-xihuan"></i>
-                            <span>我的喜欢</span>
-                            <span class="SideBar-navNumber">220</span>
-                        </li>
-                        <li class="sideBar-list-item">
-                            <i class="iconfont icon-31pinglun"></i>
-                            <span>我的评论</span>
-                            <span class="SideBar-navNumber">230</span>
-                        </li>
 
-                    </ul>
-                </div>
-            </div>
+        <th:block th:insert="home/fragment::right_card"/>
 
-            <div class="layui-card">
-                <div class="layui-card-header">一言</div>
-                <div class="layui-card-body layui-row layui-col-space10">
-                    <span id="jinrishici-sentence">正在加载今日诗词....</span>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -100,6 +71,7 @@
         let $ = layui.jquery;
         let popup = layui.popup;
 
+        //诗句
         let getFlush = function () {
             let loading = layer.load(1);
             $.ajax({
@@ -186,37 +158,6 @@
 
         $('.index-flush').click(function () {
             getFlush();
-        })
-
-        $('body').on('click','.poem-tool div.layui-inline',function () {
-            let poem = {};
-            let id_value = $(this).attr('id');
-            let cur = $(this).children('span');
-            poem.poemId = $(this).parent().prev().attr('id');
-
-            switch (id_value) {
-                case 'shouCuang':
-                    poem.shouCuang = parseInt(cur.text())+1;break;
-                case 'xiHuan':
-                    poem.xiHuan = parseInt(cur.text())+1;break;
-                case 'dianZan':
-                    poem.dianZan = parseInt(cur.text())+1;break;
-                default:return;
-            }
-
-            $.ajax({
-                url: '/home/poem/update',
-                data: JSON.stringify(poem),
-                dataType: 'json',
-                contentType: 'application/json',
-                type: 'put',
-                success:function (result) {
-                    if (result.success){
-                        cur.text(parseInt(cur.text())+1);
-                        layer.msg('成功');
-                    }
-                }
-            })
         })
     })
 </script>

@@ -1,5 +1,6 @@
 package com.weiyu.chaitoufeng.service.system;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.system.SysMenu;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
@@ -13,7 +14,7 @@ import java.util.List;
  * Since: 2022-03-13 11:13
  * Author: wish_dq
  */
-public interface ISysUserService {
+public interface ISysUserService extends IService<SysUser> {
 
     /**
      * Describe: 根据条件查询用户列表数据
@@ -77,4 +78,9 @@ public interface ISysUserService {
      */
     List<SysMenu> toUserMenu(List<SysMenu> sysMenus, String parentId);
 
+
+    /**
+     * 前台用户
+     */
+    PageInfo<SysUser> getHomePage(PageDomain pageDomain, SysUser homeUser);
 }

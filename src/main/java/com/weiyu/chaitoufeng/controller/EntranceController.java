@@ -1,14 +1,21 @@
 package com.weiyu.chaitoufeng.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.weiyu.chaitoufeng.common.logging.BusinessType;
 import com.weiyu.chaitoufeng.common.logging.Logging;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
+import com.weiyu.chaitoufeng.domain.home.HomeCollect;
+import com.weiyu.chaitoufeng.domain.home.HomeLove;
+import com.weiyu.chaitoufeng.domain.home.HomeReview;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import com.weiyu.chaitoufeng.secure.session.SecureSessionService;
+import com.weiyu.chaitoufeng.service.home.HomeCollectService;
+import com.weiyu.chaitoufeng.service.home.HomeLoveService;
+import com.weiyu.chaitoufeng.service.home.HomeReviewService;
 import com.weiyu.chaitoufeng.service.system.ISysRoleService;
 import com.weiyu.chaitoufeng.service.system.ISysUserService;
 import com.wf.captcha.utils.CaptchaUtil;
@@ -48,16 +55,43 @@ public class EntranceController extends BaseController {
     @Resource
     PasswordEncoder passwordEncoder;
 
+    @Resource
+    HomeCollectService collectService;
+
+    @Resource
+    HomeLoveService loveService;
+
+    @Resource
+    HomeReviewService reviewService;
+
 
     @GetMapping("/")
     public String toIndex(){
         return "redirect:/index";
     }
+
     @GetMapping("index")
     public String index(Model model) {
         SysUser sysUser = (SysUser) SecurityUtil.currentUser();
         if (sysUser != null && sysUser.getIsAdmin()){
             return "redirect:admin";
+        }
+        if (SecurityUtil.isAuthentication()){
+            QueryWrapper<HomeCollect> collectQueryWrapper = new QueryWrapper<>();
+            collectQueryWrapper.eq("user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+            int collectNum = (int) collectService.count(collectQueryWrapper);
+
+            QueryWrapper<HomeLove> loveQueryWrapper = new QueryWrapper<>();
+            loveQueryWrapper.eq("user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+            int loveNum = (int) loveService.count(loveQueryWrapper);
+
+            QueryWrapper<HomeReview> reviewQueryWrapper = new QueryWrapper<>();
+            reviewQueryWrapper.eq("review_user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+            int reviewNum = (int) reviewService.count(reviewQueryWrapper);
+
+            model.addAttribute("collectNum",collectNum);
+            model.addAttribute("loveNum",loveNum);
+            model.addAttribute("reviewNum",reviewNum);
         }
         model.addAttribute("active","index");
         return "home/index";

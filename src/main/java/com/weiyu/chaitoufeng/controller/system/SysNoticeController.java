@@ -105,7 +105,7 @@ public class SysNoticeController extends BaseController {
     @GetMapping("/add")
     @PreAuthorize("hasPermission('/system/notice/add','system:notice:add')")
     public ModelAndView add(Model model) {
-        model.addAttribute("users", sysUserService.list(null));
+        model.addAttribute("users", sysUserService.list());
         return jumpPage(prefix + "/add");
     }
 

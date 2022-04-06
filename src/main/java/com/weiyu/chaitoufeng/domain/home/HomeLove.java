@@ -5,52 +5,37 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 /**
  * 
- * @TableName home_review
+ * @TableName home_love
  */
-@TableName(value ="home_review")
+@TableName(value ="home_love")
 @Data
-@Alias("HomeReview")
-public class HomeReview implements Serializable {
+@Alias("HomeLove")
+@NoArgsConstructor
+public class HomeLove implements Serializable {
     /**
-     * 评论ID
+     * 
      */
     @TableId
-    private String reviewId;
+    private String loveId;
 
     /**
-     * 评论内容
+     * 
      */
-    private String content;
-
-    private String reviewUserName;
-
-    private String reviewUserRealName;
-
-    private int dianZan;
-
-    private String enable;
+    private String userId;
 
     /**
-     * 评论位置ID
+     * 
      */
-    private String reviewLocationId;
+    private String poemId;
 
-    /**
-     * 评论用户ID
-     */
-    private String reviewUserId;
-
-    /**
-     * 评论时间
-     */
-    private LocalDateTime createTime;
 
     /**
      * 计算列
@@ -66,4 +51,10 @@ public class HomeReview implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public HomeLove(String loveId,String userId,String poemId){
+        this.loveId = loveId;
+        this.userId = userId;
+        this.poemId = poemId;
+    }
 }

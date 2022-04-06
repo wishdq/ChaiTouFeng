@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weiyu.chaitoufeng.mapper.home.HomeLoveMapper">
+
+    <resultMap id="HomeLoveMap" type="HomeLove">
+        <id property="loveId" column="love_id" jdbcType="CHAR"/>
+        <result property="userId" column="user_id" jdbcType="CHAR"/>
+        <result property="poemId" column="poem_id" jdbcType="CHAR"/>
+        <result property="author" column="author"/>
+        <result property="dynasty" column="dynasty"/>
+        <result property="title" column="title"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        love_id
+        ,user_id,poem_id
+    </sql>
+
+    <select id="hadLoveCount" resultType="int">
+        select count(love_id)
+        from home_love
+        where user_id = #{userId}
+          and poem_id = #{poemId}
+    </select>
+
+    <select id="selectList" resultMap="HomeLoveMap">
+        select hl.love_id,
+               p.title,
+               p.dynasty,
+               p.author
+        from home_love as hl
+                 left join poem as p on hl.poem_id = p.poem_id
+        where hl.user_id = #{userId}
+    </select>
+
+</mapper>

@@ -1,52 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header(title)">
     <meta charset="UTF-8">
     <title th:replace="${title}"></title>
     <!-- CSS -->
-    <link rel="stylesheet" th:href="@{/static/component/bootstrap/css/bootstrap.min.css}" >
-    <link rel="stylesheet" th:href="@{/static/home/css/main.css}">
+    <link rel="stylesheet" th:href="@{/static/component/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/static/home/css/iconfont.css}">
     <link rel="stylesheet" th:href="@{/static/component/layui/css/layui.css}">
     <link rel="stylesheet" th:href="@{/static/component/pear/css/pear.css}">
+    <link rel="stylesheet" th:href="@{/static/home/css/main.css}">
+    <link rel="shortcut icon" th:href="@{/static/favicon.ico}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
-        .layui-card{
+        .layui-card {
             border-radius: 7px;
         }
-        .layui-card-header{
+
+        .layui-card-header {
             color: #1e7e34;
             font-size: 14.5px;
         }
-        p{
+
+        p {
             margin: 0 0 10px;
             letter-spacing: 3px;
         }
-        a{
+
+        a {
             color: #009688
         }
-        .dropdown-menu .dropdown-item{
+
+        .dropdown-menu .dropdown-item {
             font-size: 13px;
             font-family: KaiTi;
             font-weight: bold;
         }
-        body::-webkit-scrollbar{
+
+        body::-webkit-scrollbar {
             height: 8px;
             width: 8px;
         }
-        body::-webkit-scrollbar-corner{
+
+        body::-webkit-scrollbar-corner {
             background-color: transparent;
         }
-        body::-webkit-scrollbar-thumb{
+
+        body::-webkit-scrollbar-thumb {
             background-color: #639b8f;
-            background-image: -webkit-linear-gradient( 45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
+            background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
             border-radius: 2em;
         }
     </style>
 </head>
 <body>
 
-
+<!--顶部导航-->
 <nav th:fragment="nav" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="/index">
@@ -58,7 +66,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse collapse" id="navbarsExample07" >
+        <div class="navbar-collapse collapse" id="navbarsExample07">
             <ul class="navbar-nav mr-auto">
                 <li th:class="'nav-item ' +${active eq 'index'?'nav-active':''} ">
                     <a class="nav-link" th:href="@{/index}">推荐</a>
@@ -86,58 +94,59 @@
                 <li class="nav-item" sec:authorize="${!isAuthenticated()}">
                     <a class="nav-link" href="/login">登 录</a>
                 </li>
-
-                <li class="nav-item dropdown" th:class="login-user" th:id="${#authentication.principal.userId}" sec:authorize="${isAuthenticated()}">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item" th:class="login-user" th:id="${#authentication.principal.userId}"
+                    sec:authorize="${isAuthenticated()}">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="dropdown03" data-toggle="dropdown"
+                       aria-expanded="false">
                         [[${#authentication.principal.realName}]]</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown03">
-                        <a class="dropdown-item" th:id="profile" href="javascript:void(0)">个 人</a>
-                        <a class="dropdown-item" th:id="logout" href="javascript:void(0)">退 出</a>
-                    </div>
+                    <!--<div class="dropdown-menu" aria-labelledby="dropdown03">-->
+                    <!--    <a class="dropdown-item" th:id="profile" href="javascript:void(0)">个 人</a>-->
+                    <!--    <a class="dropdown-item" th:id="logout" href="javascript:void(0)">退 出</a>-->
+                    <!--</div>-->
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div th:fragment="carousel" id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel"  >
-    <!--轮播图-->
+<!--轮播图-->
+<div th:fragment="carousel" id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel">
     <ol class="carousel-indicators">
-        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active" ></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
     </ol>
-    <div class="carousel-inner" >
-        <div class="carousel-item active" >
+    <div class="carousel-inner">
+        <div class="carousel-item active">
             <img src="../../static/home/img/02.png" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="padding-bottom: 100px"><span class="subtitle" >念 念 不 忘，必 有 回 响</span></h4>
+                <h4 style="padding-bottom: 100px"><span class="subtitle">念 念 不 忘，必 有 回 响</span></h4>
             </div>
         </div>
         <div class="carousel-item">
             <img src="../../static/home/img/10.png" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="padding-bottom: 100px"><span class="subtitle" >山河远阔 人间星河。无一是你 无一不是你</span></h4>
+                <h4 style="padding-bottom: 100px"><span class="subtitle">山河远阔 人间星河。无一是你 无一不是你</span></h4>
             </div>
         </div>
         <div class="carousel-item">
             <img src="../../static/home/img/11.png" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="padding-bottom: 100px"><span class="subtitle" >眠可深，梦可远。</span></h4>
+                <h4 style="padding-bottom: 100px"><span class="subtitle">眠可深，梦可远。</span></h4>
             </div>
         </div>
         <div class="carousel-item">
             <img src="../../static/home/img/11.png" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="padding-bottom: 100px"><span class="subtitle" >欲买桂花同载酒，终不似，少年游。</span></h4>
+                <h4 style="padding-bottom: 100px"><span class="subtitle">欲买桂花同载酒，终不似，少年游。</span></h4>
             </div>
         </div>
         <div class="carousel-item">
             <img src="../../static/home/img/11.png" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="padding-bottom: 100px"><span class="subtitle" >人面不知何处去，桃花依旧笑春风。</span></h4>
+                <h4 style="padding-bottom: 100px"><span class="subtitle">人面不知何处去，桃花依旧笑春风。</span></h4>
             </div>
         </div>
     </div>
@@ -151,9 +160,49 @@
     </button>
 </div>
 
+<!--右边卡片-->
+<div th:fragment="right_card" class="right_card col-lg-3">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <a href="/profile">个人中心</a>
+        </div>
+        <div class="layui-card-body layui-row layui-col-space10">
+            <ul class="side-list">
+                <li class="sideBar-list-item">
+                    <i class="iconfont icon-shoucang"></i>
+                    <span>我的收藏</span>
+                    <span sec:authorize="${!isAuthenticated()}" class="SideBar-navNumber">0</span>
+                    <span sec:authorize="${isAuthenticated()}" th:text="${collectNum}"
+                          class="SideBar-navNumber">0</span>
+                </li>
+                <li class="sideBar-list-item">
+                    <i class="iconfont icon-xihuan"></i>
+                    <span>我的喜欢</span>
+                    <span sec:authorize="${!isAuthenticated()}" class="SideBar-navNumber">0</span>
+                    <span sec:authorize="${isAuthenticated()}" th:text="${loveNum}" class="SideBar-navNumber">0</span>
+                </li>
+                <li class="sideBar-list-item">
+                    <i class="iconfont icon-31pinglun"></i>
+                    <span>我的评论</span>
+                    <span sec:authorize="${!isAuthenticated()}" class="SideBar-navNumber">0</span>
+                    <span sec:authorize="${isAuthenticated()}" th:text="${reviewNum}" class="SideBar-navNumber">0</span>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-card">
+        <div class="layui-card-header">一言</div>
+        <div class="layui-card-body layui-row layui-col-space10">
+            <span id="jinrishici-sentence">正在加载今日诗词....</span>
+        </div>
+    </div>
+</div>
+
 <div th:fragment="footer">
     <!-- jQuery and JavaScript Bundle with Popper -->
-    <script th:src="@{/static/admin/js/jquery.min.js}" ></script>
+    <script th:src="@{/static/admin/js/jquery.min.js}"></script>
     <script th:src="@{/static/component/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/static/component/layui/layui.js}"></script>
     <script th:src="@{/static/component/pear/pear.js}"></script>
@@ -167,24 +216,86 @@
             layer.msg('对不起，您的浏览器暂不支持一键复制功能！');
         });
 
-        layui.use(['jquery','popup'], function(){
+        layui.use(['jquery', 'popup', 'dropdown'], function () {
             let $ = layui.jquery;
             let popup = layui.popup;
+            let dropdown = layui.dropdown;
 
-            $('#logout').click(function () {
-                let loading = layer.load();
+            //自定义事件 - hover
+            dropdown.render({
+                elem: '#dropdown03'
+                , trigger: 'hover'
+                , data: [{
+                    title: '个人中心'
+                    , templet: '<i class="layui-icon layui-icon-username"></i> {{d.title}}'
+                    , id: 'profile'
+                }, {
+                    title: '退出'
+                    , templet: '<i class="layui-icon layui-icon-logout"></i>{{d.title}}'
+                    , id: 'logout'
+                }]
+                , click: function (data, othis) {
+                    if (data.id === 'logout') {
+                        let loading = layer.load();
+                        $.ajax({
+                            url: '/logout',
+                            dataType: 'json',
+                            type: 'post',
+                            success: function (result) {
+                                layer.close(loading);
+                                if (result.success) {
+                                    popup.success(result.msg, function () {
+                                        location.href = "/index";
+                                    });
+                                    return true;
+                                }
+                            }
+                        })
+                    } else {
+                        location.href = '/profile'
+                    }
+                }
+            });
+
+            //poem-tool
+            $('body').on('click', '.poem-tool div.layui-inline', function () {
+                let poem = {};
+                let id_value = $(this).attr('id');
+                let cur = $(this).children('span');
+                poem.poemId = $(this).parent().prev().attr('id');
+
+                switch (id_value) {
+                    case 'shouCuang':
+                        poem.shouCuang = parseInt(cur.text()) + 1;
+                        break;
+                    case 'xiHuan':
+                        poem.xiHuan = parseInt(cur.text()) + 1;
+                        break;
+                    case 'dianZan':
+                        poem.dianZan = parseInt(cur.text()) + 1;
+                        break;
+                    default:
+                        return;
+                }
+
+                let userId = $('.login-user').attr('id');
+                if (userId === undefined && id_value !== 'dianZan') {
+                    layer.msg('请先登录！')
+                    return;
+                }
+
                 $.ajax({
-                    url: '/logout',
+                    url: '/home/poem/update/' + id_value + '/' + userId,
+                    data: JSON.stringify(poem),
                     dataType: 'json',
-                    type: 'post',
+                    contentType: 'application/json',
+                    type: 'put',
                     success: function (result) {
-                        layer.close(loading);
                         if (result.success) {
-                            popup.success(result.msg, function () {
-                                location.href = "/index";
-                            });
-                            return true;
+                            cur.text(parseInt(cur.text()) + 1);
+                            layer.msg('成功');
                         }
+                        layer.msg(result.msg);
                     }
                 })
             })

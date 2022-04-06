@@ -1,5 +1,6 @@
 package com.weiyu.chaitoufeng.service.system.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
@@ -27,7 +28,7 @@ import java.util.List;
  * Author: wish_dq
  */
 @Service
-public class SysUserServiceImpl implements ISysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> implements ISysUserService {
 
     /**
      * 注入用户服务
@@ -208,5 +209,14 @@ public class SysUserServiceImpl implements ISysUserService {
         return list;
     }
 
+    /**
+     * 前台用户
+     */
+    @Override
+    public PageInfo<SysUser> getHomePage(PageDomain pageDomain, SysUser homeUser) {
+        PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
+        List<SysUser> homeUsers = sysUserMapper.selectHomePageUsers(homeUser);
+        return new PageInfo<>(homeUsers);
+    }
 }
 

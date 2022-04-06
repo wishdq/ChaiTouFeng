@@ -57,14 +57,17 @@
                 </ModuleInfoGo>
               </list>
             </option>
-            <option name="needsComment" value="true" />
             <option name="relativePackage" value="domain" />
             <option name="superClass" value="" />
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Poem" />
-                  <option name="tableName" value="poem" />
+                  <option name="className" value="HomeLove" />
+                  <option name="tableName" value="home_love" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="HomeCollect" />
+                  <option name="tableName" value="home_collect" />
                 </TableUIInfo>
               </list>
             </option>

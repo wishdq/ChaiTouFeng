@@ -1,5 +1,6 @@
 package com.weiyu.chaitoufeng.mapper.system;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +13,7 @@ import java.util.List;
  * Author: wish_dq
  */
 @Mapper
-public interface SysUserMapper {
+public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * Describe: 根据 username 查询用户
@@ -38,18 +39,20 @@ public interface SysUserMapper {
 
     /**
      * Describe: 添加用户数据
+     * @return
      */
-    Integer insert(SysUser sysUser);
+    //int insert(SysUser sysUser);
 
     /**
      * Describe: 根据 Id 修改用户
+     * @return
      */
-    Integer updateById(SysUser sysUser);
+    //int updateById(SysUser sysUser);
 
     /**
      * Describe: 根据 Id 删除用户
      */
-    Integer deleteById(String id);
+    //Integer deleteById(String id);
 
 
     /**
@@ -66,4 +69,13 @@ public interface SysUserMapper {
      * Describe: 批量重置部门
      */
     Integer resetDeptByDeptIds(String[] deptIds);
+
+    /**
+     * 前台用户
+     */
+
+    List<SysUser> selectHomePageUsers(SysUser user);
+
+
+    //List<HomeUser> selectPageList(HomeUser homeUser);
 }

@@ -1,8 +1,7 @@
 package com.weiyu.chaitoufeng.mapper.poetry;
 
-import com.weiyu.chaitoufeng.domain.poetry.PoemAuthor;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
+import com.weiyu.chaitoufeng.domain.poetry.PoemAuthor;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.io.Serializable;
@@ -13,7 +12,6 @@ import java.util.List;
 * @author wish_dq
 * @description 针对表【poem_author(诗集作者表)】的数据库操作Mapper
 * @createDate 2022-03-28 15:50:21
-* @Entity com.weiyu.chaitoufeng.domain.poetry.PoemAuthor
 */
 @Mapper
 public interface PoemAuthorMapper extends BaseMapper<PoemAuthor> {

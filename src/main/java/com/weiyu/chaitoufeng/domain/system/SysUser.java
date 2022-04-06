@@ -1,8 +1,12 @@
 package com.weiyu.chaitoufeng.domain.system;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.weiyu.chaitoufeng.domain.BaseDomain;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,14 +25,18 @@ import java.util.List;
 @Getter
 @Setter
 @Alias("SysUser")
+@ToString
+@TableName("sys_user")
 public class SysUser extends BaseDomain implements UserDetails, CredentialsContainer {
 
     private static final long serialVersionUID = 1L;
 
     //前端登录类型判定
+    @TableField(exist = false)
     private Boolean isAdmin = false;
 
     // 编号
+    @TableId
     private String userId;
     // 账户名称
     private String username;
@@ -55,6 +63,7 @@ public class SysUser extends BaseDomain implements UserDetails, CredentialsConta
     // 是否登录
     private String login;
     // 计算列
+    @TableField(exist = false)
     private String roleIds;
     // 最后一次登录时间
     private LocalDateTime lastTime;
@@ -62,6 +71,7 @@ public class SysUser extends BaseDomain implements UserDetails, CredentialsConta
     /**
      * 权限 这里暂时不用 security 的 Authorities
      */
+    @TableField(exist = false)
     private List<SysPower> powerList;
 
     public SysUser(){}

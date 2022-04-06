@@ -2,26 +2,29 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weiyu.chaitoufeng.mapper.site.HomeReviewMapper">
+<mapper namespace="com.weiyu.chaitoufeng.mapper.home.HomeReviewMapper">
 
     <resultMap id="HomeReviewMap" type="HomeReview">
-            <id property="reviewId" column="review_id" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="enable" column="enable" />
-            <result property="reviewUserName" column="username" />
-            <result property="reviewUserRealName" column="real_name" />
-            <result property="reviewLocationId" column="review_location_id" jdbcType="VARCHAR"/>
-            <result property="dianZan" column="dian_zan" jdbcType="VARCHAR"/>
-            <!--<result property="reviewUserId" column="review_user_id" jdbcType="VARCHAR"/>-->
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <id property="reviewId" column="review_id" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="enable" column="enable"/>
+        <result property="reviewUserName" column="username"/>
+        <result property="reviewUserRealName" column="real_name"/>
+        <result property="reviewLocationId" column="review_location_id" jdbcType="VARCHAR"/>
+        <result property="dianZan" column="dian_zan" jdbcType="VARCHAR"/>
+        <!--<result property="reviewUserId" column="review_user_id" jdbcType="VARCHAR"/>-->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="author" column="author"/>
+        <result property="dynasty" column="dynasty"/>
+        <result property="title" column="title"/>
     </resultMap>
 
 
     <select id="selectPageList" resultMap="HomeReviewMap">
         select hr.review_id,hr.content,hr.enable,hr.create_time,hr.review_location_id,hr.dian_zan,
-               su.username,su.real_name
-               from home_review as hr left join sys_user as su
-        on hr.review_user_id = su.user_id
+        su.username,su.real_name
+        from home_review as hr
+        left join sys_user as su on hr.review_user_id = su.user_id
         <where>
             <if test="reviewId!=null and reviewId!=''">
                 and review_id like "%"#{reviewId}"%"
@@ -30,10 +33,10 @@
                 and content like "%"#{content}"%"
             </if>
             <if test="reviewUserName!=null and reviewUserName!=''">
-                and hu.username like "%"#{reviewUserName}"%"
+                and su.username like "%"#{reviewUserName}"%"
             </if>
-            <if test="reviewUserProfileName!=null and reviewUserProfileName!=''">
-                and hu.profile_name like "%"#{reviewUserProfileName}"%"
+            <if test="reviewUserRealName!=null and reviewUserRealName!=''">
+                and su.real_name like "%"#{reviewUserRealName}"%"
             </if>
             <if test="enable!=null and enable!=''">
                 and enable like "%"#{enable}"%"
@@ -65,7 +68,17 @@
                 and review_user_id = #{reviewUserId}
             </if>
         </where>
-        order by hr.dian_zan asc
+        order by hr.dian_zan desc
+    </select>
+
+
+    <select id="selectList" resultMap="HomeReviewMap">
+        select hr.review_id,hr.content,hr.create_time,
+               p.title, p.dynasty,p.author
+        from home_review as hr
+                 left join poem as p on hr.review_location_id = p.poem_id
+        where hr.review_user_id = #{userId}
+        order by hr.create_time desc
     </select>
 
 </mapper>

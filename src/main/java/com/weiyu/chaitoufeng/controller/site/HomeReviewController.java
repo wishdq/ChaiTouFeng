@@ -7,7 +7,7 @@ import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.build.ResultTable;
 import com.weiyu.chaitoufeng.domain.home.HomeReview;
-import com.weiyu.chaitoufeng.service.site.HomeReviewService;
+import com.weiyu.chaitoufeng.service.home.HomeReviewService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;

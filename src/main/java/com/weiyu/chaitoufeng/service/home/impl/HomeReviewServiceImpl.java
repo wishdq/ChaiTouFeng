@@ -1,14 +1,13 @@
-package com.weiyu.chaitoufeng.service.site.impl;
+package com.weiyu.chaitoufeng.service.home.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
+import com.weiyu.chaitoufeng.domain.home.HomeLove;
 import com.weiyu.chaitoufeng.domain.home.HomeReview;
-import com.weiyu.chaitoufeng.domain.home.HomeUser;
-import com.weiyu.chaitoufeng.mapper.site.HomeUserMapper;
-import com.weiyu.chaitoufeng.service.site.HomeReviewService;
-import com.weiyu.chaitoufeng.mapper.site.HomeReviewMapper;
+import com.weiyu.chaitoufeng.mapper.home.HomeReviewMapper;
+import com.weiyu.chaitoufeng.service.home.HomeReviewService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -50,6 +49,13 @@ public class HomeReviewServiceImpl extends ServiceImpl<HomeReviewMapper, HomeRev
         PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
         List<HomeReview> homeReviews = homeReviewMapper.selectHomePageList(homeReview);
         return new PageInfo<>(homeReviews);
+    }
+
+    @Override
+    public PageInfo<HomeReview> getProfilePage(PageDomain pageDomain, String userId) {
+        PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
+        List<HomeReview> reviews = homeReviewMapper.selectList(userId);
+        return new PageInfo<>(reviews);
     }
 
     @Override

@@ -92,142 +92,142 @@
 
 
     <!-- 新增 SysUser 数据 -->
-    <insert id="insert" parameterType="SysUser">
-        insert into sys_user
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userId!=null">
-                user_id,
-            </if>
-            <if test="username!=null">
-                username,
-            </if>
-            <if test="password!=null">
-                password,
-            </if>
-            <if test="realName!=null">
-                real_name,
-            </if>
-            <if test="email!=null">
-                email,
-            </if>
-            <if test="phone!=null">
-                phone,
-            </if>
-            <if test="sex!=null">
-                sex,
-            </if>
-            <if test="createTime!=null">
-                create_time,
-            </if>
-            <if test="createBy!=null">
-                create_by,
-            </if>
-            <if test="remark!=null">
-                remark,
-            </if>
-            <if test="status!=null">
-                status,
-            </if>
-            <if test="enable">
-                enable,
-            </if>
-            <if test="deptId!=null and deptId!=''">
-                dept_id,
-            </if>
-        </trim>
-        <trim prefix="values(" suffix=")" suffixOverrides=",">
-            <if test="userId!=null">
-                #{userId},
-            </if>
-            <if test="username!=null">
-                #{username},
-            </if>
-            <if test="password!=null">
-                #{password},
-            </if>
-            <if test="realName!=null">
-                #{realName},
-            </if>
-            <if test="email!=null">
-                #{email},
-            </if>
-            <if test="phone!=null">
-                #{phone},
-            </if>
-            <if test="sex!=null">
-                #{sex},
-            </if>
-            <if test="createTime!=null">
-                #{createTime},
-            </if>
-            <if test="createBy!=null">
-                #{createBy},
-            </if>
-            <if test="remark!=null">
-                #{remark},
-            </if>
-            <if test="status!=null and status!=''">
-                #{status},
-            </if>
-            <if test="enable!=null and enable!=''">
-                #{enable},
-            </if>
-            <if test="deptId!=null and deptId!=''">
-                #{deptId},
-            </if>
-        </trim>
-    </insert>
+    <!--<insert id="insert" parameterType="SysUser">-->
+    <!--    insert into sys_user-->
+    <!--    <trim prefix="(" suffix=")" suffixOverrides=",">-->
+    <!--        <if test="userId!=null">-->
+    <!--            user_id,-->
+    <!--        </if>-->
+    <!--        <if test="username!=null">-->
+    <!--            username,-->
+    <!--        </if>-->
+    <!--        <if test="password!=null">-->
+    <!--            password,-->
+    <!--        </if>-->
+    <!--        <if test="realName!=null">-->
+    <!--            real_name,-->
+    <!--        </if>-->
+    <!--        <if test="email!=null">-->
+    <!--            email,-->
+    <!--        </if>-->
+    <!--        <if test="phone!=null">-->
+    <!--            phone,-->
+    <!--        </if>-->
+    <!--        <if test="sex!=null">-->
+    <!--            sex,-->
+    <!--        </if>-->
+    <!--        <if test="createTime!=null">-->
+    <!--            create_time,-->
+    <!--        </if>-->
+    <!--        <if test="createBy!=null">-->
+    <!--            create_by,-->
+    <!--        </if>-->
+    <!--        <if test="remark!=null">-->
+    <!--            remark,-->
+    <!--        </if>-->
+    <!--        <if test="status!=null">-->
+    <!--            status,-->
+    <!--        </if>-->
+    <!--        <if test="enable">-->
+    <!--            enable,-->
+    <!--        </if>-->
+    <!--        <if test="deptId!=null and deptId!=''">-->
+    <!--            dept_id,-->
+    <!--        </if>-->
+    <!--    </trim>-->
+    <!--    <trim prefix="values(" suffix=")" suffixOverrides=",">-->
+    <!--        <if test="userId!=null">-->
+    <!--            #{userId},-->
+    <!--        </if>-->
+    <!--        <if test="username!=null">-->
+    <!--            #{username},-->
+    <!--        </if>-->
+    <!--        <if test="password!=null">-->
+    <!--            #{password},-->
+    <!--        </if>-->
+    <!--        <if test="realName!=null">-->
+    <!--            #{realName},-->
+    <!--        </if>-->
+    <!--        <if test="email!=null">-->
+    <!--            #{email},-->
+    <!--        </if>-->
+    <!--        <if test="phone!=null">-->
+    <!--            #{phone},-->
+    <!--        </if>-->
+    <!--        <if test="sex!=null">-->
+    <!--            #{sex},-->
+    <!--        </if>-->
+    <!--        <if test="createTime!=null">-->
+    <!--            #{createTime},-->
+    <!--        </if>-->
+    <!--        <if test="createBy!=null">-->
+    <!--            #{createBy},-->
+    <!--        </if>-->
+    <!--        <if test="remark!=null">-->
+    <!--            #{remark},-->
+    <!--        </if>-->
+    <!--        <if test="status!=null and status!=''">-->
+    <!--            #{status},-->
+    <!--        </if>-->
+    <!--        <if test="enable!=null and enable!=''">-->
+    <!--            #{enable},-->
+    <!--        </if>-->
+    <!--        <if test="deptId!=null and deptId!=''">-->
+    <!--            #{deptId},-->
+    <!--        </if>-->
+    <!--    </trim>-->
+    <!--</insert>-->
 
     <!-- 根据 Id 修改用户数据 -->
-    <update id="updateById" parameterType="SysUser">
-        update sys_user
-        <set>
-            <if test="username">
-                username = #{username},
-            </if>
-            <if test="realName">
-                real_name = #{realName},
-            </if>
-            <if test="enable!=null and enable!=''">
-                enable = #{enable},
-            </if>
-            <if test="email!=null and email!=''">
-                email = #{email},
-            </if>
-            <if test="sex!=null and sex!=''">
-                sex = #{sex},
-            </if>
-            <if test="phone!=null and phone!=''">
-                phone = #{phone},
-            </if>
-            <if test="password!=null and password!=''">
-                password = #{password},
-            </if>
-            <if test="deptId!=null and deptId!=''">
-                dept_id = #{deptId},
-            </if>
-            <if test="remark!=null and remark!=''">
-                remark = #{remark},
-            </if>
-            <if test="lastTime!=null">
-                last_time = #{lastTime},
-            </if>
-            <if test="avatar!=null">
-                avatar = #{avatar},
-            </if>
-            <if test="login!=null and login!=''">
-                login = #{login},
-            </if>
-        </set>
-        where user_id = #{userId}
-    </update>
+    <!--<update id="updateById" parameterType="SysUser">-->
+    <!--    update sys_user-->
+    <!--    <set>-->
+    <!--        <if test="username">-->
+    <!--            username = #{username},-->
+    <!--        </if>-->
+    <!--        <if test="realName">-->
+    <!--            real_name = #{realName},-->
+    <!--        </if>-->
+    <!--        <if test="enable!=null and enable!=''">-->
+    <!--            enable = #{enable},-->
+    <!--        </if>-->
+    <!--        <if test="email!=null and email!=''">-->
+    <!--            email = #{email},-->
+    <!--        </if>-->
+    <!--        <if test="sex!=null and sex!=''">-->
+    <!--            sex = #{sex},-->
+    <!--        </if>-->
+    <!--        <if test="phone!=null and phone!=''">-->
+    <!--            phone = #{phone},-->
+    <!--        </if>-->
+    <!--        <if test="password!=null and password!=''">-->
+    <!--            password = #{password},-->
+    <!--        </if>-->
+    <!--        <if test="deptId!=null and deptId!=''">-->
+    <!--            dept_id = #{deptId},-->
+    <!--        </if>-->
+    <!--        <if test="remark!=null and remark!=''">-->
+    <!--            remark = #{remark},-->
+    <!--        </if>-->
+    <!--        <if test="lastTime!=null">-->
+    <!--            last_time = #{lastTime},-->
+    <!--        </if>-->
+    <!--        <if test="avatar!=null">-->
+    <!--            avatar = #{avatar},-->
+    <!--        </if>-->
+    <!--        <if test="login!=null and login!=''">-->
+    <!--            login = #{login},-->
+    <!--        </if>-->
+    <!--    </set>-->
+    <!--    where user_id = #{userId}-->
+    <!--</update>-->
 
-    <!-- 根据 Id 删除用户数据 -->
-    <delete id="deleteById" parameterType="string">
-        delete
-        from sys_user
-        where user_id = #{id}
-    </delete>
+    <!--&lt;!&ndash; 根据 Id 删除用户数据 &ndash;&gt;-->
+    <!--<delete id="deleteById" parameterType="string">-->
+    <!--    delete-->
+    <!--    from sys_user-->
+    <!--    where user_id = #{id}-->
+    <!--</delete>-->
 
     <!-- 根据 Id 批量删除用户数据 -->
     <delete id="deleteByIds" parameterType="string">
@@ -253,4 +253,23 @@
             #{deptId}
         </foreach>
     </update>
+
+    <!-- 查询前台用户列表   -->
+    <select id="selectHomePageUsers" resultMap="SysUserMap">
+        select su.user_id,su.username,su.real_name,su.sex,su.remark,
+               su.email,su.phone,su.enable,su.create_time
+        from sys_user as su
+        left join sys_user_role as sur on su.user_id = sur.user_id
+        left join sys_role as sr on sur.role_id = sr.role_id
+        <where>
+            <if test="username!=null and username!=''">
+                and username like "%"#{username}"%"
+            </if>
+            <if test="realName!=null and realName!=''">
+                and real_name like "%"#{realName}"%"
+            </if>
+            and sr.role_code='home'
+        </where>
+        order by su.create_time desc
+    </select>
 </mapper>

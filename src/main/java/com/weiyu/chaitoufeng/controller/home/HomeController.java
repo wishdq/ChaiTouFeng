@@ -3,18 +3,26 @@ package com.weiyu.chaitoufeng.controller.home;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.common.result.Result;
+import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.build.ResultTable;
+import com.weiyu.chaitoufeng.domain.home.HomeCollect;
+import com.weiyu.chaitoufeng.domain.home.HomeLove;
 import com.weiyu.chaitoufeng.domain.home.HomeReview;
 import com.weiyu.chaitoufeng.domain.poetry.Poem;
 import com.weiyu.chaitoufeng.domain.poetry.PoemDynasty;
 import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
+import com.weiyu.chaitoufeng.domain.system.SysUser;
+import com.weiyu.chaitoufeng.service.home.HomeCollectService;
+import com.weiyu.chaitoufeng.service.home.HomeLoveService;
 import com.weiyu.chaitoufeng.service.poetry.PoemDynastyService;
 import com.weiyu.chaitoufeng.service.poetry.PoemQuoteService;
 import com.weiyu.chaitoufeng.service.poetry.PoemService;
-import com.weiyu.chaitoufeng.service.site.HomeReviewService;
+import com.weiyu.chaitoufeng.service.home.HomeReviewService;
+import com.weiyu.chaitoufeng.service.system.ISysUserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,6 +56,17 @@ public class HomeController extends BaseController {
     @Resource
     HomeReviewService reviewService;
 
+    @Resource
+    HomeCollectService collectService;
+
+    @Resource
+    HomeLoveService loveService;
+
+    @Resource
+    PasswordEncoder passwordEncoder;
+
+    @Resource
+    ISysUserService userService;
     /**
      * 视图部分
      */
@@ -60,6 +79,23 @@ public class HomeController extends BaseController {
 
         model.addAttribute("poemNum",poemNum);
         model.addAttribute("active","poem");
+        if (SecurityUtil.isAuthentication()){
+            QueryWrapper<HomeCollect> collectQueryWrapper = new QueryWrapper<>();
+            collectQueryWrapper.eq("user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+            int collectNum = (int) collectService.count(collectQueryWrapper);
+
+            QueryWrapper<HomeLove> loveQueryWrapper = new QueryWrapper<>();
+            loveQueryWrapper.eq("user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+            int loveNum = (int) loveService.count(loveQueryWrapper);
+
+            QueryWrapper<HomeReview> reviewQueryWrapper = new QueryWrapper<>();
+            reviewQueryWrapper.eq("review_user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+            int reviewNum = (int) reviewService.count(reviewQueryWrapper);
+
+            model.addAttribute("collectNum",collectNum);
+            model.addAttribute("loveNum",loveNum);
+            model.addAttribute("reviewNum",reviewNum);
+        }
         return jumpPage(MODULE_PATH+"poem");
     }
 
@@ -100,6 +136,32 @@ public class HomeController extends BaseController {
         return jumpPage(MODULE_PATH+"dynasty");
     }
 
+    @GetMapping("profile")
+    public ModelAndView profile(Model model){
+        if (!SecurityUtil.isAuthentication()){
+            return jumpPage("login");
+        }
+
+        QueryWrapper<HomeCollect> collectQueryWrapper = new QueryWrapper<>();
+        collectQueryWrapper.eq("user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+        int collectNum = (int) collectService.count(collectQueryWrapper);
+
+        QueryWrapper<HomeLove> loveQueryWrapper = new QueryWrapper<>();
+        loveQueryWrapper.eq("user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+        int loveNum = (int) loveService.count(loveQueryWrapper);
+
+        QueryWrapper<HomeReview> reviewQueryWrapper = new QueryWrapper<>();
+        reviewQueryWrapper.eq("review_user_id",((SysUser)SecurityUtil.currentUser()).getUserId());
+        int reviewNum = (int) reviewService.count(reviewQueryWrapper);
+
+        SysUser curUser = userService.getById(((SysUser)SecurityUtil.currentUser()).getUserId());
+        model.addAttribute("curUser",curUser);
+        model.addAttribute("collectNum",collectNum);
+        model.addAttribute("loveNum",loveNum);
+        model.addAttribute("reviewNum",reviewNum);
+        return jumpPage(MODULE_PATH+"profile");
+    }
+
     @GetMapping("about")
     public ModelAndView aboutMe(Model model){
         model.addAttribute("active","about");
@@ -122,8 +184,26 @@ public class HomeController extends BaseController {
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
     }
 
-    @PutMapping(MODULE_PATH+"poem/update")
-    public Result poemUpdate(@RequestBody Poem poem){
+    @PutMapping(MODULE_PATH+"poem/update/{option}/{userId}")
+    public Result poemUpdate(@RequestBody Poem poem,
+                             @PathVariable String option,
+                             @PathVariable String userId){
+        switch (option){
+            case "shouCuang":
+                HomeCollect collect = new HomeCollect(SequenceUtil.makeStringId(),userId,poem.getPoemId());
+                if (collectService.isHadCollect(collect)){
+                    return Result.failure("你已加入收藏");
+                }
+                collectService.save(collect);
+                break;
+            case "xiHuan":
+                HomeLove love = new HomeLove(SequenceUtil.makeStringId(),userId,poem.getPoemId());
+                if (loveService.isHadLove(love)){
+                    return Result.failure("你已加入喜欢");
+                }
+                loveService.save(love);
+                break;
+        }
         boolean result = poemService.updateById(poem);
         return Result.decide(result);
     }
@@ -155,8 +235,6 @@ public class HomeController extends BaseController {
      */
     @PutMapping(MODULE_PATH+"poem/review/update")
     public Result updatePoemReview(@RequestBody HomeReview review){
-        System.out.println("=================");
-        System.out.println(review);
         boolean result = reviewService.updateById(review);
         return Result.decide(result);
     }
@@ -175,4 +253,68 @@ public class HomeController extends BaseController {
     }
 
 
+    @PostMapping(MODULE_PATH+"profile/save")
+    public Result profileUpdate(@RequestBody SysUser user){
+        if ("".equals(user.getPassword())){
+            user.setPassword(null);
+        }else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        boolean result = userService.updateById(user);
+        return Result.decide(result);
+    }
+
+    /**
+     * 收藏列表
+     */
+    @GetMapping(MODULE_PATH+"collect/data/{userId}")
+    public ResultTable collectData(PageDomain pageDomain, @PathVariable String userId){
+        if (!SecurityUtil.isAuthentication()){
+            return ResultTable.dataTable("请登录");
+        }
+        PageInfo<HomeCollect> pageInfo = collectService.getPage(pageDomain,userId);
+        return pageTable(pageInfo.getList(), pageInfo.getTotal());
+    }
+    /**
+     * 喜欢列表
+     */
+    @GetMapping(MODULE_PATH+"love/data/{userId}")
+    public ResultTable loveData(PageDomain pageDomain, @PathVariable String userId){
+        if (!SecurityUtil.isAuthentication()){
+            return ResultTable.dataTable("请登录");
+        }
+        PageInfo<HomeLove> pageInfo = loveService.getPage(pageDomain,userId);
+        return pageTable(pageInfo.getList(), pageInfo.getTotal());
+    }
+    /**
+     * 个人评论列表
+     */
+    @GetMapping(MODULE_PATH+"review/data/{userId}")
+    public ResultTable reviewData(PageDomain pageDomain, @PathVariable String userId){
+        if (!SecurityUtil.isAuthentication()){
+            return ResultTable.dataTable("请登录");
+        }
+        PageInfo<HomeReview> pageInfo = reviewService.getProfilePage(pageDomain,userId);
+        return pageTable(pageInfo.getList(), pageInfo.getTotal());
+    }
+
+    /**
+     * 个人中心操作
+     */
+    @PutMapping(MODULE_PATH+"profile/option/{code}")
+    public Result profileOption(@RequestBody String id, @PathVariable String code){
+        if (!SecurityUtil.isAuthentication()){
+            return Result.failure("请登录");
+        }
+        System.out.println("============");
+        System.out.println(id);
+        System.out.println(code);
+        switch (code){
+            case "del-collect": collectService.removeById(id);break;
+            case "del-love": loveService.removeById(id);break;
+            case "del-review": reviewService.removeById(id);break;
+            default: return Result.failure();
+        }
+        return Result.success();
+    }
 }

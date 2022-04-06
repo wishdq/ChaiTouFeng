@@ -1,10 +1,9 @@
-package com.weiyu.chaitoufeng.service.site;
+package com.weiyu.chaitoufeng.service.home;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.home.HomeReview;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.weiyu.chaitoufeng.domain.home.HomeUser;
 
 /**
 * @author wish_dq
@@ -22,4 +21,10 @@ public interface HomeReviewService extends IService<HomeReview> {
      * 前台评论页
      */
     PageInfo<HomeReview> getHomePage(PageDomain pageDomain, HomeReview homeReview);
+
+
+    /**
+     * 个人评论列表
+     */
+    PageInfo<HomeReview> getProfilePage(PageDomain pageDomain, String userId);
 }

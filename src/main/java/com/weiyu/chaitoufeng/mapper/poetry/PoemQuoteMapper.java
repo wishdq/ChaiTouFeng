@@ -16,7 +16,6 @@ import java.util.List;
 * @author wish_dq
 * @description 针对表【poem_quote(诗集引用名句表)】的数据库操作Mapper
 * @createDate 2022-03-28 10:36:31
-* @Entity com.weiyu.chaitoufeng.domain.poetry.PoemQuote
 */
 @Mapper
 public interface PoemQuoteMapper extends BaseMapper<PoemQuote> {

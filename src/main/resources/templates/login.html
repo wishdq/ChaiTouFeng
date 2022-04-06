@@ -79,6 +79,7 @@
             function (){
                 $('button').text('登 录').attr('lay-filter','login');
                 $('[name="remember-me"]').parent().removeClass('layui-hide')
+                $('[name="isAdmin"]').parent().removeClass('layui-hide')
             }
         )
 
@@ -86,6 +87,7 @@
             function (){
                 $('button').text('注 册').attr('lay-filter','register')
                 $('[name="remember-me"]').parent().addClass('layui-hide')
+                $('[name="isAdmin"]').parent().addClass('layui-hide')
             }
         )
 
@@ -121,7 +123,6 @@
         form.on('submit(register)', function (data) {
             let loader = layer.load();
             let btn = button.load({elem: '.login'});
-            console.log(data.field)
             $.ajax({
                 url: '/register',
                 data: data.field,

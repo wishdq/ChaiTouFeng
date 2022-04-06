@@ -125,14 +125,14 @@ div.col-lg-12{
 }
 
 
-.sentence-part,.poem-detail{
+.sentence-part,.poem-detail,.profile-part{
   padding-bottom: 20px;
   padding-top: 20px;
   margin: auto;
 }
 
-.sentence-content-list{
-  padding: 30px 100px 20px;
+.sentence-content-list,.profile-part-list,.profile-part-action{
+  padding: 1.5% 3% 1%;
   margin-bottom: 15px;
   background-color: #ffffff;
   border-radius: 7px;
@@ -410,4 +410,21 @@ div.col-lg-12{
   margin-bottom: 15px;
   background-color: #ffffff;
   border-radius: 7px;
+}
+.collect-poem-item-title,.love-poem-item-title,.review-poem-item-content{
+  font-family: KaiTi;
+  font-size: 16px;
+}
+.collect-poem-item-author,.love-poem-item-author,.review-poem-item-author{
+  font-size: 13px;
+  color: #999;
+  font-family: KaiTi;
+}
+
+.del-collect,.del-love,.del-review{
+  float: right;
+}
+.del-collect span,.del-love span,.del-review span{
+  color: #999;
+  font-family: KaiTi;
 }

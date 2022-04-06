@@ -1,0 +1,364 @@
+<!DOCTYPE html >
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home/fragment::header(~{::title})">
+    <title>钗头凤 · 个人中心</title>
+</head>
+<body>
+
+<th:block th:insert="home/fragment::nav"/>
+
+<th:block th:insert="home/fragment::carousel"/>
+
+
+<div class="container-fluid poetry_main no-padding">
+    <div class="row col-lg-12">
+        <div class="col-lg-9 profile-part" >
+            <div class="profile-part-list">
+                <div class="layui-card">
+                    <div class="layui-card-header">个人中心</div>
+                    <div class="layui-card-body layui-row layui-col-space10">
+                        <form class="layui-form">
+                            <div class="layui-form-item layui-hide">
+                                <label class="layui-form-label">用户名ID:</label>
+                                <div class="layui-input-block">
+                                    <input autocomplete="off" class="layui-input" name="userId" placeholder=""
+                                           th:value="${curUser.userId}" maxlength="30" show-word-limit lay-verify="required" type="text" >
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-inline">
+                                <label class="layui-form-label">用户名:</label>
+                                <div class="layui-input-block">
+                                    <input autocomplete="off" class="layui-input" name="username" placeholder="请输入用户名"
+                                          th:value="${curUser.username}" maxlength="30" show-word-limit lay-verify="required" type="text" >
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-inline">
+                                <label class="layui-form-label">网名:</label>
+                                <div class="layui-input-block">
+                                    <input autocomplete="off" class="layui-input" name="realName" placeholder="请输入网名"
+                                           th:value="${curUser.realName}" maxlength="30" show-word-limit type="text" >
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-inline">
+                                <label class="layui-form-label">密码:</label>
+                                <div class="layui-input-block">
+                                    <input autocomplete="off" class="layui-input" name="password" placeholder="密码不可见"
+                                            maxlength="30" show-word-limit type="text" >
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-inline">
+                                <label class="layui-form-label">性 别:</label>
+                                <div class="layui-input-block">
+                                    <input th:checked="${curUser.sex eq '1'}" name="sex" title="男" type="radio" value="1">
+                                    <input th:checked="${curUser.sex eq '0'}" name="sex" title="女" type="radio" value="0">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">描述:</label>
+                                <div class="layui-input-block">
+                                    <textarea th:text="${curUser.remark}" class="layui-textarea" name="remark" placeholder="请输入其它介绍"></textarea>
+                                </div>
+                            </div>
+                            <div class="btn-review-container" style="text-align: center">
+                                <button class="pear-btn pear-btn-success pear-btn-sm" lay-filter="profile-save" lay-submit="" type="submit">
+                                    <i class="layui-icon layui-icon-ok"></i>
+                                    提交
+                                </button>
+                                <button class="pear-btn pear-btn-sm" type="reset">
+                                    <i class="layui-icon layui-icon-refresh"></i>
+                                    重置
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-part-action">
+                <div class="layui-card">
+                    <div class="layui-card-header">收藏列表</div>
+                    <div class="layui-card-body layui-row layui-col-space10">
+                        <div class="collect-poem-item">
+                            <span class="collect-poem-item-title">西江月·重九</span>
+                            <span class="collect-poem-item-author">元代 · 蓝仁</span>
+                            <span class="del-collect" >
+                                <i class="layui-icon layui-icon-close"></i>
+                                <span >取消收藏</span>
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="collect-page-bottom" class="layui-table-page" style="text-align: center;margin-top: -15px;"></div>
+            </div>
+
+            <div class="profile-part-action">
+                <div class="layui-card">
+                    <div class="layui-card-header">喜欢列表</div>
+                    <div class="layui-card-body layui-row layui-col-space10">
+                        <div class="love-poem-item">
+                            <span class="love-poem-item-title">西江月·重九</span>
+                            <span class="love-poem-item-author">元代 · 蓝仁</span>
+                            <span class="del-love" >
+                                <i class="layui-icon layui-icon-close"></i>
+                                <span >取消喜欢</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="love-page-bottom" class="layui-table-page" style="text-align: center;margin-top: -15px;"></div>
+            </div>
+
+            <div class="profile-part-action">
+                <div class="layui-card">
+                    <div class="layui-card-header">评论列表</div>
+                    <div class="layui-card-body layui-row layui-col-space10">
+                        <div class="review-poem-item">
+                            <span class="review-poem-item-content">西江月·重九</span>
+                            <span class="review-poem-item-author">元代 · 蓝仁</span>
+                            <span class="del-review" >
+                                <i class="layui-icon layui-icon-close"></i>
+                                <span >取消评论</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="review-page-bottom" class="layui-table-page" style="text-align: center;margin-top: -15px;"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<th:block th:insert="home/fragment::footer"/>
+<script>
+    layui.use(['laypage', 'jquery','popup','form'], function(){
+        let laypage = layui.laypage;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+        let form = layui.form;
+
+        form.on('submit(profile-save)',function (data) {
+            $.ajax({
+                url: '/home/profile/save',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg('更新成功');
+                        location.reload();
+                    } else {
+                        layer.msg('更新失败');
+                    }
+                }
+            })
+            return false;
+        })
+
+        //收藏列表
+        let loadCollect = function () {
+            laypage.render({
+                elem: 'collect-page-bottom'
+                ,count: [[${collectNum}]]
+                ,limit: 8
+                ,limits: [8, 16, 24]
+                ,groups: 1
+                ,layout: ['prev', 'page', 'next', 'skip','count', 'limit']
+                ,prev: '<i class="layui-icon"></i>'
+                ,next: '<i class="layui-icon"></i>'
+                ,jump: function(obj){
+                    let page={};
+                    page.page = obj.curr;
+                    page.limit = obj.limit;
+
+                    let userId = $('.login-user').attr('id');
+
+                    $.ajax({
+                        url: '/home/collect/data/'+userId,
+                        data: page,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'get',
+                        success: function (result) {
+                            if (result.code !== 0){
+                                popup.failure(result.msg);
+                                return;
+                            }
+                            let collects = $('.collect-poem-item').parent();
+                            let data = result.data;
+
+                            let collect_poem_item = $('.collect-poem-item')
+                            for (let i = 0; i < collect_poem_item.length; i++) {
+                                collect_poem_item[i].remove()
+                            }
+
+                            for (let i = 0; i < data.length; i++) {
+                                let collect_item = '<div class="collect-poem-item" id="'+data[i].collectId+'">\n' +
+                                    '    <span class="collect-poem-item-title">'+data[i].title+
+                                    '</span>\n' +
+                                    '    <span class="collect-poem-item-author">'+data[i].dynasty+'·'+data[i].author+
+                                    '</span>\n' +
+                                    '    <span class="del-collect">\n' +
+                                    '        <i class="layui-icon layui-icon-close"></i>\n' +
+                                    '        <span>取消收藏</span>\n' +
+                                    '    </span>\n' +
+                                    '</div>'
+
+                                collects.append(collect_item);
+                            }
+                        }
+                    })
+                }
+            });
+        }
+
+
+        //喜欢列表
+        let loadLove = function () {
+            laypage.render({
+                elem: 'love-page-bottom'
+                ,count: [[${loveNum}]]
+                ,limit: 8
+                ,limits: [8, 16, 24]
+                ,groups: 1
+                ,layout: ['prev', 'page', 'next', 'skip','count', 'limit']
+                ,prev: '<i class="layui-icon"></i>'
+                ,next: '<i class="layui-icon"></i>'
+                ,jump: function(obj){
+                    let page={};
+                    page.page = obj.curr;
+                    page.limit = obj.limit;
+
+                    let userId = $('.login-user').attr('id');
+
+                    $.ajax({
+                        url: '/home/love/data/'+userId,
+                        data: page,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'get',
+                        success: function (result) {
+                            if (result.code !== 0){
+                                popup.failure(result.msg);
+                                return;
+                            }
+                            let loves = $('.love-poem-item').parent();
+                            let data = result.data;
+
+                            let love_poem_item = $('.love-poem-item')
+                            for (let i = 0; i < love_poem_item.length; i++) {
+                                love_poem_item[i].remove()
+                            }
+
+                            for (let i = 0; i < data.length; i++) {
+                                let love_item = '<div class="love-poem-item" id="'+data[i].loveId+'">\n' +
+                                    '    <span class="love-poem-item-title">'+data[i].title+
+                                    '</span>\n' +
+                                    '    <span class="love-poem-item-author">'+data[i].dynasty+'·'+data[i].author+
+                                    '</span>\n' +
+                                    '    <span class="del-love">\n' +
+                                    '        <i class="layui-icon layui-icon-close"></i>\n' +
+                                    '        <span>取消喜欢</span>\n' +
+                                    '    </span>\n' +
+                                    '</div>'
+
+                                loves.append(love_item);
+                            }
+                        }
+                    })
+                }
+            });
+        }
+
+        //评论列表
+        let loadReview = function () {
+            laypage.render({
+                elem: 'review-page-bottom'
+                ,count: [[${reviewNum}]]
+                ,limit: 8
+                ,limits: [8, 16, 24]
+                ,groups: 1
+                ,layout: ['prev', 'page', 'next', 'skip','count', 'limit']
+                ,prev: '<i class="layui-icon"></i>'
+                ,next: '<i class="layui-icon"></i>'
+                ,jump: function(obj){
+                    let page={};
+                    page.page = obj.curr;
+                    page.limit = obj.limit;
+
+                    let userId = $('.login-user').attr('id');
+
+                    $.ajax({
+                        url: '/home/review/data/'+userId,
+                        data: page,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'get',
+                        success: function (result) {
+                            if (result.code !== 0){
+                                popup.failure(result.msg);
+                                return;
+                            }
+                            let reviews = $('.review-poem-item').parent();
+                            let data = result.data;
+
+                            let review_poem_item = $('.review-poem-item')
+                            for (let i = 0; i < review_poem_item.length; i++) {
+                                review_poem_item[i].remove()
+                            }
+
+                            for (let i = 0; i < data.length; i++) {
+                                let review_item = '<div class="love-poem-item" id="'+data[i].reviewId+'">\n' +
+                                    '    <span class="review-poem-item-title">'+data[i].content+
+                                    '</span>\n' +
+                                    '    <span class="review-poem-item-author">'+'|'+data[i].title+'|'+data[i].dynasty+'·'+data[i].author+'|'+data[i].createTime+
+                                    '</span>\n' +
+                                    '    <span class="del-review">\n' +
+                                    '        <i class="layui-icon layui-icon-close"></i>\n' +
+                                    '        <span>取消评论</span>\n' +
+                                    '    </span>\n' +
+                                    '</div>'
+
+                                reviews.append(review_item);
+                            }
+                        }
+                    })
+                }
+            });
+        }
+
+        loadCollect();
+        loadLove();
+        loadReview();
+
+        $('body').on('click','.layui-icon-close',function () {
+            let id = $(this).parent().parent().attr('id');
+            let type = $(this).parent().attr('class');
+            $.ajax({
+                url: '/home/profile/option/'+type,
+                data: id,
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success:function (result) {
+                    if (result.success){
+                        layer.msg('操作成功')
+                        switch (type) {
+                            case 'del-collect':loadCollect();break;
+                            case 'del-love':loadLove();break;
+                            case 'del-review':loadReview();break;
+                        }
+                    }else {
+                        layer.msg('操作失败')
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
