@@ -230,7 +230,7 @@ public class SysUserController extends BaseController {
     public ModelAndView center(Model model) {
         SysUser sysUser = (SysUser) SecurityUtil.currentUser();
         model.addAttribute("userInfo", sysUserService.getById(sysUser.getUserId()));
-        model.addAttribute("logs", sysLogService.selectTopLoginLog(sysUser.getUsername()));
+        //model.addAttribute("logs", sysLogService.selectTopLoginLog(sysUser.getUsername()));
         return jumpPage(MODULE_PATH + "center");
     }
 

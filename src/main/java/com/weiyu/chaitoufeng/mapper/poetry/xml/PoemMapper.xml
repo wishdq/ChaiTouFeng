@@ -59,6 +59,7 @@
                 and update_time like "%"#{updateTime}"%"
             </if>
         </where>
+        order by dian_zan desc
     </select>
 
     <select id="random" resultMap="PoemMap">

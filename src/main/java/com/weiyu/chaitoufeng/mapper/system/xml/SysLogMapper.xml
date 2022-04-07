@@ -161,6 +161,12 @@
         </trim>
     </insert>
 
+    <select id="getCount" resultType="int" >
+        select count(id) from sys_logging
+        where create_time >= #{createTime}
+    </select>
+
+
     <select id="getById" resultMap="SysLogMap">
         select * from sys_logging
         <where>

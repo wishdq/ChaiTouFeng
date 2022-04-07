@@ -13,7 +13,7 @@
 <div class="container-fluid poetry_main no-padding">
     <div class="row col-lg-12">
         <div class="left_card col-lg-7" >
-
+            <div class="left_card-list"></div>
             <!--分页-->
             <div id="page_bottom" class="layui-table-page" ></div>
         </div>
@@ -61,7 +61,7 @@
                             popup.failure(result.msg);
                             return
                         }
-                        let left_card = $('.left_card')
+                        let left_card = $('.left_card-list')
                         let data = result.data;
 
                         let poem_card = $('.poem-card')
@@ -122,7 +122,7 @@
                             poem_card += tags+'    </div>\n' +
                                 '            </div>'
 
-                            left_card.prepend(poem_card);
+                            left_card.append(poem_card);
                         }
                     }
                 })

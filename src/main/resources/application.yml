@@ -109,6 +109,7 @@ chaitoufeng:
       - /dynasty
       - /profile
       - /about
+      - /search
       - /poem/**  # 前端数据接口
       - /home/**
       - /login/**  # 开放登录接口

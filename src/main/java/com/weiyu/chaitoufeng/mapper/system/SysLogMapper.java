@@ -1,5 +1,6 @@
 package com.weiyu.chaitoufeng.mapper.system;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.weiyu.chaitoufeng.common.logging.LoggingType;
 import com.weiyu.chaitoufeng.domain.system.SysLog;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,13 +14,17 @@ import java.util.List;
  * Author: wish_dq
  */
 @Mapper
-public interface SysLogMapper {
+public interface SysLogMapper extends BaseMapper<SysLog> {
 
     /**
      * Describe: 插入日志信息
      */
     int insert(SysLog sysLog);
 
+    /**
+     * 按时间查看访问人数
+     */
+    int getCount(String createTime);
     /**
      * Describe: 查询日志信息
      */

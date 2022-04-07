@@ -1,5 +1,7 @@
 package com.weiyu.chaitoufeng.domain.system;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.weiyu.chaitoufeng.common.logging.BusinessType;
 import com.weiyu.chaitoufeng.common.logging.LoggingType;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.Map;
  */
 @Data
 @Alias("SysLog")
+@TableName("sys_logging")
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysLog {

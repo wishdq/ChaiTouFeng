@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.home.HomeReview;
 
+import java.util.List;
+
 /**
 * @author wish_dq
 * @description 针对表【home_review】的数据库操作Service
@@ -27,4 +29,9 @@ public interface HomeReviewService extends IService<HomeReview> {
      * 个人评论列表
      */
     PageInfo<HomeReview> getProfilePage(PageDomain pageDomain, String userId);
+
+    /**
+     * 控制台活动列表
+     */
+    List<HomeReview> getActiveList();
 }

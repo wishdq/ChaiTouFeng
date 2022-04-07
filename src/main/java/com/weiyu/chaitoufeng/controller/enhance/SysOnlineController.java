@@ -35,8 +35,6 @@ public class SysOnlineController extends BaseController {
 
     /**
      * Describe: 在线用户列表
-     * Param: username
-     * Return: ModelAndView
      */
     @GetMapping("data")
     @PreAuthorize("hasPermission('/system/online/data','sys:online:data')")
@@ -60,7 +58,6 @@ public class SysOnlineController extends BaseController {
 
     /**
      * Describe: 获取在线用户列表视图
-     * Return: ModelAndView
      */
     @GetMapping("main")
     @PreAuthorize("hasPermission('/system/online/main','sys:online:main')")
@@ -71,8 +68,6 @@ public class SysOnlineController extends BaseController {
 
     /**
      * Describe: 踢出用户（下线）
-     * Param: onlineId
-     * Return: ModelAndView
      */
     @DeleteMapping("/remove/{onlineId}")
     @PreAuthorize("hasPermission('/system/online/remove','sys:online:remove')")

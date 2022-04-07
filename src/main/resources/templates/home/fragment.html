@@ -27,7 +27,8 @@
         }
 
         a {
-            color: #009688
+            color: #009688;
+            cursor: pointer;
         }
 
         .dropdown-menu .dropdown-item {
@@ -87,8 +88,8 @@
                     <a class="nav-link" th:href="@{/about}">关于</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-md-0">
-                <input class="form-control form-control-sm" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">
+            <form class="form-inline my-2 my-md-0" th:action="@{/search}" th:method="get">
+                <input th:value="${key}==null?_:${key}" class="form-control form-control-sm" name="key" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">
             </form>
             <ul class="navbar-nav" style="margin-left: 10px">
                 <li class="nav-item" sec:authorize="${!isAuthenticated()}">
@@ -216,7 +217,7 @@
             layer.msg('对不起，您的浏览器暂不支持一键复制功能！');
         });
 
-        layui.use(['jquery', 'popup', 'dropdown'], function () {
+        layui.use(['jquery', 'popup','dropdown'], function () {
             let $ = layui.jquery;
             let popup = layui.popup;
             let dropdown = layui.dropdown;

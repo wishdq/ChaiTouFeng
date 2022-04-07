@@ -29,6 +29,11 @@ public interface HomeReviewMapper extends BaseMapper<HomeReview> {
      * 根据用户userId，查看评论列表
      */
     List<HomeReview> selectList(@Param("userId") String userId);
+
+    /**
+     * 控制台活动列表
+     */
+    List<HomeReview> selectActiveList();
 }
 
 

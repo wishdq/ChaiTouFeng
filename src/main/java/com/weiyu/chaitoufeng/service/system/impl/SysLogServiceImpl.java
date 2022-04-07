@@ -1,5 +1,6 @@
 package com.weiyu.chaitoufeng.service.system.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.weiyu.chaitoufeng.common.logging.LoggingType;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.common.tools.ServletUtil;
@@ -20,7 +21,7 @@ import java.util.List;
  * Author: wish_dq
  */
 @Service
-public class SysLogServiceImpl implements ISysLogService {
+public class SysLogServiceImpl extends ServiceImpl<SysLogMapper,SysLog> implements ISysLogService {
 
     @Resource
     private SysLogMapper sysLogMapper;
@@ -41,6 +42,13 @@ public class SysLogServiceImpl implements ISysLogService {
         return result > 0;
     }
 
+    /**
+     * 按时间查看访问人数
+     */
+    @Override
+    public int count(String createTime) {
+        return sysLogMapper.getCount(createTime);
+    }
 
     @Override
     public List<SysLog> data(LoggingType loggingType, LocalDateTime startTime, LocalDateTime endTime) {

@@ -1,0 +1,120 @@
+<!DOCTYPE html >
+<head th:replace="home/fragment::header(~{::title})">
+    <title>钗头凤 · 搜索</title>
+</head>
+<body>
+
+<th:block th:insert="home/fragment::nav"/>
+
+<th:block th:insert="home/fragment::carousel"/>
+
+
+<div class="container-fluid poetry_main no-padding">
+    <div class="row col-lg-12">
+        <div class="col-lg-9 search-part" >
+            <div class="sentence-content-list">
+                <div class="searchItem">
+                    <div class="search">
+                        <div>
+                            <a class="search-left">
+                                山有木兮木有枝，心悦君兮君不知。
+                            </a>
+                        </div>
+                        <div class="search-dynasty-author">
+                            <a href="#" class="search-right">
+                                佚名《越人歌》
+                            </a>
+                        </div>
+                    </div>
+                    <div class="searchContent">
+                        今夕何夕兮，搴舟中流。今日何日兮，得与王子同舟。
+                        蒙羞被好兮，不訾诟耻。心几烦而不绝兮，得知王子。
+                        山有木兮木有枝，心悦君兮君不知。
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--分页-->
+            <div id="search_bottom" class="layui-table-page" style=""></div>
+
+        </div>
+    </div>
+</div>
+
+
+<th:block th:insert="home/fragment::footer"/>
+<script>
+    layui.use(['laypage', 'jquery','popup'], function(){
+        let laypage = layui.laypage;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+
+        //搜索功能
+        let search_this = function () {
+            laypage.render({
+                elem: 'search_bottom'
+                ,count: [[${searchNum}]]
+                ,limit: 8
+                ,limits: [8, 16, 24]
+                ,groups: 1
+                ,layout: ['prev', 'page', 'next', 'skip','count', 'limit']
+                ,prev: '<i class="layui-icon"></i>'
+                ,next: '<i class="layui-icon"></i>'
+                ,jump: function(obj){
+                    let page={};
+                    page.page = obj.curr;
+                    page.limit = obj.limit;
+
+                    $.ajax({
+                        url: '/home/search/data/[[${key}]]',
+                        data: page,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'get',
+                        success: function (result) {
+                            if (result.code !== 0){
+                                popup.failure(result.msg);
+                                return
+                            }
+                            let search_list = $('.sentence-content-list')
+                            let data = result.data;
+
+                            let searchItem = $('.searchItem')
+                            for (let i = 0; i < searchItem.length; i++) {
+                                searchItem[i].remove()
+                            }
+
+                            for (let i = 0; i < data.length; i++) {
+                                let item = '<div class="searchItem">\n' +
+                                    '    <div class="search">\n' +
+                                    '        <div><a class="search-left" href="/poem/'+data[i].poemId+'">'+data[i].title+
+                                    '        </a></div>\n' +
+                                    '        <div class="search-dynasty-author">\n' +
+                                    '            <a href="#" class="search-right">'+data[i].dynasty+'·'+data[i].author+
+                                    '           </a></div>\n' +
+                                    '    </div>\n' +
+                                    '    <div class="searchContent">'
+
+                                let contents = data[i].content.replace(/[[${key}]]/,'<span style="font-weight: bolder">[[${key}]]</span>')
+
+                                item += contents+    '    </div>\n' +
+                                    '</div>'
+
+                                search_list.append(item);
+                            }
+                        }
+                    })
+                }
+            });
+        }
+        if ($('form input[name="key"]').val() !== ''){
+            search_this();
+        }else{
+            layer.msg('关键字不为空')
+        }
+    })
+</script>
+</body>
+</html>

@@ -16,7 +16,7 @@
                 <div class="dynasty_kind">
                     <span>朝代：</span>
                     <ul style="display: inline-block">
-                        <li class="layui-inline">不限</li>
+                        <li class="layui-inline author-dynasty-this">不限</li>
                         <li class="layui-inline">先秦</li>
                         <li class="layui-inline">两汉</li>
                         <li class="layui-inline">魏晋</li>
@@ -49,12 +49,11 @@
             </div>
 
             <!--分页-->
-            <div id="page_bottom" class="layui-table-page" style=""></div>
+            <div id="author_bottom" class="layui-table-page" style=""></div>
 
         </div>
     </div>
 </div>
-
 
 
 <th:block th:insert="home/fragment::footer"/>
@@ -64,151 +63,67 @@
         let $ = layui.jquery;
         let popup = layui.popup;
 
-        //
-        // $('.dynasty_kind ul li').click(function () {
-        //     $(this).siblings().css('color','rgba(0, 0, 0, 0.47)')
-        //     $(this).css('color','#1e7e34')
-        // })
-
-
         //完整功能
-        laypage.render({
-            elem: 'page_bottom'
-            ,count: 354
-            ,limit: 8
-            ,limits: [8, 16, 24]
-            ,groups: 1
-            ,curr: location.hash.replace('#!pages=', '') //获取起始页
-            ,hash: 'pages' //自定义hash值
-            ,layout: ['prev', 'page', 'next', 'skip','count', 'limit']
-            ,prev: '<i class="layui-icon"></i>'
-            ,next: '<i class="layui-icon"></i>'
-            ,jump: function(obj){
-                let page={};
-                page.page = obj.curr;
-                page.limit = obj.limit;
+        let author_this = function (dynasty) {
+            laypage.render({
+                elem: 'author_bottom'
+                ,count: [[${authorNum}]]
+                ,limit: 8
+                ,limits: [8, 16, 24]
+                ,groups: 1
+                ,curr: location.hash.replace('#!pages=', '') //获取起始页
+                ,hash: 'pages' //自定义hash值
+                ,layout: ['prev', 'page', 'next', 'skip','count', 'limit']
+                ,prev: '<i class="layui-icon"></i>'
+                ,next: '<i class="layui-icon"></i>'
+                ,jump: function(obj){
+                    let page={};
+                    page.page = obj.curr;
+                    page.limit = obj.limit;
 
-                $.ajax({
-                    url: '/home/data',
-                    data: page,
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    type: 'get',
-                    success: function (result) {
-                        if (result.code !== 0){
-                            popup.failure(result.msg);
-                            return
-                        }
-                        this.count = result.count;
-                        let left_card = $('.left_card')
-                        let data = result.data;
+                    $.ajax({
+                        url: '/home/author/data/'+dynasty,
+                        data: page,
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'get',
+                        success: function (result) {
+                            if (result.code !== 0){
+                                popup.failure(result.msg);
+                                return
+                            }
+                            let authors = $('.authors_lists')
+                            let data = result.data;
 
-                        let poem_card = $('.poem-card')
-                        for (let i = 0; i < poem_card.length; i++) {
-                            poem_card[i].remove()
-                        }
-
-                        for (let i = 0; i < data.length; i++) {
-                            let poem_card = '<div class="poem-card">'+
-                                '<div id='+data[i].poemId +'>'+
-                                '<div class="card-title">\n' +
-                                '                        <h2 class="poem-title">'+
-                                '<a class="title-link" href="" target="_blank">'+data[i].title+'</a>'+
-                                '    </h2>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="poem-author">'+
-                                '<p><a class="author_dynasty" href="" target="_blank">'+data[i].dynasty+
-                                '</a> : <a class="author_name" target="_blank">'+data[i].author+'</a>'+
-                                '   </p>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="poem-content">'
-
-                            let contents = data[i].content.split('。');
-
-                            let poem_content = '';
-                            for (let j = 0; j < contents.length; j++) {
-                                if (contents[j].length !== 0){
-                                    poem_content += '<p class="p-content">'+contents[j]+'。</p>'
-                                }
+                            let author_item = $('.author_item')
+                            for (let i = 0; i < author_item.length; i++) {
+                                author_item[i].remove()
                             }
 
-                            poem_card += poem_content +
-                                '                    </div>\n' +
-                                '                </div>\n' +
-                                '                <div class="poem-tool">\n' +
-                                '                    <div class="layui-inline" id="shouCuang">\n' +
-                                '                        <i class="iconfont icon-shoucang" ></i>\n' +
-                                '                        <span >'+data[i].shouCuang+'</span>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="layui-inline" id="xiHuan">\n' +
-                                '                        <i class="iconfont icon-xihuan" ></i>\n' +
-                                '                        <span >'+data[i].xiHuan+'</span>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="layui-inline" id="copy">\n' +
-                                '                        <i class="iconfont icon-fuzhi" aria-hidden="true"></i>\n' +
-                                '                    </div>\n' +
-                                '                    <div class="layui-inline dianZan" id="dianZan">\n' +
-                                '                        <i class="iconfont icon-dianzan"></i>\n' +
-                                '                        <span >'+data[i].dianZan+'</span>\n' +
-                                '                    </div>\n' +
-                                '                </div>\n' +
-                                '\n' +
-                                '                <div class="poem-tag">'
+                            for (let i = 0; i < data.length; i++) {
+                                let item = '<div class="author_item">\n' +
+                                    '    <span>'+data[i].name+
+                                    '</span>\n' +
+                                    '    <div class="author-brief-intro">'+((data[i].briefIntro==='' || data[i].briefIntro===null)?'暂无简介':data[i].briefIntro)+
+                                    '    </div>\n' +
+                                    '</div>'
 
-                            let poem_tag = '';
-                            let tags = data[i].tags.replace(/#/g,"  #  ")
-                            // for (let j = 0; j < tags.length; j++) {
-                            //     poem_tag += '<a href="" class="tag">'+tags[j]+' # </a>'
-                            // }
-                            poem_card += tags+'    </div>\n' +
-                                '            </div>'
-
-                            left_card.prepend(poem_card);
+                                authors.append(item);
+                            }
                         }
-                    }
-                })
-            }
-        });
-
-
-
-        $('body').on('click','.poem-tool div.layui-inline',function () {
-            let poem = {};
-            let id_value = $(this).attr('id');
-            let cur = $(this).children('span');
-            poem.poemId = $(this).parent().prev().attr('id');
-
-            switch (id_value) {
-                case 'shouCuang':
-                    poem.shouCuang = parseInt(cur.text())+1;break;
-                case 'xiHuan':
-                    poem.xiHuan = parseInt(cur.text())+1;break;
-                case 'dianZan':
-                    poem.dianZan = parseInt(cur.text())+1;break;
-                case 'copy':
-                    console.log(id_value);break;
-            }
-            console.log(JSON.stringify(poem));
-            $.ajax({
-                url: '/home/poem/update',
-                data: JSON.stringify(poem),
-                dataType: 'json',
-                contentType: 'application/json',
-                type: 'put',
-                success:function (result) {
-                    if (result.success){
-                        cur.text(parseInt(cur.text())+1);
-                        layer.msg('成功');
-                    }
+                    })
                 }
-            })
-            // let cur = $(this).children('span');
-            // cur.text(parseInt(cur.text())+1)
+            });
+        }
+
+        author_this('不限')
+
+        $('body').on('click','.dynasty_kind ul li',function () {
+            $(this).addClass('author-dynasty-this').siblings().removeClass('author-dynasty-this')
+            let dynasty = $(this).text();
+            author_this(dynasty);
         })
     })
-
-
-
 </script>
 </body>
 </html>

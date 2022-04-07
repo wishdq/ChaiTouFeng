@@ -92,7 +92,7 @@ div.col-lg-12{
   padding-bottom: 6px;
 }
 
-#page_bottom{
+#page_bottom,#search_bottom,#author_bottom{
   border-radius: 7px;
   background: #FFFFFF;
   text-align: center;
@@ -125,27 +125,32 @@ div.col-lg-12{
 }
 
 
-.sentence-part,.poem-detail,.profile-part{
+.sentence-part,.search-part,.poem-detail,.profile-part{
   padding-bottom: 20px;
   padding-top: 20px;
   margin: auto;
 }
 
-.sentence-content-list,.profile-part-list,.profile-part-action{
+.sentence-content-list,.search-content-list{
+  padding: 1.5% 6% 1%;
+}
+.profile-part-list,.profile-part-action{
   padding: 1.5% 3% 1%;
+}
+
+.sentence-content-list,.profile-part-list,.profile-part-action,.search-content-list{
   margin-bottom: 15px;
   background-color: #ffffff;
   border-radius: 7px;
 }
 
-.sentenceContent{
+.sentenceContent,.searchContent{
   color: #999;
-  cursor: pointer;
   margin-bottom: 10px;
   font-size: 14px;
   line-height: 1.428571;
 }
-.sentenceItem{
+.sentenceItem,.searchItem{
   margin-bottom: 10px;
   border-bottom: 1px solid #e6e6e6;
 }
@@ -161,7 +166,7 @@ div.col-lg-12{
   box-shadow: 0 4px 18px -4px rgba(0,0,0,.1);
 }
 
-.sentence{
+.sentence,.search{
   font-weight: 500;
   color: #333;
   font-size: 17px;
@@ -171,7 +176,7 @@ div.col-lg-12{
   margin-bottom: -10px;
 }
 
-.sentence-right{
+.sentence-right,.search-right{
   font-size: 13px;
   float: right;
   color: #999;
@@ -234,7 +239,11 @@ div.col-lg-12{
   font-size: 22px;
   color: #1e7e34;
 }
-.dynasty_kind>ul>li{
+.author-dynasty-this{
+  color: #1e7e34 !important;
+}
+
+.dynasty_kind>ul .layui-inline{
   margin: 0 4px 0;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.47);
@@ -323,7 +332,7 @@ div.col-lg-12{
   line-height: 26px;
   display: block;
 }
-.sentence-title-author{
+.sentence-title-author,.search-dynasty-author{
   display: inline-block;
   width: 100%;
   margin-top: -10px;
@@ -427,4 +436,7 @@ div.col-lg-12{
 .del-collect span,.del-love span,.del-review span{
   color: #999;
   font-family: KaiTi;
+}
+.author-brief-intro{
+  color: #666666e3;
 }

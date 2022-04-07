@@ -52,6 +52,11 @@ public class HomeReviewServiceImpl extends ServiceImpl<HomeReviewMapper, HomeRev
     }
 
     @Override
+    public List<HomeReview> getActiveList() {
+        return homeReviewMapper.selectActiveList();
+    }
+
+    @Override
     public PageInfo<HomeReview> getProfilePage(PageDomain pageDomain, String userId) {
         PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
         List<HomeReview> reviews = homeReviewMapper.selectList(userId);

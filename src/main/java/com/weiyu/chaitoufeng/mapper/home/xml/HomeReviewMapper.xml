@@ -81,4 +81,14 @@
         order by hr.create_time desc
     </select>
 
+    <select id="selectActiveList" resultMap="HomeReviewMap">
+        select hr.review_id,hr.content,hr.create_time,hr.review_location_id,
+               p.title, p.dynasty,p.author,
+               su.real_name
+        from home_review as hr
+        left join poem as p on hr.review_location_id = p.poem_id
+        left join sys_user as su on hr.review_user_id = su.user_id
+        order by hr.create_time desc limit 8
+    </select>
+
 </mapper>
