@@ -39,6 +39,11 @@ public class PoemServiceImpl extends ServiceImpl<PoemMapper, Poem>
     }
 
     @Override
+    public List<Poem> topZhanZan(PageDomain pageDomain) {
+        return poemMapper.topList(pageDomain.start(),pageDomain.getLimit());
+    }
+
+    @Override
     public boolean save(Poem entity) {
         return super.save(entity);
     }

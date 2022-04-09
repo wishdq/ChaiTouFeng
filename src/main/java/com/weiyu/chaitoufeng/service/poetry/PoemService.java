@@ -17,4 +17,7 @@ public interface PoemService extends IService<Poem> {
     PageInfo<Poem> page(Poem poem, PageDomain pageDomain);
 
     List<Poem> randoms(Integer objects);
+
+    List<Poem> topZhanZan(PageDomain pageDomain);
+
 }

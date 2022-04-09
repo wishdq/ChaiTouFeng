@@ -117,9 +117,6 @@ chaitoufeng:
       - /system/captcha/** # 开放验证码接口
       - /error/** # 开放错误接口
       - /static/**  #开放静态资源
-#      - /assets/** # 开放静态资源
-#      - /admin/** # 开放静态资源
-#      - /component/** # 开放静态资源
 #      - /favicon.ico # 开放FAVICON
 
   # 上传配置

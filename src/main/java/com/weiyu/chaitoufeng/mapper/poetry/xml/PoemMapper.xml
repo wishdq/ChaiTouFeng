@@ -59,11 +59,17 @@
                 and update_time like "%"#{updateTime}"%"
             </if>
         </where>
-        order by dian_zan desc
     </select>
 
     <select id="random" resultMap="PoemMap">
         select * from poem limit #{loc},6
+    </select>
+
+    <select id="topList" resultMap="PoemMap">
+        select * from poem where poem.poem_id in
+             (SELECT tmp.poem_id from
+                    (select poem_id from poem order by dian_zan desc limit #{start},#{limit}) as tmp)
+        ORDER BY dian_zan desc
     </select>
 
 </mapper>

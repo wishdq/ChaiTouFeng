@@ -27,6 +27,14 @@ public interface SysConfigMapper {
     Integer insert(SysConfig sysConfig);
 
     /**
+     * 根据config_code 获取config_value
+     */
+    String getValue(String configCode);
+    /**
+     * 根据config_code 获取config_value
+     */
+    boolean setValue(String configCode,String configValue);
+    /**
      * Describe: 根据 Id 查询系统配置
      */
     SysConfig selectById(@Param("id") String id);

@@ -18,6 +18,7 @@ import com.weiyu.chaitoufeng.secure.session.SecureSessionService;
 import com.weiyu.chaitoufeng.service.home.HomeCollectService;
 import com.weiyu.chaitoufeng.service.home.HomeLoveService;
 import com.weiyu.chaitoufeng.service.home.HomeReviewService;
+import com.weiyu.chaitoufeng.service.system.ISysConfigService;
 import com.weiyu.chaitoufeng.service.system.ISysLogService;
 import com.weiyu.chaitoufeng.service.system.ISysRoleService;
 import com.weiyu.chaitoufeng.service.system.ISysUserService;
@@ -72,6 +73,9 @@ public class EntranceController extends BaseController {
 
     @Resource
     HomeReviewService reviewService;
+
+    @Resource
+    ISysConfigService configService;
 
 
     @GetMapping("/")

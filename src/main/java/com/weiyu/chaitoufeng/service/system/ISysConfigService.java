@@ -31,6 +31,16 @@ public interface ISysConfigService {
     SysConfig getById(String id);
 
     /**
+     * 根据config_code 获取config_value
+     */
+    String getValueByCode(String code);
+
+    /**
+     * 根据config_code 设置config_value
+     */
+    Boolean setValueByCode(String configCode,String configValue);
+
+    /**
      * Describe: 根据 code 查询系统配置
      */
     SysConfig getByCode(String code);

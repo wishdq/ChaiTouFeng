@@ -105,6 +105,18 @@
         </trim>
     </insert>
 
+    <!--根据code获取value-->
+    <select id="getValue" resultType="string">
+        select config_value from sys_config
+        where config_code = #{configCode}
+    </select>
+
+    <!--根据code设置value-->
+    <update id="setValue" parameterType="string">
+        update sys_config set config_value = #{configValue}
+        where config_code = #{configCode}
+    </update>
+
     <!-- 根据 Id 修改系统配置数据 -->
     <update id="updateById" parameterType="SysConfig">
         update sys_config

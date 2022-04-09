@@ -64,6 +64,22 @@ public class SysConfigServiceImpl implements ISysConfigService {
     }
 
     /**
+     * 根据config_code 获取config_value
+     */
+    @Override
+    public String getValueByCode(String code) {
+        return sysConfigMapper.getValue(code);
+    }
+
+    /**
+     * 根据config_code 设置config_value
+     */
+    @Override
+    public Boolean setValueByCode(String configCode, String configValue) {
+        return sysConfigMapper.setValue(configCode,configValue);
+    }
+
+    /**
      * Describe: 根据 Code 查询系统配置
      */
     @Override

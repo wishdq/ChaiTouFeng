@@ -23,7 +23,11 @@ import com.weiyu.chaitoufeng.service.poetry.PoemDynastyService;
 import com.weiyu.chaitoufeng.service.poetry.PoemQuoteService;
 import com.weiyu.chaitoufeng.service.poetry.PoemService;
 import com.weiyu.chaitoufeng.service.home.HomeReviewService;
+import com.weiyu.chaitoufeng.service.system.ISysConfigService;
 import com.weiyu.chaitoufeng.service.system.ISysUserService;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +43,7 @@ import java.util.Random;
  * Since: 2022-04-01 17:31
  * Author: wish_dq
  */
+@Slf4j
 @RestController
 public class HomeController extends BaseController {
 
@@ -73,15 +78,16 @@ public class HomeController extends BaseController {
     @Resource
     ISysUserService userService;
 
+    @Resource
+    ISysConfigService configService;
+
     /**
      * 视图部分
      */
 
     @GetMapping("poem")
     public ModelAndView poem(Model model) {
-        QueryWrapper<Poem> queryWrapper = new QueryWrapper<>();
-        queryWrapper.isNotNull("poem_id");
-        Long poemNum = poemService.count(queryWrapper);
+        int poemNum = Integer.parseInt(configService.getValueByCode("poem_num"));
 
         model.addAttribute("poemNum", poemNum);
         model.addAttribute("active", "poem");
@@ -192,14 +198,15 @@ public class HomeController extends BaseController {
      */
     @GetMapping(MODULE_PATH + "index")
     public ResultTable homoIndex() {
-        List<Poem> poems = poemService.randoms(random.nextInt((int) (poemService.count() / 6)));
+        int poemNum = Integer.parseInt(configService.getValueByCode("poem_num"));
+        List<Poem> poems = poemService.randoms(random.nextInt(poemNum / 6));
         return ResultTable.dataTable(poems);
     }
 
     @GetMapping(MODULE_PATH + "poem")
     public ResultTable homeData(PageDomain pageDomain) {
-        PageInfo<Poem> pageInfo = poemService.page(null, pageDomain);
-        return pageTable(pageInfo.getList(), pageInfo.getTotal());
+        List<Poem> poems = poemService.topZhanZan(pageDomain);
+        return ResultTable.dataTable(poems);
     }
 
     @PutMapping(MODULE_PATH + "poem/update/{option}/{userId}")
@@ -354,17 +361,6 @@ public class HomeController extends BaseController {
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
     }
 
-    //@GetMapping(MODULE_PATH + "author/data/count/{dynasty}")
-    //public ResultTable coutAuthors(@PathVariable String dynasty) {
-    //    QueryWrapper<PoemAuthor> authorQueryWrapper = new QueryWrapper<>();
-    //    if ("不限".equals(dynasty)) {
-    //        authorQueryWrapper.isNotNull("author_id");
-    //    } else {
-    //        authorQueryWrapper.like("dynasty", dynasty);
-    //    }
-    //    int count = (int) authorService.count(authorQueryWrapper);
-    //    return ResultTable.pageTable(count, null);
-    //}
 
     @GetMapping(MODULE_PATH + "author/data/{dynasty}")
     public ResultTable authorData(PageDomain pageDomain, @PathVariable String dynasty) {

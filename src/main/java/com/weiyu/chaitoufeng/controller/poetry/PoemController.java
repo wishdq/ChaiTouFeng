@@ -9,6 +9,7 @@ import com.weiyu.chaitoufeng.domain.poetry.Poem;
 import com.weiyu.chaitoufeng.domain.build.PageDomain;
 import com.weiyu.chaitoufeng.domain.build.ResultTable;
 import com.weiyu.chaitoufeng.service.poetry.PoemService;
+import com.weiyu.chaitoufeng.service.system.ISysConfigService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,9 @@ public class PoemController extends BaseController {
     @Resource
     PoemService poemService;
 
+    @Resource
+    ISysConfigService configService;
+
     @GetMapping("main")
     @PreAuthorize("hasPermission('/poetry/poem/main','poetry:poem:main')")
     public ModelAndView main() {
@@ -49,7 +53,6 @@ public class PoemController extends BaseController {
                             HttpServletRequest request,
                             ServletResponse response) throws ServletException, IOException {
         if (pageDomain.getPage() != null && pageDomain.getLimit() != null){
-            System.out.println(pageDomain);
             PageInfo<Poem> pageInfo = poemService.page(param, pageDomain);
             return pageTable(pageInfo.getList(), pageInfo.getTotal());
         }
@@ -71,7 +74,9 @@ public class PoemController extends BaseController {
         poem.setPoemId(SequenceUtil.makeStringId());
         poem.setUpdateTime(LocalDateTime.now());
         boolean result = poemService.save(poem);
-        return decide(result);
+        String poem_num = String.valueOf(Integer.parseInt(configService.getValueByCode("poem_num"))+1);
+        boolean resultConfig = configService.setValueByCode("poem_num",poem_num);
+        return decide(result&&resultConfig);
     }
 
     @GetMapping("edit")
@@ -95,13 +100,17 @@ public class PoemController extends BaseController {
     @PreAuthorize("hasPermission('/poetry/poem/remove','poetry:poem:remove')")
     public Result remove(@PathVariable("id") String id) {
         Boolean result = poemService.removeById(id);
-        return decide(result);
+        String poem_num = String.valueOf(Integer.parseInt(configService.getValueByCode("poem_num"))-1);
+        boolean resultConfig = configService.setValueByCode("poem_num",poem_num);
+        return decide(result && resultConfig);
     }
 
     @DeleteMapping("batchRemove/{ids}")
     @PreAuthorize("hasPermission('/poetry/poem/remove','poetry:poem:remove')")
     public Result batchRemove(@PathVariable String ids) {
         boolean result = poemService.removeByIds(Arrays.asList(ids.split(",")));
-        return decide(result);
+        String poem_num = String.valueOf(Integer.parseInt(configService.getValueByCode("poem_num"))-Arrays.asList(ids.split(",")).size());
+        boolean resultConfig = configService.setValueByCode("poem_num",poem_num);
+        return decide(result && resultConfig);
     }
 }

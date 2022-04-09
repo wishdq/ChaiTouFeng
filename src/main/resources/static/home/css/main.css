@@ -40,7 +40,9 @@ i{
 }
 
 .carousel-caption h4 .subtitle{
-  font-size: 22px;
+  letter-spacing: 4px;
+  font-family: KaiTi;
+  font-size: 30px;
 }
 
 div.col-lg-12{
@@ -224,7 +226,7 @@ div.col-lg-12{
 }
 
 .author_content,.dynasty_content{
-  padding: 30px 60px 20px;
+  padding: 4% 6% 1%;
   margin-bottom: 15px;
   background-color: #ffffff;
   border-radius: 7px;
