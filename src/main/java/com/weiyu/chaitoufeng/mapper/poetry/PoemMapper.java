@@ -16,6 +16,7 @@ public interface PoemMapper extends BaseMapper<Poem> {
 
     List<Poem> selectList(Poem poem);
 
+    Long selectList_COUNT();
 
     List<Poem> random(Integer objects);
 

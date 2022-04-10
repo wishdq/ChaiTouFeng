@@ -22,18 +22,4 @@ public class MyWebConfig {
         return firewall;
     }
 
-//
-//    /**
-//     * 文件上传配置
-//     */
-//    //@Bean
-//    //public MultipartConfigElement multipartConfigElement() {
-//    //    MultipartConfigFactory factory = new MultipartConfigFactory();
-//    //    // 单个数据大小
-//    //    factory.setMaxFileSize(DataSize.parse("30MB")); // KB,MB
-//    //    //总上传数据大小
-//    //    factory.setMaxRequestSize(DataSize.parse("100MB"));
-//    //    return factory.createMultipartConfig();
-//    //}
-//
 }

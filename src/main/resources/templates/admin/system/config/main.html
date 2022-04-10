@@ -280,7 +280,9 @@
                         layer.close(loading);
                         if (result.success) {
                             popup.success(result.msg, function () {
+                                let get_class = $('#group').attr('class')
                                 table.reload('config-table');
+                                $('#group').attr('class',get_class)
                             });
                         } else {
                             popup.failure(result.msg);
@@ -307,7 +309,9 @@
                         layer.close(loading);
                         if (result.success) {
                             popup.success(result.msg, function () {
+                                let get_class = $('#group').attr('class')
                                 table.reload('config-table');
+                                $('#group').attr('class',get_class)
                             });
                         } else {
                             popup.failure(result.msg);
@@ -329,7 +333,9 @@
         }
 
         window.refresh = function (param) {
+            let get_class = $('#group').attr('class')
             table.reload('config-table', {where: param});
+            $('#group').attr('class',get_class)
         }
     })
 </script>

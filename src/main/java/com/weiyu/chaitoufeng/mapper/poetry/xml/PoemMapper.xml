@@ -5,22 +5,27 @@
 <mapper namespace="com.weiyu.chaitoufeng.mapper.poetry.PoemMapper">
 
     <resultMap id="PoemMap" type="Poem">
-            <id property="poemId" column="poem_id" jdbcType="VARCHAR"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="dynasty" column="dynasty" jdbcType="VARCHAR"/>
-            <result property="author" column="author" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="type" column="type" jdbcType="VARCHAR"/>
-            <result property="tags" column="tags" jdbcType="VARCHAR"/>
-            <result property="zhujie" column="zhujie" jdbcType="VARCHAR"/>
-            <result property="shangxi" column="shangxi" jdbcType="VARCHAR"/>
-            <result property="yiwen" column="yiwen" jdbcType="VARCHAR"/>
-            <result property="shouCuang" column="shou_cuang" jdbcType="INTEGER"/>
-            <result property="xiHuan" column="xi_huan" jdbcType="INTEGER"/>
-            <result property="dianZan" column="dian_zan" jdbcType="INTEGER"/>
-            <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
+        <id property="poemId" column="poem_id" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="dynasty" column="dynasty" jdbcType="VARCHAR"/>
+        <result property="author" column="author" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="tags" column="tags" jdbcType="VARCHAR"/>
+        <result property="zhujie" column="zhujie" jdbcType="VARCHAR"/>
+        <result property="shangxi" column="shangxi" jdbcType="VARCHAR"/>
+        <result property="yiwen" column="yiwen" jdbcType="VARCHAR"/>
+        <result property="shouCuang" column="shou_cuang" jdbcType="INTEGER"/>
+        <result property="xiHuan" column="xi_huan" jdbcType="INTEGER"/>
+        <result property="dianZan" column="dian_zan" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="selectList_COUNT" resultType="long">
+        select config_value
+        from sys_config
+        where config_code = 'poem_num'
+    </select>
 
     <select id="selectList" resultMap="PoemMap">
         select * from poem
@@ -62,13 +67,17 @@
     </select>
 
     <select id="random" resultMap="PoemMap">
-        select * from poem limit #{loc},6
+        select *
+        from poem
+        limit #{loc},6
     </select>
 
     <select id="topList" resultMap="PoemMap">
-        select * from poem where poem.poem_id in
-             (SELECT tmp.poem_id from
-                    (select poem_id from poem order by dian_zan desc limit #{start},#{limit}) as tmp)
+        select *
+        from poem
+        where poem.poem_id in
+              (SELECT tmp.poem_id
+               from (select poem_id from poem order by dian_zan desc limit #{start},#{limit}) as tmp)
         ORDER BY dian_zan desc
     </select>
 
