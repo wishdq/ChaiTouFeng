@@ -81,4 +81,9 @@
         ORDER BY dian_zan desc
     </select>
 
+    <select id="getLikeQuote" resultMap="PoemMap">
+        select *
+        from poem where content like "%"#{quote}"%" limit 1;
+    </select>
+
 </mapper>

@@ -271,6 +271,9 @@
                 poem.poemId = $(this).parent().prev().attr('id');
 
                 switch (id_value) {
+                    case 'rectify' :
+                        rectifyPoem();
+                        break;
                     case 'shouCuang':
                         poem.shouCuang = parseInt(cur.text()) + 1;
                         break;
@@ -285,26 +288,38 @@
                 }
 
                 let userId = $('.login-user').attr('id');
-                if (userId === undefined && id_value !== 'dianZan') {
+                if (userId === undefined && id_value !== 'dianZan' && id_value !== 'rectify') {
                     layer.msg('请先登录！')
-                    return;
-                }
-
-                $.ajax({
-                    url: '/home/poem/update/' + id_value + '/' + userId,
-                    data: JSON.stringify(poem),
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    type: 'put',
-                    success: function (result) {
-                        if (result.success) {
-                            cur.text(parseInt(cur.text()) + 1);
-                            layer.msg('成功');
+                }else if (id_value !== 'rectify'){
+                    $.ajax({
+                        url: '/home/poem/update/' + id_value + '/' + userId,
+                        data: JSON.stringify(poem),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        type: 'put',
+                        success: function (result) {
+                            if (result.success) {
+                                cur.text(parseInt(cur.text()) + 1);
+                                layer.msg('成功');
+                            }
+                            layer.msg(result.msg);
                         }
-                        layer.msg(result.msg);
-                    }
-                })
+                    })
+                }
             })
+
+            let rectifyPoem = function () {
+                let poemId = $('.poem-tool').prev().attr('id')
+                console.log(poemId)
+
+                layer.open({
+                    type: 2,
+                    title: '纠正',
+                    shade: 0.1,
+                    area: ['550px', '380px'],
+                    content: '/home/poem/' + 'rectify?poemId='+poemId
+                });
+            }
         })
     </script>
 </div>

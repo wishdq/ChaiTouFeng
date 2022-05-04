@@ -26,9 +26,6 @@ import java.util.List;
 @Component
 public class SecureUserDetailsServiceImpl implements UserDetailsService {
 
-    //private static String roles ="";
-    //
-    //private static List<String> roleList = new ArrayList<>();
 
     @Resource
     private SysUserMapper sysUserMapper;

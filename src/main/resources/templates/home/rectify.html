@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home/fragment::header(~{::title})">
+    <title>钗头凤 · 古诗</title>
+</head>
+<body>
+<form action="" class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">id:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required" name="poemId"
+                              th:value="${poem.poemId}" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择:</label>
+                    <div class="layui-input-block">
+                        <select lay-filter="kindType" name="kind">
+                            <option value=""></option>
+                            <option value="title">诗词名</option>
+                            <option value="author">作者</option>
+                            <option value="dynasty">朝代</option>
+                            <option value="content">内容</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">内容:</label>
+                    <div class="layui-input-block">
+                        <textarea style="height: 150px;" class="layui-textarea" name="content"
+                                  ></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button class="pear-btn pear-btn-primary pear-btn-sm" lay-filter="rectify-save" lay-submit="" type="submit">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button class="pear-btn pear-btn-sm" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:insert="home/fragment::footer"/>
+<script>
+    layui.use(['form', 'jquery'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        let title = '[[${poem.title}]]'
+        let author = '[[${poem.author}]]'
+        let dynasty = '[[${poem.dynasty}]]'
+        let content_before = '[[${poem.content}]]'
+
+        form.on('submit(rectify-save)', function (data) {
+            let kind = data.field.kind;
+            switch (kind) {
+                case 'title':data.field.contentBefore = title;break;
+                case 'author':data.field.contentBefore = author;break;
+                case 'dynasty':data.field.contentBefore = dynasty;break;
+                case 'content':data.field.contentBefore = content_before;break;
+            }
+            console.log(data.field)
+            $.ajax({
+                url: '/home/poem/rectify/save',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        })
+    })
+</script>
+</body>
+</html>

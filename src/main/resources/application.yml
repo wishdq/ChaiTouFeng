@@ -111,6 +111,8 @@ chaitoufeng:
       - /about
       - /search
       - /poem/**  # 前端数据接口
+      - /sentence/**
+      - /author/**
       - /home/**
       - /login/**  # 开放登录接口
       - /register  #开放注册接口

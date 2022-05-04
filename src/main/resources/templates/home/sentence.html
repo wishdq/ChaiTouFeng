@@ -152,14 +152,12 @@
 
                             let item = '<div class="sentenceItem">\n' +
                                 '    <div class="sentence">\n' +
-                                '     <div>   <a class="sentence-left">'+data[i].sentence+
+                                '     <div>   <a class="sentence-left" href="/sentence/'+data[i].quoteId+'">'+data[i].sentence+
                                 '</a></div>\n' +
                                 '    <div class="sentence-title-author">    <a href="#" class="sentence-right">'+data[i].author+' 《'+data[i].title+'》'+
                                 '    </a></div>\n' +
                                 '    </div>\n' +
-                                '    <div class="sentenceContent">'+'今夕何夕兮，搴舟中流。今日何日兮，得与王子同舟。\n' +
-                                '        蒙羞被好兮，不訾诟耻。心几烦而不绝兮，得知王子。\n' +
-                                '        山有木兮木有枝，心悦君兮君不知。'+
+                                '    <div class="sentenceContent">'+
                                 '</div>\n' +
                                 '    <div class="sentenceTool layui-hide">\n' +
                                 '        <div class="layui-inline sentence-shouChang">\n' +
@@ -190,8 +188,8 @@
 
         $('body').on('click','.sentenceItem',function () {
             $('.sentenceItem').removeClass('selected');
-            $('.sentenceItem .sentenceTool').addClass('layui-hide');
-            $(this).children('.sentenceTool').removeClass('layui-hide');
+            // $('.sentenceItem .sentenceTool').addClass('layui-hide');
+            // $(this).children('.sentenceTool').removeClass('layui-hide');
             $(this).addClass('selected')
         })
 

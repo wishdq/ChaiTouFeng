@@ -66,9 +66,9 @@ public class SysPowerServiceImpl implements ISysPowerService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean remove(String id) {
-        sysPowerMapper.deleteById(id);
-        sysRolePowerMapper.deleteByPowerId(id);
-        return true;
+
+        //sysRolePowerMapper.deleteByPowerId(id);
+        return sysPowerMapper.deleteById(id) > 0;
     }
 
     /**

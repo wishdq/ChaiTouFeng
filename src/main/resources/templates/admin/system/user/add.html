@@ -59,8 +59,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">角&emsp;色:</label>
                     <div class="layui-input-block">
-                        <input lay-skin="primary" name="roleIds" th:each="sysRole:${sysRoles}"
-                               th:title="${sysRole.roleName}" th:value="${sysRole.roleId}" type="checkbox">
+                        <input lay-skin="primary" name="roleIds" th:each="sysRole,sysRoleStat:${sysRoles}"
+                            th:checked="${sysRoleStat.last}"   th:title="${sysRole.roleName}" th:value="${sysRole.roleId}" type="checkbox">
                     </div>
                 </div>
             </div>

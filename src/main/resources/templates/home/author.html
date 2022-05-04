@@ -102,8 +102,8 @@
 
                             for (let i = 0; i < data.length; i++) {
                                 let item = '<div class="author_item">\n' +
-                                    '    <span>'+data[i].name+
-                                    '</span>\n' +
+                                    '    <span><a href="/author/'+data[i].authorId+'">'+data[i].name+
+                                    '</a></span>\n' +
                                     '    <div class="author-brief-intro">'+((data[i].briefIntro==='' || data[i].briefIntro===null)?'暂无简介':data[i].briefIntro)+
                                     '    </div>\n' +
                                     '</div>'

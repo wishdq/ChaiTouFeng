@@ -20,4 +20,6 @@ public interface PoemService extends IService<Poem> {
 
     List<Poem> topZhanZan(PageDomain pageDomain);
 
+    Poem getLike(String quote);
+
 }

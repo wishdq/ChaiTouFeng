@@ -98,9 +98,9 @@ public class SysUserController extends BaseController {
         sysUser.setUserId(SequenceUtil.makeStringId());
         sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
         sysUser.setCreateTime(LocalDateTime.now());
-        sysUserService.saveUserRole(sysUser.getUserId(), Arrays.asList(sysUser.getRoleIds().split(",")));
-        Boolean result = sysUserService.save(sysUser);
-        return decide(result);
+        Boolean resultUser = sysUserService.save(sysUser);
+        Boolean resultUserRole = sysUserService.saveUserRole(sysUser.getUserId(), Arrays.asList(sysUser.getRoleIds().split(",")));
+        return decide(resultUser && resultUserRole);
     }
 
     /**

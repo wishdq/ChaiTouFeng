@@ -52,6 +52,7 @@
                 </choose>
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectRegisterByUsername" resultMap="SysUserMap">

@@ -1,5 +1,6 @@
 package com.weiyu.chaitoufeng.service.poetry.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -44,6 +45,11 @@ public class PoemServiceImpl extends ServiceImpl<PoemMapper, Poem>
     }
 
     @Override
+    public Poem getLike(String quote) {
+        return poemMapper.getLikeQuote(quote);
+    }
+
+    @Override
     public boolean save(Poem entity) {
         return super.save(entity);
     }
@@ -61,6 +67,11 @@ public class PoemServiceImpl extends ServiceImpl<PoemMapper, Poem>
     @Override
     public boolean updateById(Poem entity) {
         return super.updateById(entity);
+    }
+
+    @Override
+    public Poem getOne(Wrapper<Poem> queryWrapper) {
+        return super.getOne(queryWrapper);
     }
 }
 

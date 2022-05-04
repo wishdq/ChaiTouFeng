@@ -21,6 +21,8 @@ public interface PoemMapper extends BaseMapper<Poem> {
     List<Poem> random(Integer objects);
 
     List<Poem> topList(Integer start,Integer limit);
+
+    Poem getLikeQuote(String quote);
 }
 
 

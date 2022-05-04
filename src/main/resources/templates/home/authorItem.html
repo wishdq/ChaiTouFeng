@@ -1,0 +1,135 @@
+<!DOCTYPE html >
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home/fragment::header(~{::title})">
+    <title>钗头凤 · 古诗</title>
+</head>
+<body>
+
+<th:block th:insert="home/fragment::nav"/>
+
+<th:block th:insert="home/fragment::carousel"/>
+
+
+<div class="container-fluid poetry_main no-padding">
+    <div class="row col-lg-12">
+        <div class="left_card col-lg-7" >
+            <div class="left_card-list"></div>
+            <!--分页-->
+            <div id="page_bottom" class="layui-table-page" ></div>
+        </div>
+
+        <th:block th:insert="home/fragment::right_card"/>
+
+    </div>
+</div>
+
+
+
+<th:block th:insert="home/fragment::footer"/>
+<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+<script>
+    layui.use(['laypage', 'jquery','popup'], function(){
+        let laypage = layui.laypage;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+
+        //poem 完整功能
+        laypage.render({
+            elem: 'page_bottom'
+            ,count: [[${poemNum}]]
+            ,limit: 8
+            ,limits: [8, 16, 24]
+            ,groups: 1
+            ,curr: location.hash.replace('#!pages=', '') //获取起始页
+            ,hash: 'pages' //自定义hash值
+            ,layout: ['prev', 'page', 'next', 'skip','count', 'limit']
+            ,prev: '<i class="layui-icon"></i>'
+            ,next: '<i class="layui-icon"></i>'
+            ,jump: function(obj){
+                let page={};
+                page.page = obj.curr;
+                page.limit = obj.limit;
+
+                $.ajax({
+                    url: '/author/[[${authorId}]]/data',
+                    data: page,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'get',
+                    success: function (result) {
+                        if (result.code !== 0){
+                            popup.failure(result.msg);
+                            return
+                        }
+                        let left_card = $('.left_card-list')
+                        let data = result.data;
+
+                        let poem_card = $('.poem-card')
+                        for (let i = 0; i < poem_card.length; i++) {
+                            poem_card[i].remove()
+                        }
+
+                        for (let i = 0; i < data.length; i++) {
+                            let poem_card = '<div class="poem-card">'+
+                                '<div id='+data[i].poemId +' '+'class="poem'+data[i].poemId+'">'+
+                                '<div class="card-title">\n' +
+                                '                        <h2 class="poem-title">'+
+                                '<a class="title-link" href="'+'poem/'+data[i].poemId+'" target="_blank">'+data[i].title+'</a>'+
+                                '    </h2>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="poem-author">'+
+                                '<p><a class="author_dynasty" href="" target="_blank">'+data[i].dynasty+
+                                '</a> · <a class="author_name" target="_blank">'+data[i].author+'</a>'+
+                                '   </p>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="poem-content">'
+
+                            let contents = data[i].content.split('。');
+
+                            let poem_content = '';
+                            for (let j = 0; j < contents.length; j++) {
+                                if (contents[j].length !== 0){
+                                    poem_content += '<p class="p-content">'+contents[j]+'。</p>'
+                                }
+                            }
+
+                            poem_card += poem_content +
+                                '                    </div>\n' +
+                                '                </div>\n' +
+                                '                <div class="poem-tool">\n' +
+                                '                    <div class="layui-inline" id="shouCuang">\n' +
+                                '                        <i class="iconfont icon-shoucang" ></i>\n' +
+                                '                        <span >'+data[i].shouCuang+'</span>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="layui-inline" id="xiHuan">\n' +
+                                '                        <i class="iconfont icon-xihuan" ></i>\n' +
+                                '                        <span >'+data[i].xiHuan+'</span>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="layui-inline" id="copy" data-clipboard-action="copy" data-clipboard-target=".poem'+data[i].poemId+'">\n' +
+                                '                        <i class="iconfont icon-fuzhi" aria-hidden="true"></i>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="layui-inline dianZan" id="dianZan">\n' +
+                                '                        <i class="iconfont icon-dianzan"></i>\n' +
+                                '                        <span >'+data[i].dianZan+'</span>\n' +
+                                '                    </div>\n' +
+                                '                </div>\n' +
+                                '\n' +
+                                '                <div class="poem-tag">'+
+                                '<i class="iconfont icon-biaoqian"></i>'
+
+                            let tags = data[i].tags.replace(/#/g,"  #  ")
+
+                            poem_card += tags+'    </div>\n' +
+                                '            </div>'
+
+                            left_card.append(poem_card);
+                        }
+                    }
+                })
+            }
+        });
+
+    })
+</script>
+</body>
+</html>

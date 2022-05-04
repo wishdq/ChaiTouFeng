@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('前台纠正列表')"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form action="" class="layui-form">
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">类型:</label>
+                <div class="layui-input-block">
+                    <select lay-filter="kindType" name="kind">
+                        <option value=""></option>
+                        <option value="title">诗词名</option>
+                        <option value="author">作者</option>
+                        <option value="dynasty">朝代</option>
+                        <option value="content">内容</option>
+                    </select>
+                </div>
+            </div>
+            <!--<div class="layui-form-item layui-inline">-->
+            <!--    <label class="layui-form-label">类型:</label>-->
+            <!--    <div class="layui-input-inline">-->
+            <!--        <input class="layui-input" name="reviewUserName" placeholder="请输入用户名" type="text">-->
+            <!--    </div>-->
+            <!--</div>-->
+            <!--<div class="layui-form-item layui-inline">-->
+            <!--    <label class="layui-form-label">网 名:</label>-->
+            <!--    <div class="layui-input-inline">-->
+            <!--        <input class="layui-input" name="reviewUserProfileName" placeholder="请输入网名" type="text">-->
+            <!--    </div>-->
+            <!--</div>-->
+            <button class="pear-btn pear-btn-md pear-btn-primary" lay-filter="review-query" lay-submit>
+                <i class="layui-icon layui-icon-search"></i>
+                查询
+            </button>
+            <!--<br>-->
+
+            <!--<div class="layui-form-item layui-inline">-->
+            <!--    <label class="layui-form-label">评 论 内 容:</label>-->
+            <!--    <div class="layui-input-inline">-->
+            <!--        <input class="layui-input" name="content" placeholder="请输入评论内容" type="text">-->
+            <!--    </div>-->
+            <!--</div>-->
+            <!--<div class="layui-form-item layui-inline">-->
+            <!--    <label class="layui-form-label">评 论 位 置:</label>-->
+            <!--    <div class="layui-input-inline">-->
+            <!--        <input class="layui-input" name="reviewLocationId" placeholder="请输入评论位置" type="text">-->
+            <!--    </div>-->
+            <!--</div>-->
+            <button class="pear-btn pear-btn-md" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="rectify-table" lay-filter="rectify-table"></table>
+    </div>
+</div>
+</body>
+
+<script id="rectify-toolbar" type="text/html">
+    <button sec:authorize="hasPermission('/site/review/remove','site:review:remove')"
+            class="pear-btn pear-btn-danger pear-btn-md"
+            lay-event="batchRemove">
+        <i class="pear-icon pear-icon-ashbin"></i>
+        删除
+    </button>
+</script>
+
+<script id="review-bar" type="text/html">
+    <button
+            class="pear-btn pear-btn-primary pear-btn-sm" lay-event="viewItem">
+        <i class="layui-icon layui-icon-chart-screen"></i>
+    </button>
+    <button
+            class="pear-btn pear-btn-warming pear-btn-sm" lay-event="sure"><i
+            class="layui-icon layui-icon-ok"></i>
+    </button>
+    <button sec:authorize="hasPermission('/site/rectify/remove','site:rectify:remove')"
+            class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+</script>
+
+<script id="review-enable" type="text/html">
+    <input type="checkbox" name="enable" value="{{d.reviewId}}" lay-skin="switch" lay-text="启用|禁用"
+           lay-filter="review-enable" {{ d.enable== true ? 'checked' : '' }} />
+</script>
+
+
+<script id="rectify-end" type="text/html">
+    {{#if (d.kind == 'title') { }}
+    <span>标题</span>
+    {{# }else if(d.kind == 'author'){ }}
+    <span>作者</span>
+    {{# }else if(d.kind == 'dynasty'){ }}
+    <span>朝代</span>
+    {{# }else if(d.kind == 'content'){ }}
+    <span>内容</span>
+    {{# } }}
+</script>
+
+<script id="status-type" type="text/html">
+    {{#if (d.status == '0') { }}
+    <span class="layui-badge layui-bg-orange">待处理</span>
+    {{# }else if(d.status == '1'){ }}
+    <span class="layui-badge layui-bg-blue">已处理</span>
+    {{# } }}
+</script>
+
+<th:block th:include="common :: footer"/>
+<script>
+    layui.use(['table', 'form', 'jquery', 'popup', 'common'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let popup = layui.popup;
+        let common = layui.common;
+
+        let MODULE_PATH = "/site/rectify/";
+
+        let cols = [
+            [
+                {type: 'checkbox'},
+                {title: '诗词ID', field: 'poemId',width: 100},
+                {title: '类型', field: 'kind',templet: '#rectify-end',align: 'center',width: 70},
+                {title: '修改前的内容', field: 'contentBefore'},
+                {title: '修改后的内容', field: 'content'},
+                {title: '状态', field: 'status',templet: '#status-type',align: 'center',width: 90},
+                {title: '操作', toolbar: '#review-bar', align: 'center',width: 145}
+            ]
+        ]
+
+        table.render({
+            elem: '#rectify-table',
+            url: MODULE_PATH + 'data',
+            page: true,
+            cols: cols,
+            skin: 'line',
+            toolbar: '#rectify-toolbar',
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+
+        table.on('tool(rectify-table)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'viewItem') {
+                window.viewItem(obj);
+            } else if (obj.event === 'sure') {
+                window.sure(obj);
+            }
+        });
+
+        table.on('toolbar(rectify-table)', function (obj) {
+            if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            }
+        });
+
+        form.on('submit(review-query)', function (data) {
+            table.reload('rectify-table', {where: data.field})
+            return false;
+        });
+
+        window.viewItem = function (obj) {
+            layer.open({
+                type: 2,
+                title: '查看',
+                shade: 0.1,
+                area: ['500px', '400px'],
+                content: MODULE_PATH + 'view?poemId=' + obj.data['poemId']
+            });
+        }
+
+        window.sure = function (obj) {
+            layer.confirm('确定修改吗？', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "sure/" + obj.data['rectifyId'],
+                    dataType: 'json',
+                    type: 'put',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {icon: 1, time: 1000});
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该纠正', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "remove/" + obj.data['rectifyId'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {icon: 2, time: 1000});
+                        }
+                    }
+                })
+            });
+        }
+
+        window.batchRemove = function (obj) {
+            let ids = common.checkField(obj, 'rectifyId');
+            if (common.isEmpty(ids)) {
+                popup.warning("未选中数据");
+                return false;
+            }
+            layer.confirm('确定要删除选中评论', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: MODULE_PATH + "batchRemove/" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            popup.success(result.msg, function () {
+                                table.reload('rectify-table');
+                            });
+                        } else {
+                            popup.failure(result.msg);
+                        }
+                    }
+                })
+            });
+        }
+
+        window.refresh = function () {
+            table.reload('rectify-table');
+        }
+    })
+</script>
+</html>

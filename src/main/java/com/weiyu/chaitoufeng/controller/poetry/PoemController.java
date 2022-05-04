@@ -55,9 +55,7 @@ public class PoemController extends BaseController {
                             ServletResponse response) throws ServletException, IOException {
         if (pageDomain.getPage() != null && pageDomain.getLimit() != null){
             PageInfo<Poem> pageInfo = poemService.page(param, pageDomain);
-            //List<Poem> poems = poemService.limitPage(param,pageDomain);
             return pageTable(pageInfo.getList(), pageInfo.getTotal());
-            //return pageTable(poems,poems.size());
         }
         request.getRequestDispatcher("/error/403").forward(request,response);
         return null;

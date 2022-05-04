@@ -9,6 +9,7 @@ import com.weiyu.chaitoufeng.common.logging.Logging;
 import com.weiyu.chaitoufeng.common.result.Result;
 import com.weiyu.chaitoufeng.common.tools.SecurityUtil;
 import com.weiyu.chaitoufeng.common.tools.SequenceUtil;
+import com.weiyu.chaitoufeng.config.MyWebConfig;
 import com.weiyu.chaitoufeng.controller.base.BaseController;
 import com.weiyu.chaitoufeng.domain.home.HomeCollect;
 import com.weiyu.chaitoufeng.domain.home.HomeLove;
@@ -24,8 +25,17 @@ import com.weiyu.chaitoufeng.service.system.ISysRoleService;
 import com.weiyu.chaitoufeng.service.system.ISysUserService;
 import com.wf.captcha.utils.CaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -141,7 +151,10 @@ public class EntranceController extends BaseController {
 
     @PostMapping("register")
     @ResponseBody
-    public Result register(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("captcha") String captcha, HttpServletRequest request) {
+    public Result register(@RequestParam("username") String username,
+                           @RequestParam("password") String password,
+                           @RequestParam("captcha") String captcha,
+                           HttpServletRequest request) {
         if (!CaptchaUtil.ver(captcha, request)) {
             return Result.failure("验证码错误");
         }
@@ -158,6 +171,16 @@ public class EntranceController extends BaseController {
         //保存注册用户的，用户角色
         boolean userRoleSave = userService.saveRegisterUserRole(user.getUserId(), roleService.getRoleIdByRoleCode("home"));
 
+        boolean result = userSave && userRoleSave;
+        if (result){
+
+            //UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username,passwordEncoder.encode(password));
+            //
+            //token.setDetails(new WebAuthenticationDetails(request));
+            //Authentication authenticatedUser=authenticationManager.authenticate(token);
+            //SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+            //request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+        }
         return Result.decide(userSave && userRoleSave, "注册成功", "注册失败");
     }
 

@@ -62,12 +62,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="HomeLove" />
-                  <option name="tableName" value="home_love" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="HomeCollect" />
-                  <option name="tableName" value="home_collect" />
+                  <option name="className" value="PoemRectify" />
+                  <option name="tableName" value="poem_rectify" />
                 </TableUIInfo>
               </list>
             </option>

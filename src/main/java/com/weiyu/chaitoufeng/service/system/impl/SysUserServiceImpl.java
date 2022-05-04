@@ -99,7 +99,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean remove(String id) {
-        sysUserRoleMapper.deleteByUserId(id);
+        //sysUserRoleMapper.deleteByUserId(id);
         sysUserMapper.deleteById(id);
         return true;
     }
@@ -111,7 +111,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
     @Transactional(rollbackFor = Exception.class)
     public boolean batchRemove(String[] ids) {
         sysUserMapper.deleteByIds(ids);
-        sysUserRoleMapper.deleteByUserIds(ids);
+        //sysUserRoleMapper.deleteByUserIds(ids);
         return true;
     }
 

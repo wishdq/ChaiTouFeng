@@ -11,6 +11,7 @@ import com.weiyu.chaitoufeng.domain.build.ResultTable;
 import com.weiyu.chaitoufeng.domain.home.HomeCollect;
 import com.weiyu.chaitoufeng.domain.home.HomeLove;
 import com.weiyu.chaitoufeng.domain.home.HomeReview;
+import com.weiyu.chaitoufeng.domain.home.HomeRectify;
 import com.weiyu.chaitoufeng.domain.poetry.Poem;
 import com.weiyu.chaitoufeng.domain.poetry.PoemAuthor;
 import com.weiyu.chaitoufeng.domain.poetry.PoemDynasty;
@@ -18,6 +19,7 @@ import com.weiyu.chaitoufeng.domain.poetry.PoemQuote;
 import com.weiyu.chaitoufeng.domain.system.SysUser;
 import com.weiyu.chaitoufeng.service.home.HomeCollectService;
 import com.weiyu.chaitoufeng.service.home.HomeLoveService;
+import com.weiyu.chaitoufeng.service.home.HomeRectifyService;
 import com.weiyu.chaitoufeng.service.poetry.PoemAuthorService;
 import com.weiyu.chaitoufeng.service.poetry.PoemDynastyService;
 import com.weiyu.chaitoufeng.service.poetry.PoemQuoteService;
@@ -25,8 +27,6 @@ import com.weiyu.chaitoufeng.service.poetry.PoemService;
 import com.weiyu.chaitoufeng.service.home.HomeReviewService;
 import com.weiyu.chaitoufeng.service.system.ISysConfigService;
 import com.weiyu.chaitoufeng.service.system.ISysUserService;
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
@@ -80,6 +80,9 @@ public class HomeController extends BaseController {
 
     @Resource
     ISysConfigService configService;
+
+    @Resource
+    HomeRectifyService poemRectifyService;
 
     /**
      * 视图部分
@@ -136,12 +139,42 @@ public class HomeController extends BaseController {
         return jumpPage(MODULE_PATH + "sentence");
     }
 
+    @GetMapping("sentence/{quoteId}")
+    public ModelAndView getQuote(@PathVariable String quoteId,Model model){
+        PoemQuote quote = quoteService.getById(quoteId);
+        Poem poem = poemService.getLike(quote.getSentence());
+        if( poem == null){
+            QueryWrapper<PoemQuote> queryWrapper = new QueryWrapper<>();
+            queryWrapper.isNotNull("quote_id");
+            Long sentenceNum = quoteService.count(queryWrapper);
+
+            model.addAttribute("sentenceNum", sentenceNum);
+            model.addAttribute("active", "sentence");
+            return jumpPage(MODULE_PATH+"sentence");
+        }
+        model.addAttribute("poem",poem);
+        return jumpPage(MODULE_PATH+"sentenceItem");
+    }
+
     @GetMapping("author")
     public ModelAndView author(Model model) {
         int authorNum = (int) authorService.count();
         model.addAttribute("active", "author");
         model.addAttribute("authorNum", authorNum);
         return jumpPage(MODULE_PATH + "author");
+    }
+
+    @GetMapping("author/{authorId}")
+    public ModelAndView authorItem(Model model, @PathVariable String authorId) {
+        //PoemAuthor author = new PoemAuthor();
+        //author.setAuthorId(authorId);
+        PoemAuthor author = authorService.getById(authorId);
+        QueryWrapper<Poem> poemQueryWrapper = new QueryWrapper<>();
+        poemQueryWrapper.like("author",author.getName());
+        int poemNum = (int) poemService.count(poemQueryWrapper);
+        model.addAttribute("authorId",authorId);
+        model.addAttribute("poemNum",poemNum);
+        return jumpPage(MODULE_PATH + "authorItem");
     }
 
     @GetMapping("dynasty")
@@ -192,6 +225,11 @@ public class HomeController extends BaseController {
         return jumpPage(MODULE_PATH + "search");
     }
 
+    @GetMapping("/home/poem/rectify")
+    public ModelAndView rectify( String poemId,Model model){
+        model.addAttribute("poem",poemService.getById(poemId));
+        return jumpPage(MODULE_PATH+"rectify");
+    }
 
     /**
      * 逻辑处理
@@ -271,6 +309,15 @@ public class HomeController extends BaseController {
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
     }
 
+    @GetMapping("author/{authorId}/data")
+    public ResultTable authorPoemData(PageDomain pageDomain, @PathVariable String authorId) {
+
+        PoemAuthor author = authorService.getById(authorId);
+        Poem poem = new Poem();
+        poem.setAuthor(author.getName());
+        PageInfo<Poem> pageInfo = poemService.page(poem,pageDomain);
+        return pageTable(pageInfo.getList(), pageInfo.getTotal());
+    }
 
     @GetMapping(MODULE_PATH + "dynasty/data")
     public ResultTable dynastyData() {
@@ -375,5 +422,13 @@ public class HomeController extends BaseController {
         }
         PageInfo<PoemAuthor> pageInfo = authorService.getPage(pageDomain, author);
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
+    }
+
+    @PutMapping("/home/poem/rectify/save")
+    public Result saveRectify(@RequestBody HomeRectify poemRectify){
+        System.out.println(poemRectify);
+        poemRectify.setRectifyId(SequenceUtil.makeStringId());
+        poemRectify.setStatus("0");
+        return decide(poemRectifyService.save(poemRectify));
     }
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html >
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home/fragment::header(~{::title})">
+    <title>钗头凤 · 名句</title>
+</head>
+<body>
+
+<th:block th:insert="home/fragment::nav"/>
+
+<th:block th:insert="home/fragment::carousel"/>
+
+<div class="container-fluid poetry_main no-padding">
+    <div class="row col-lg-12">
+        <div class="left_card col-lg-7" >
+            <div class="poem-card-list">
+                <div class="poem-card">
+                    <div th:id="${poem.poemId}" th:class="'poem'+${poem.poemId}">
+                        <div class="card-title" >
+                            <h2 class="poem-title">
+                                <a class="title-link" th:text="${poem.title}" th:href="'/poem/'+${poem.poemId}" >西江月·重九</a>
+                            </h2>
+                        </div>
+                        <div class="poem-author">
+                            <p><a class="author_dynasty" >
+                                [[${poem.dynasty}]]</a> : <a class="author_name" target="_blank" th:text="${poem.author}">苏轼</a>
+                            </p>
+                        </div>
+                        <div class="poem-content" th:each="item :${#strings.arraySplit(poem.content,'。')}">
+                            <p class="p-content" th:if="${!#strings.contains(item,'？')}" th:text="${item}+'。'">点点楼头细雨，重重江外平湖。当年戏马会东徐，今日凄凉南浦。</p>
+                            <p class="p-content" th:if="${#strings.contains(item,'？')}" th:text="${item}">点点楼头细雨，重重江外平湖。当年戏马会东徐，今日凄凉南浦。</p>
+                            <!--<p class="p-content">莫恨黄花未吐，且教红粉相扶。酒阑不必看茱萸，俯仰人间今古。</p>-->
+                        </div>
+                    </div>
+                    <div class="poem-tool">
+                        <div class="layui-inline" id="shouCuang">
+                            <i class="iconfont icon-shoucang" ></i>[[${poem.shouCuang}]]
+                        </div>
+                        <div class="layui-inline"  id="xiHuan">
+                            <i class="iconfont icon-xihuan" ></i>[[${poem.xiHuan}]]
+                        </div>
+                        <div class="layui-inline"  id="copy" data-clipboard-action="copy" th:data-clipboard-target="'.poem'+${poem.poemId}" >
+                            <i class="iconfont icon-fuzhi" aria-hidden="true"></i>
+                        </div>
+                        <div class="layui-inline dianZhan" style="float: right" id="dianZan">
+                            <i class="iconfont icon-dianzan"></i>
+                            <span th:text="${poem.dianZan}">68</span>
+                        </div>
+                    </div>
+
+                    <div class="poem-tag">
+                        <a href="javascript:void(0)" th:text="${poem.tags}" class="tag">感伤 ,</a>
+                        <!--<a href="" class="tag" >时光</a>                                                                                                            </p>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <th:block th:insert="home/fragment::right_card"/>
+
+    </div>
+</div>
+
+
+<th:block th:insert="home/fragment::footer"/>
+<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+
+</body>
+</html>

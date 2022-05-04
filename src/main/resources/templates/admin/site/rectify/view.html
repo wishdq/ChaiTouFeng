@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="common :: header('前台纠正列表')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标 题:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="title" placeholder="请输入古诗标题"
+                               th:value="${poem.title}" type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">朝 代:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="dynasty" placeholder="请输入朝代"
+                               th:value="${poem.dynasty}" type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">作 者:</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="author" placeholder="请输入作者"
+                               th:value="${poem.author}" type="text" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">内 容:</label>
+                    <div class="layui-input-block">
+                        <textarea style="height: 150px" lay-verify="required" class="layui-textarea" name="content"
+                                  th:text="${poem.content}"  ></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<th:block th:insert="home/fragment::footer"/>
+<script>
+    layui.use(['form', 'jquery', 'inputAttr'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let inputAttr = layui.inputAttr;
+
+        inputAttr.render();
+
+        // form.on('submit(poem-save)', function (data) {
+        //     $.ajax({
+        //         url: '/poetry/poem/save',
+        //         data: JSON.stringify(data.field),
+        //         dataType: 'json',
+        //         contentType: 'application/json',
+        //         type: 'post',
+        //         success: function (result) {
+        //             if (result.success) {
+        //                 layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+        //                     parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+        //                     parent.layui.table.reload("poem-table");
+        //                 });
+        //             } else {
+        //                 layer.msg(result.msg, {icon: 2, time: 1000});
+        //             }
+        //         }
+        //     })
+        //     return false;
+        // });
+
+    })
+</script>
+</body>
+</html>
