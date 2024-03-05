@@ -39,7 +39,7 @@
 
     <select id="selectTopLoginLog" resultMap="SysLogMap">
         select * from sys_logging
-        where logging_type = "LOGIN"
+        where logging_type = #{loggingType}
           and operate_name = #{operateName}
         order by create_time desc
         limit 1,9

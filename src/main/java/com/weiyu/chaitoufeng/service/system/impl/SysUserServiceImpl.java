@@ -143,7 +143,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> imple
      */
     @Override
     public boolean saveUserRole(String userId, List<String> roleIds) {
-        sysUserRoleMapper.deleteByUserId(userId);
+        //sysUserRoleMapper.deleteByUserId(userId);
         List<SysUserRole> sysUserRoles = new ArrayList<>();
         roleIds.forEach(roleId -> {
             SysUserRole sysUserRole = new SysUserRole();

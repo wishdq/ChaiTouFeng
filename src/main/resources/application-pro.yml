@@ -1,7 +1,7 @@
 #----------------spring配置------------------------
 spring:
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
   web:
     resources:
       static-locations: [ classpath:/static/ ]
@@ -68,7 +68,7 @@ spring:
 
 #---------------server配置--------------------
 server:
-  port: 8080
+  port: 20240
   servlet:
     context-path: /
     session:

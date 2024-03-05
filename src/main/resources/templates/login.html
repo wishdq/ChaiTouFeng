@@ -92,6 +92,13 @@
         )
 
         form.on('submit(login)', function (data) {
+            // if(data.field.username === '' || data.field.password ===''){
+            //     popup.failure('用户名或密码为空！')
+            //     return ;
+            // }else if (data.field.username.indexOf(" ")>0 || !data.field.password.indexOf(" ")>0){
+            //     popup.failure('用户名或密码格式错误！')
+            //     return ;
+            // }
             let loader = layer.load();
             let btn = button.load({elem: '.login'});
             data.field.username = $('#login div input:first').val();
@@ -121,6 +128,13 @@
 
 
         form.on('submit(register)', function (data) {
+            if(data.field.username === '' || data.field.password ===''){
+                popup.failure('用户名或密码为空！')
+                return ;
+            }else if (data.field.username.indexOf(" ")>0 || !data.field.password.indexOf(" ")>0){
+                popup.failure('用户名或密码格式错误！')
+                return ;
+            }
             let loader = layer.load();
             let btn = button.load({elem: '.login'});
             $.ajax({

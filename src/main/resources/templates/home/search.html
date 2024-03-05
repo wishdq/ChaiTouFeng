@@ -68,7 +68,7 @@
                     page.limit = obj.limit;
 
                     $.ajax({
-                        url: '/home/search/data/[[${key}]]',
+                        url: '/home/search/data/[[${key}]]?type=[[${searchPattern}]]',
                         data: page,
                         dataType: 'json',
                         contentType: 'application/json',

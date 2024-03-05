@@ -62,7 +62,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper,SysLog> implemen
 
     @Override
     public List<SysLog> selectTopLoginLog(String operateName) {
-        return sysLogMapper.selectTopLoginLog(operateName);
+        return sysLogMapper.selectTopLoginLog(operateName,"LOGIN");
     }
 
 }

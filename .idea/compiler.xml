@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ChaiTouFeng" target="11" />
+      <module name="ChaiTouFeng" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

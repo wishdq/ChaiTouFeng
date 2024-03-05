@@ -38,7 +38,7 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
     /**
      * Describe: 根据 operateName 查询日志
      */
-    List<SysLog> selectTopLoginLog(String operateName);
+    List<SysLog> selectTopLoginLog(String operateName,String loggingType);
 
 }
 

@@ -166,6 +166,7 @@ public class EntranceController extends BaseController {
         //保存用户
         SysUser user = new SysUser(SequenceUtil.makeStringId(), username, username, passwordEncoder.encode(password), "1", "1");
         user.setCreateTime(LocalDateTime.now());
+        user.setDeptId("1");
         boolean userSave = userService.save(user);
 
         //保存注册用户的，用户角色

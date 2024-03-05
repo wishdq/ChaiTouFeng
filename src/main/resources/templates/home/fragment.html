@@ -69,7 +69,7 @@
         <div class="navbar-collapse collapse" id="navbarsExample07">
             <ul class="navbar-nav mr-auto">
                 <li th:class="'nav-item ' +${active eq 'index'?'nav-active':''} ">
-                    <a class="nav-link" th:href="@{/index}">推荐</a>
+                    <a class="nav-link" th:href="@{/index}">首页</a>
                 </li>
                 <li th:class="'nav-item ' +${active eq 'poem'?'nav-active':''} ">
                     <a class="nav-link" th:href="@{/poem}">诗文</a>
@@ -87,9 +87,39 @@
                     <a class="nav-link" th:href="@{/about}">关于</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-md-0" th:action="@{/search}" th:method="get">
-                <input th:value="${key}==null?_:${key}" class="form-control form-control-sm" name="key" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">
-            </form>
+            <ul>
+                <form class="input-group form-inline my-2 my-md-0" th:action="@{/search}" th:method="get">
+                    <!--<button class="btn btn-outline-secondary dropdown-toggle" type="button"  name="type" data-bs-toggle="dropdown" aria-expanded="false">搜内容</button>-->
+                    <!--<ul class="dropdown-menu">-->
+                    <!--    <li><a class="dropdown-item" href="#">内容</a></li>-->
+                    <!--    <li><a class="dropdown-item" href="#">标题</a></li>-->
+                    <!--    <li><a class="dropdown-item" href="#">作者</a></li>-->
+                    <!--</ul>-->
+                    <input th:value="${key}==null?_:${key}" class="form-control form-control-sm" name="key" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">
+                </form>
+            </ul>
+            <!--<ul>-->
+            <!--    <form class="input-group form-inline my-2 my-md-0">-->
+            <!--        &lt;!&ndash;<div class="input-group-prepend">&ndash;&gt;-->
+            <!--        &lt;!&ndash;    <button class="btn btn-outline-secondary dropdown-toggle btn-sm" name="type" type="button" data-toggle="dropdown" aria-expanded="false">Dropdown</button>&ndash;&gt;-->
+            <!--        &lt;!&ndash;    <div class="dropdown-menu">&ndash;&gt;-->
+            <!--        &lt;!&ndash;        <a class="dropdown-item" href="&type=content">内容</a>&ndash;&gt;-->
+            <!--        &lt;!&ndash;        <a class="dropdown-item" href="#">标题</a>&ndash;&gt;-->
+            <!--        &lt;!&ndash;        <a class="dropdown-item" href="#">作者</a>&ndash;&gt;-->
+            <!--        &lt;!&ndash;    </div>&ndash;&gt;-->
+            <!--        &lt;!&ndash;</div>&ndash;&gt;-->
+
+            <!--        &lt;!&ndash;<div class="input-group-prepend">&ndash;&gt;-->
+            <!--        &lt;!&ndash;    <label class="input-group-text form-control form-control-sm" for="type">搜</label>&ndash;&gt;-->
+            <!--        &lt;!&ndash;</div>&ndash;&gt;-->
+            <!--        &lt;!&ndash;<select class="custom-select form-control form-control-sm" id="type">&ndash;&gt;-->
+            <!--        &lt;!&ndash;    <option value="content" selected>内容</option>&ndash;&gt;-->
+            <!--        &lt;!&ndash;    <option value="title">标题</option>&ndash;&gt;-->
+            <!--        &lt;!&ndash;    <option value="author">作者</option>&ndash;&gt;-->
+            <!--        &lt;!&ndash;</select>&ndash;&gt;-->
+            <!--        <input th:value="${key}==null?_:${key}" class="form-control form-control-sm" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" name="key" type="text" placeholder="弱水三千，只取一瓢" aria-label="Search">-->
+            <!--    </form>-->
+            <!--</ul>-->
             <ul class="navbar-nav" style="margin-left: 10px">
                 <li class="nav-item" sec:authorize="${!isAuthenticated()}">
                     <a class="nav-link" href="/login">登 录</a>
@@ -126,9 +156,9 @@
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../../static/home/img/4.jpg" class="d-block w-100" alt="...">
+            <img src="../../static/home/img/8.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h4 style="padding-bottom: 100px"><span class="subtitle">山河远阔 人间星河。无一是你 无一不是你</span></h4>
+                <h4 style="padding-bottom: 100px"><span class="subtitle">春风十里扬州路，卷上珠帘总不如。</span></h4>
             </div>
         </div>
         <div class="carousel-item">
@@ -141,6 +171,12 @@
             <img src="../../static/home/img/5.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <h4 style="padding-bottom: 100px"><span class="subtitle">欲买桂花同载酒，终不似，少年游。</span></h4>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="../../static/home/img/7.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h4 style="padding-bottom: 100px"><span class="subtitle">满堂花醉三千客，一剑霜寒十四州。</span></h4>
             </div>
         </div>
         <div class="carousel-item">

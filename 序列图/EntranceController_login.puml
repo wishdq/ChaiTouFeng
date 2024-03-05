@@ -1,0 +1,33 @@
+@startuml
+header 页头
+footer 页脚 %page% of %lastpage%
+participant Actor
+Actor -> EntranceController : login
+activate EntranceController
+EntranceController -> SecureSessionService : expiredSession
+activate SecureSessionService
+SecureSessionService -> HttpSessionContextHolder : currentSessionContext
+activate HttpSessionContextHolder
+HttpSessionContextHolder --> SecureSessionService
+deactivate HttpSessionContextHolder
+SecureSessionService -> HttpSessionContext : getSession
+activate HttpSessionContext
+HttpSessionContext --> SecureSessionService
+deactivate HttpSessionContext
+SecureSessionService -> HttpSessionContextHolder : currentSessionContext
+activate HttpSessionContextHolder
+HttpSessionContextHolder --> SecureSessionService
+deactivate HttpSessionContextHolder
+SecureSessionService -> HttpSessionContext : removeSession
+activate HttpSessionContext
+HttpSessionContext --> SecureSessionService
+deactivate HttpSessionContext
+SecureSessionService --> EntranceController
+deactivate SecureSessionService
+EntranceController -> SecurityUtil : currentUser
+activate SecurityUtil
+SecurityUtil --> EntranceController
+deactivate SecurityUtil
+return
+
+@enduml

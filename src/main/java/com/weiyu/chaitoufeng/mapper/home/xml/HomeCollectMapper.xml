@@ -13,9 +13,9 @@
             <result property="title" column="title"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        collect_id,user_id,poem_id
-    </sql>
+    <!--<sql id="Base_Column_List">-->
+    <!--    collect_id,user_id,poem_id-->
+    <!--</sql>-->
 
     <select id="hadCollectCount" parameterType="HomeCollect" resultType="int">
         select count(collect_id) from home_collect

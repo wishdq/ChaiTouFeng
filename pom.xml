@@ -11,13 +11,22 @@
     <groupId>com.weiyu</groupId>
     <artifactId>ChaiTouFeng</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>ChaiTouFeng</name>
     <description>ChaiTouFeng</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <!-- 工 作 流 版 本 -->
         <activiti.version>6.0.0</activiti.version>
+
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <!-- 文件拷贝时的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
     <dependencies>
@@ -151,15 +160,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
+                <!--<configuration>-->
+                <!--    <fork>true</fork>-->
+                <!--    <mainClass>com.weiyu.chaitoufeng.ChaiTouFengApplication</mainClass>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                <!--    <execution>-->
+                <!--        <goals>-->
+                <!--            <goal>repackage</goal>-->
+                <!--        </goals>-->
+                <!--    </execution>-->
+                <!--</executions>-->
             </plugin>
+
         </plugins>
         <resources>
             <!-- 加 载 .Java 下 的 XML 文 件 -->

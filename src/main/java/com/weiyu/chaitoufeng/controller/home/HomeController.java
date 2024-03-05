@@ -28,6 +28,7 @@ import com.weiyu.chaitoufeng.service.home.HomeReviewService;
 import com.weiyu.chaitoufeng.service.system.ISysConfigService;
 import com.weiyu.chaitoufeng.service.system.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Case;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -217,11 +218,24 @@ public class HomeController extends BaseController {
 
     @GetMapping("search")
     public ModelAndView aboutMe(String key, Model model) {
+        String searchPattern = "content";
+        String keyWords = key;
+        if (key.contains("#")) {
+            searchPattern= "title";
+            keyWords = key.replace("#","");
+        }
+        if (key.contains("@")) {
+            searchPattern  = "author";
+            keyWords = key.replace("@","");
+        }
+        System.out.println(searchPattern);
+        System.out.println(keyWords);
         QueryWrapper<Poem> poemQueryWrapper = new QueryWrapper<>();
-        poemQueryWrapper.like("content", key);
+        poemQueryWrapper.like(searchPattern, keyWords);
         int searchNum = (int) poemService.count(poemQueryWrapper);
         model.addAttribute("searchNum", searchNum);
-        model.addAttribute("key", key);
+        model.addAttribute("searchPattern",searchPattern);
+        model.addAttribute("key", keyWords);
         return jumpPage(MODULE_PATH + "search");
     }
 
@@ -398,12 +412,19 @@ public class HomeController extends BaseController {
     }
 
     @GetMapping(MODULE_PATH + "search/data/{key}")
-    public ResultTable searchData(PageDomain pageDomain, @PathVariable String key) {
+    public ResultTable searchData(PageDomain pageDomain, @RequestParam String type, @PathVariable String key) {
         if ("".equals(key)) {
             return ResultTable.dataTable("关键字不为空");
         }
         Poem poem = new Poem();
-        poem.setContent(key);
+        System.out.println(type);
+        switch (type) {
+            case "title":poem.setTitle(key);break;
+            case "author":poem.setAuthor(key);break;
+            case "content":
+            default:poem.setContent(key);
+        }
+        //poem.setContent(key);
         PageInfo<Poem> pageInfo = poemService.page(poem, pageDomain);
         return pageTable(pageInfo.getList(), pageInfo.getTotal());
     }
